@@ -1,0 +1,56 @@
+<div class="container title-container">
+  <div class="row">
+    <h2>새 포스트</h2>
+  </div>
+</div>
+<div class="container editor-container">
+  <div class="row">
+    <div class="col">
+      <form [formGroup]="postForm">
+        <fieldset>
+          <legend>컨텐츠</legend>
+          <hr>
+          <div class="form-group">
+            <label>제목</label>
+            <input class="form-control" type="text" formControlName="title">
+          </div>
+          <div class="form-group">
+            <label>내용</label>
+            <textarea class="form-control" id="exampleTextarea" formControlName="contents" rows="8"></textarea>
+          </div>
+          <legend>설정</legend>
+          <hr>
+          <div class="form-group">
+            <div class="custom-control custom-switch">
+              <input type="checkbox" class="custom-control-input" id="customSwitch1" #exposed checked="">
+              <label class="custom-control-label" for="customSwitch1">메인화면에 보이기</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="customRange1">우선순위: {{ priority.value }} (우선순위가 높을 순서대로 메인화면에서 위쪽에 표시됩니다)</label>
+            <input type="range" #priority class="custom-range" (change)="true" min="0" max="100" value="50">
+          </div>
+          <div class="form-group">
+            <hr>
+            <button type="button" class="btn btn-primary float-right" (click)="save()">작성하기</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="container title-container">
+  <div class="row">
+    <h2>미리보기</h2>
+  </div>
+</div>
+<div class="container priview-container">
+  <h1>{{ postForm.get('title').value }}</h1>
+  <hr>
+  <div class="row">
+    <div class="col">
+      <ngx-md [data]="postForm.get('contents').value"></ngx-md>
+    </div>
+  </div>
+</div>
