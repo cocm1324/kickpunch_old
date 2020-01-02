@@ -1,8 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
+const fs = require('fs');
+let dbCredential;
+
+try {
+    dbCredential = JSON.parse(fs.readFileSync("./.db.secret", "utf8"));
+} catch (error) {
+    console.error(error);
+}
+
 const mongoose = require('mongoose');
-const db = 'mongodb+srv://kickpunch:firePro17!@dev-kwvql.gcp.mongodb.net/kickpunch';
+const db = `mongodb+srv://${dbCredential.db_access}:${dbCredential.db_password}@dev-kwvql.gcp.mongodb.net/${dbCredential.db_name}`;
 
 const User = require('../models/user');
 
