@@ -77,5 +77,12 @@ router.get('/posts', (req, res) => {
     res.json(posts);
 });
 
+router.get('/posts1', (req, res) => {
+    let posts = [
+        {"title": "for testing", "contents": "Heelooo there,\n\n- aqiegjiw\n- qgewijgi\n\nqweigjijiqg\n\nqwegjiji", "exposed": true, "priority": "20"}
+    ]
+
+    res.json(posts);
+});
 
 module.exports = router;

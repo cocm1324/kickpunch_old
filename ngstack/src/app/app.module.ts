@@ -11,12 +11,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PostComponent } from './post/post.component';
-import { PostlistComponent } from './postlist/postlist.component';
 import { NotfoundComponent } from './common/notfound/notfound.component';
 import { LoginComponent } from './common/login/login.component';
 import { EditorComponent } from './common/editor/editor.component';
 import { NgxMdModule } from './common/ngxmd/ngx-md.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { LandingComponent } from './landing/landing.component';
+import { RegisterComponent } from './common/register/register.component';
+import { AuthService } from './service/auth.service';
+import { DataService } from './service/data.service';
+import { PostManagerComponent } from './post-manager/post-manager.component';
 
 
 @NgModule({
@@ -24,10 +28,12 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     AppComponent,
     DashboardComponent,
     PostComponent,
-    PostlistComponent,
     NotfoundComponent,
     LoginComponent,
-    EditorComponent
+    EditorComponent,
+    LandingComponent,
+    RegisterComponent,
+    PostManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +45,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   providers: [
-
+    AuthService,
+    DataService
   ],
   bootstrap: [AppComponent]
 })
