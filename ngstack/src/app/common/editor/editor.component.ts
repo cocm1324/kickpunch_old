@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, ViewChildren, Renderer2 } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewChildren } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Post } from 'src/assets/post';
-import { QueryList } from '@angular/core/src/render3';
 
 
 @Component({
@@ -10,7 +9,6 @@ import { QueryList } from '@angular/core/src/render3';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
-  private _renderer: Renderer2;
 
   @ViewChild('exposed') exposed: ElementRef;
   @ViewChild('priority') priority: ElementRef;
@@ -23,7 +21,9 @@ export class EditorComponent implements OnInit {
 
   post: Post = new Post();
 
-  constructor(private _fb: FormBuilder) { }
+  constructor(private _fb: FormBuilder) { 
+    
+  }
 
   ngOnInit() {
   }
@@ -32,8 +32,8 @@ export class EditorComponent implements OnInit {
   save():void {
     this.post.title = this.postForm.get('title').value;
     this.post.contents = this.postForm.get('contents').value;
-    this.post.exposed = this.exposed.nativeElement.value
-    this.post.priority = this.priority.nativeElement.value
+    this.post.exposed = this.exposed.nativeElement.checked;
+    this.post.priority = this.priority.nativeElement.value;
     console.log(this.post);
   }
 }

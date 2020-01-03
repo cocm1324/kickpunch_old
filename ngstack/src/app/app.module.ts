@@ -6,7 +6,8 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgxMdModule } from 'ngx-md';
+// import { NgxMdModule } from 'ngx-md';
+
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PostComponent } from './post/post.component';
@@ -14,6 +15,8 @@ import { PostlistComponent } from './postlist/postlist.component';
 import { NotfoundComponent } from './common/notfound/notfound.component';
 import { LoginComponent } from './common/login/login.component';
 import { EditorComponent } from './common/editor/editor.component';
+import { NgxMdModule } from './common/ngxmd/ngx-md.module';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -32,9 +35,12 @@ import { EditorComponent } from './common/editor/editor.component';
     ReactiveFormsModule,
     FormsModule,
     NgbModule,
-    NgxMdModule.forRoot()
+    NgxMdModule.forRoot(),
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
