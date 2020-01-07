@@ -1,21 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">KickPunch</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarColor01">
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2 rounded-0" type="text" placeholder="Search">
-    </form>
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/register']" routerLinkActive="router-link-active" >Sign Up</a>
-      </li>
-    </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-0">
+  <div class="container">
+    <div class="row d-block w-100">
+      <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" href="#">KickPunch</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2 rounded-0" type="text" placeholder="Search">
+          </form>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" [routerLink]="['/login']" routerLinkActive="router-link-active" >Sign In</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" [routerLink]="['/register']" routerLinkActive="router-link-active" >Sign Up</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
   </div>
 </nav>
 

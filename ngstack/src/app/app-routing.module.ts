@@ -7,7 +7,7 @@ import { LoginComponent } from './common/login/login.component';
 import { EditorComponent } from './common/editor/editor.component';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './common/register/register.component';
-import { PostManagerComponent } from './post-manager/post-manager.component';
+import { ManagerComponent } from './manager/manager.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent},
@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: ':user', component: DashboardComponent },
-  { path: ':user/postmanager', component: PostManagerComponent },
+  { path: ':user/manager', component: ManagerComponent },
   { path: ':user/new', component: EditorComponent },
   { path: ':user/:post', component: PostComponent },
 ];

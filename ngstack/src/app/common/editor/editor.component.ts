@@ -34,6 +34,6 @@ export class EditorComponent implements OnInit {
     this.post.contents = this.postForm.get('contents').value;
     this.post.exposed = this.exposed.nativeElement.checked;
     this.post.priority = this.priority.nativeElement.value;
-    console.log(this.post);
+    console.log(JSON.stringify(this.post));
   }
 }

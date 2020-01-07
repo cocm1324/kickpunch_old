@@ -20,8 +20,10 @@ import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './common/register/register.component';
 import { AuthService } from './service/auth.service';
 import { DataService } from './service/data.service';
-import { PostManagerComponent } from './post-manager/post-manager.component';
+import { ManagerComponent } from './manager/manager.component';
 
+// 폼에서 한글 마지막 글자 바인딩 안되는거 해결해주는 모듈
+import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,7 @@ import { PostManagerComponent } from './post-manager/post-manager.component';
     EditorComponent,
     LandingComponent,
     RegisterComponent,
-    PostManagerComponent
+    ManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,11 @@ import { PostManagerComponent } from './post-manager/post-manager.component';
   ],
   providers: [
     AuthService,
-    DataService
+    DataService,
+    {
+      provide: COMPOSITION_BUFFER_MODE,
+      useValue: false
+    }
   ],
   bootstrap: [AppComponent]
 })
