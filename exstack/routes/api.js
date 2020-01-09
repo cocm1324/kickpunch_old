@@ -5,7 +5,7 @@ const router = express.Router();
 // importing db credentials from file system
 const fs = require('fs');
 let dbCredential;
-try { dbCredential = JSON.parse(fs.readFileSync("./.db.secret", "utf8"));}
+try { dbCredential = JSON.parse(fs.readFileSync("./.secret/.db.secret", "utf8"));}
 catch (error) {console.error(error);}
 
 // importing mongoose and set db connection string
@@ -17,7 +17,7 @@ const User = require('../models/user');
 
 // importing hash function for password hashing
 const sha256 = require('js-sha256');
-try { sha256Credential = JSON.parse(fs.readFileSync("./.sha256.secret", "utf8"));}
+try { sha256Credential = JSON.parse(fs.readFileSync("./.secret/.sha256.secret", "utf8"));}
 catch (error) {console.error(error);}
 
 
@@ -69,9 +69,9 @@ router.post('/login', (req, res) => {
 
 router.get('/posts', (req, res) => {
     let posts = [
-        {"title": "Test title", "contents": "# test contents", "exposed": false, "priority": "57"},
-        {"title": "for testing", "contents": "Heelooo there,\n\n- aqiegjiw\n- qgewijgi\n\nqweigjijiqg\n\nqwegjiji", "exposed": true, "priority": "20"},
-        {"title": "Are we Testing?", "contents": "_**what is this?**_", "exposed": false, "priority": "20"}
+        {"id": "65ef12", "title": "Test title", "contents": "# test contents", "exposed": false, "priority": "57"},
+        {"id": "3adf31", "title": "for testing", "contents": "Heelooo there,\n\n- aqiegjiw\n- qgewijgi\n\nqweigjijiqg\n\nqwegjiji", "exposed": true, "priority": "20"},
+        {"id": "720112", "title": "Are we Testing?", "contents": "_**what is this?**_", "exposed": false, "priority": "20"}
     ]
 
     res.json(posts);

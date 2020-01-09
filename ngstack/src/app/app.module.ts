@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 // import { NgxMdModule } from 'ngx-md';
@@ -44,6 +45,7 @@ import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
     FormsModule,
     NgbModule,
     NgxMdModule.forRoot(),
+    RouterModule.forRoot([]),
     HttpClientModule
   ],
   providers: [

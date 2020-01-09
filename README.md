@@ -2,7 +2,8 @@
 
 # Kickpunch
 
-> blog service project, powered by [MongoDB](https://www.mongodb.com), [Express](https://expressjs.com/), [Angular](https://angular.io), and [Node.js](https://nodejs.org)
+> blog service project, powered by [MongoDB](https://www.mongodb.com), [Express](https://expressjs.com/), [Angular](https://angular.io), and [Node.js](https://nodejs.org) (MEAN stack)
+
 > Under construction!!!
 
 ## Features

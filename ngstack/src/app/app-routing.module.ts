@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: ':user', component: DashboardComponent },
   { path: ':user/manager', component: ManagerComponent },
   { path: ':user/new', component: EditorComponent },
-  { path: ':user/:post', component: PostComponent },
+  { path: ':user/post/:post_id', component: PostComponent },
 ];
 
 @NgModule({

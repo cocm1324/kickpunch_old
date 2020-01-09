@@ -1,9 +1,26 @@
-<div class="jumbotron rounded-0">
-  <h1 class="display-3">대시보드가 여기에 들어갈 겁니다</h1>
-  <p class="lead">여기에는 유저의 프로필이 들어갈 예정이고</p>
-  <hr class="my-4">
-  <p>아래쪽에는 포스트들이 노출될 것이다</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-  </p>
+<div class="container-fluid jumbotron rounded-0">
+  <div class="row">
+    <div class="container">
+      <h1 class="display-3">Lorem Ipsum</h1>
+      <p class="lead">"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</p>
+      <hr class="my-4">
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div *ngFor="let post of posts" class="card mb-4" style="width: 100%;">
+      <div class="card-body">
+        <h4 class="card-title">{{ post.title }}</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+        <p class="card-text">{{ post.contents }}</p>
+        <a [routerLink]="['post/' + post.id]" routerLinkActive="router-link-active"  class="card-link">Card link</a>
+      </div>
+    </div>
+  </div>
 </div>
