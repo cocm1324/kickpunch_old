@@ -1,10 +1,32 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const fs = require('fs');
+const mongoose = require('mongoose');
 
-const api = require('./routes/api');
+const api = require('./api');
 const PORT = 3000;
 const app = express();
+
+let dbCredential;
+try { 
+    dbCredential = JSON.parse(fs.readFileSync(".secret/.db.secret", "utf8"));
+}
+catch (error) {
+    console.error(error);
+}
+
+const db = `mongodb+srv://${dbCredential.db_access}:${dbCredential.db_password}@dev-kwvql.gcp.mongodb.net/${dbCredential.db_name}`;
+
+mongoose.connect(db, { 
+    useNewUrlParser: true,
+    useUnifiedTopology: true 
+}).then(() => {
+    console.log('Connected to mongodb');
+}).catch(err => {
+    console.error('Error!' + err);
+});
+mongoose.set('useCreateIndex', true);
 
 app.use(cors());
 app.use(bodyParser.json());

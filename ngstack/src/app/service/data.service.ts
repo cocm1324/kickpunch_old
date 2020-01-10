@@ -6,16 +6,24 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DataService {
-  private _postsUrl = "http://localhost:3000/api/posts";
-  private _posts1Url = "http://localhost:3000/api/posts1";
 
   constructor(private _http: HttpClient) { }
 
+
+  // 
+  private _postsUrl = "http://localhost:3000/api/posts";
   getPosts(): Observable<any> {
     return this._http.get<any>(this._postsUrl);
   }
 
+  private _posts1Url = "http://localhost:3000/api/posts1";
   getPosts1(): Observable<any> {
     return this._http.get<any>(this._posts1Url);
   }
+
+
+  private _createPostURL = "http://localhost:3000/api/posts/create";
+  createPost(post): Observable<any> {
+    return this._http.post<any>(this._createPostURL, post);
+  } 
 }
