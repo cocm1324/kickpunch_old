@@ -1,9 +1,13 @@
 const User = require('./user.model');
 const sha256 = require('js-sha256');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
 
 // importing hash function for password hashing
 const hash = (target) => {
+    let sha256Credential;
+    let targetString = target.trim();
+
     try {
         sha256Credential = JSON.parse(fs.readFileSync(".secret/.sha256.secret", "utf8"));
     }
@@ -11,9 +15,21 @@ const hash = (target) => {
         console.error(error);
     }
 
-    return sha256.hmac(sha256Credential.key, target);
+    return sha256.hmac(sha256Credential.key, targetString);
 }
 
+const getJwtKey = () => {
+    let jwtKey
+
+    try {
+        jwtKey = JSON.parse(fs.readFileSync(".secret/.jwt.secret", "utf8"));
+    }
+    catch (error) {
+        console.error(error);
+    }
+
+    return jwtKey.key;
+}
 
 module.exports = {
     register: (req, res) => {
@@ -24,7 +40,11 @@ module.exports = {
         // save user data to mongo db -> use 'save' method
         user.save((error, registeredUser) => {
             if(error) console.log(error);
-            else res.status(200).send(registeredUser);
+            else  {
+                let payload = { subject: registeredUser._id };
+                let token = jwt.sign(payload, getJwtKey());
+                res.status(200).send({token});
+            }
         });
     },
 
@@ -37,7 +57,11 @@ module.exports = {
             else {
                 if (!user) res.status(401).send('Invalid email');
                 else if (user.password !== userData.password) res.status(401).send('Invalid password');
-                else res.status(200).send(user);
+                else {
+                    let payload = { subject: user._id }
+                    let token = jwt.sign(payload, getJwtKey());
+                    res.status(200).send({token});
+                }
             }
         });
     }

@@ -16,7 +16,7 @@ export class DataService {
     return this._http.get<any>(this._postsUrl);
   }
 
-  private _posts1Url = "http://localhost:3000/api/posts1";
+  private _posts1Url = "http://localhost:3000/api/posts/posts1";
   getPosts1(): Observable<any> {
     return this._http.get<any>(this._posts1Url);
   }

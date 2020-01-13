@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <h3 class="mt-4">프로필 관리</h3>
+      <h3 class="mt-4 mb-3">프로필 관리</h3>
       <div class="jumbotron">
         <h1 class="display-3">여기에는 유저 프로필 편집</h1>
         <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
@@ -16,22 +16,24 @@
 
   <div class="row">
     <div class="col">
-      <h3 class="mt-4">포스트 관리</h3>
+      <h3 class="mt-4 mb-3">포스트 관리</h3>
       <table class="table table-hover">
         <thead>
           <tr>
             <th scope="col">Title</th>
-            <th scope="col">Column heading</th>
-            <th scope="col">Column heading</th>
-            <th scope="col">Column heading</th>
+            <th scope="col">Contents</th>
+            <th scope="col">Exposed</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Manage</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Default</th>
-            <td>Column content</td>
-            <td>Column content</td>
-            <td>Column content</td>
+          <tr *ngFor="let post of posts">
+            <th scope="row">{{ post.title }}</th>
+            <td>{{ post.contents }}</td>
+            <td>{{ post.exposed }}</td>
+            <td>{{ post.priority }}</td>
+            <td><button class="btn btn-sm btn-success mr-1">Edit</button><button class="btn btn-sm btn-danger">Del</button></td>
           </tr>
         </tbody>
       </table> 

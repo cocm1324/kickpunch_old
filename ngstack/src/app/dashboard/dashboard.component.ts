@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getPostData() {
-    this._dataService.getPosts().subscribe(
+    this._dataService.getPosts1().subscribe(
       res => this.posts = res,
       err => console.log(err)
     );
