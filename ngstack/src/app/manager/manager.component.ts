@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../service/data.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-manager',
@@ -12,7 +13,7 @@ export class ManagerComponent implements OnInit {
   cur_route;
   posts;
 
-  constructor(private _dataService: DataService, private _route: ActivatedRoute) { }
+  constructor(private _dataService: DataService, private _router: Router, private _route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getPostData();
@@ -22,7 +23,13 @@ export class ManagerComponent implements OnInit {
   getPostData() {
     this._dataService.getPosts().subscribe(
       res => this.posts = res,
-      err => console.log(err)
+      err => {
+        if(err instanceof HttpErrorResponse) {
+          if (err.status === 401) {
+            this._router.navigate(['/login']);
+          }
+        }
+      }
     );
   }
 

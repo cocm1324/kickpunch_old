@@ -8,6 +8,9 @@ import { EditorComponent } from './common/editor/editor.component';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './common/register/register.component';
 import { ManagerComponent } from './manager/manager.component';
+import { AuthGuard } from './auth.guard';
+
+// todo: 로그인을 한 유저가 login, register에 들어가지 못하도록 가드를 만들자
 
 const routes: Routes = [
   { path: '', component: LandingComponent},
@@ -15,7 +18,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'notfound', component: NotfoundComponent },
   { path: ':user', component: DashboardComponent },
-  { path: ':user/manager', component: ManagerComponent },
+  { path: ':user/manager', component: ManagerComponent, canActivate: [AuthGuard] },
   { path: ':user/new', component: EditorComponent },
   { path: ':user/post/:post_id', component: PostComponent },
 ];

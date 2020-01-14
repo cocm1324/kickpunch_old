@@ -16,7 +16,7 @@ import { NotfoundComponent } from './common/notfound/notfound.component';
 import { LoginComponent } from './common/login/login.component';
 import { EditorComponent } from './common/editor/editor.component';
 import { NgxMdModule } from './common/ngxmd/ngx-md.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './common/register/register.component';
 import { AuthService } from './service/auth.service';
@@ -25,6 +25,8 @@ import { ManagerComponent } from './manager/manager.component';
 
 // 폼에서 한글 마지막 글자 바인딩 안되는거 해결해주는 모듈
 import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
+import { AuthGuard } from './auth.guard';
+import { TokenInterceptorService } from './service/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -50,10 +52,16 @@ import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
   ],
   providers: [
     AuthService,
+    AuthGuard,
     DataService,
     {
       provide: COMPOSITION_BUFFER_MODE,
       useValue: false
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]
