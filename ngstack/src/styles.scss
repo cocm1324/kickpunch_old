@@ -3,3 +3,8 @@
 @import "./variables";
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "../node_modules/bootswatch/dist/litera/bootswatch";
+
+html, body {
+    height: 100%;
+    margin: 0;
+}

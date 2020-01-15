@@ -1,5 +1,9 @@
 const Post = require("./post.model");
 
+// todo: 포스트를 실제 디비에 저장하도록 해야함
+// todo: 포스트를 누가 썼는지 저장해야함
+// todo: 포스트에 타임 스탬프를 찍어야 함
+
 module.exports = {
     posts: (req, res) => {
         let posts = [
