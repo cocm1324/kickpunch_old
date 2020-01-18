@@ -19,21 +19,64 @@ const hash = (target) => {
 }
 
 module.exports = {
+    getAllUser: (req, res) => {
+        let userData;
+    },
+
+    getUserByEmail: (req, res) => {
+        // TODO: Im not sure about this destructuring method, improve it
+        let userData = req.params;
+
+        console.log(userData);
+
+        User.findOne({email: userData.email}, (error, user) => {
+            if (error) console.log(error);
+            else {
+                // if user not exist, send 404 not found
+                if(!user) {
+                    res.status(404).send('Not Found');
+                }
+                // user의 데이터에서 password 해시 값 제외하고 보냄
+                else {
+                    // TODO: find better way to send this
+                    res.status(200).send({
+                        _id: user._id,
+                        name: user.name,
+                        email: user.email
+                    });
+                }
+            }
+        })
+    },
+
     register: (req, res) => {
         let userData = req.body;
         userData.password = hash(userData.password) // password hashing
         let user = new User(userData);
         
-        // todo: register하기 전 유저의 데이터가 디비에 있는지 한번 검사해야 함
+        // befor register, check user email already exist in db
+        // for here, user name must be unique(ex=> a@a.com, a@b.com => not allowed)
+        User.findOne({ email: {$regex : "^" + userData.email.split("@")[0] + "@"}}, (error, user) => {
+            if (error) console.log(error);
+            else {
+                // if user exist, send email already exits
+                if (user) {
+                    res.statusMessage = "Already Exists";
+                    res.status(401).send('Already Exists');
+                }
 
-
-        // save user data to mongo db -> use 'save' method
-        user.save((error, registeredUser) => {
-            if(error) console.log(error);
-            else  {
-                let payload = { subject: registeredUser._id };
-                let token = jwt.sign(payload);
-                res.status(200).send({token});
+                // else save user to db
+                else {
+                    // save user data to mongo db -> use 'save' method
+                    user.save((error, registeredUser) => {
+                        if(error) console.log(error);
+                        else  {
+                            let payload = { subject: registeredUser._id };
+                            let token = jwt.sign(payload);
+                            res.status(200).send({token});
+                        }
+                    });         
+                }
             }
         });
     },

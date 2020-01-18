@@ -17,13 +17,13 @@ export class DashboardComponent implements OnInit {
   constructor(private _dataService: DataService, private _route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getPostData();
     this.getRouteParam();
+    this.getPostData();
   }
 
   getPostData() {
-    this._dataService.getPosts1().subscribe(
-      res => this.posts = res,
+    this._dataService.getExposedPostsByUserId(this.cur_route).subscribe(
+      res => this.posts = res.posts,
       err => console.log(err)
     );
   }

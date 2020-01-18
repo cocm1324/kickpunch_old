@@ -11,18 +11,18 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ManagerComponent implements OnInit {
 
   cur_route;
-  posts;
+  posts = [];
 
   constructor(private _dataService: DataService, private _router: Router, private _route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getPostData();
     this.getRouteParam();
+    this.getPostData();
   }
 
   getPostData() {
-    this._dataService.getPosts().subscribe(
-      res => this.posts = res,
+    this._dataService.getAllPostsByUserId(this.cur_route).subscribe(
+      res => this.posts = res.posts,
       err => {
         if(err instanceof HttpErrorResponse) {
           if (err.status === 401) {

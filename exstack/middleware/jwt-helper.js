@@ -15,16 +15,20 @@ const getJwtKey = () => {
     return jwtKey.key;
 }
 
+// this middleware is to verify 'Authorization' header in request
+// if verification is done, req.userId is updated
 module.exports = {
     sign: (payload) => {
         return jwt.sign(payload, getJwtKey());
     },
     verifyToken: (req, res, next) => {
         if (!req.headers.authorization) {
-            return req.status(401).send('Unauthorized request');
+            res.statusMessage = "Unauthorized"
+            return res.status(401).send('Unauthorized');
         }
         let token = req.headers.authorization.split(' ')[1];
         if (token === 'null') {
+            res.statusMessage = "Unauthorized"
             return res.status(401).send('Unauthorized request');
         }
         let payload = jwt.verify(token, getJwtKey());

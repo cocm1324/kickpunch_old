@@ -1,32 +1,56 @@
 const Post = require("./post.model");
 
-// todo: 포스트를 실제 디비에 저장하도록 해야함
-// todo: 포스트를 누가 썼는지 저장해야함
-// todo: 포스트에 타임 스탬프를 찍어야 함
-
 module.exports = {
-    posts: (req, res) => {
-        let posts = [
-            {"id": "65ef12", "title": "Test title", "contents": "# test contents", "exposed": false, "priority": "57"},
-            {"id": "3adf31", "title": "for testing", "contents": "Heelooo there,\n\n- aqiegjiw\n- qgewijgi\n\nqweigjijiqg\n\nqwegjiji", "exposed": true, "priority": "20"},
-            {"id": "720112", "title": "Are we Testing?", "contents": "_**what is this?**_", "exposed": false, "priority": "20"}
-        ]
-    
-        res.json(posts);
+    // for visitor; return posts that set as exposed
+    getExposedPostByUser: (req, res) => {
+        let userId = req.userId;
+
+        Post.find({ user_id: userId, exposed:true }, (error, posts) => {
+            if(error) {
+                console.log(error);
+            }
+            else {
+                if(!posts) {
+                    res.statusMessage = 'Not Found'
+                    res.status(404).send('Not Found');
+                }
+                else {
+                    res.status(200).send({posts: posts});
+                }
+            }
+        });
     },
 
-    posts1: (req, res) => {
-        let posts = [
-            {"title": "for testing", "contents": "Heelooo there,\n\n- aqiegjiw\n- qgewijgi\n\nqweigjijiqg\n\nqwegjiji", "exposed": true, "priority": "20"}
-        ]
+    // for manage perpose, return every posts
+    getAllPostByUser: (req, res) => {
+        let userId = req.userId;
     
-        res.json(posts);
+        Post.find({ user_id: userId}, (error, posts) => {
+            if(error) {
+                console.log(error);
+            }
+            else {
+                if(!posts) {
+                    res.statusMessage = 'Not Found'
+                    res.status(404).send('Not Found');
+                }
+                else {
+                    res.status(200).send({posts: posts});
+                }
+            }
+        });
     },
 
-    create: (req, res) => {
+    createPost: (req, res) => {
         let postData = req.body;
+        let userData = req.userId;
         let post = new Post(postData);
-    
+
+        post.user_id = userData;
+        // TODO: In post, created date and updated date is composed in express stack, if there is other way, apply it
+        post.created = new Date();
+        post.updated = new Date();
+
         // save user data to mongo db -> use 'save' method
         post.save((error, postedData) => {
             if(error) console.log(error);

@@ -4,13 +4,16 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
-    title: String,
-    contents: String,
-    exposed: Boolean,
-    priority: Number,
+    title: {type:String, required: true},
+    contents: {type:String, required: true},
+    exposed: {type:Boolean, required: true},
+    
+    // if it is exposed, priority is required, if not, not required
+    priority: {type:Number, required: () => { return this.exposed }},
     created: Date,
-    update: Date,
+    updated: Date,
 });
 module.exports = mongoose.model('post', postSchema, 'posts');
