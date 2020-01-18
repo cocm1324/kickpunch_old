@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './service/auth.service';
 import { DataService } from './service/data.service';
-import { GlobalDataService } from './service/global-data.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,22 +9,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  
-  title = 'ngstack';
-  currentUserId;
 
-  constructor(private _router:Router, private _authService: AuthService, private _globalDataService: GlobalDataService) {}
+  title = 'ngstack';
+  currentUser = {};
+
+  constructor(private _router:Router, private _authService: AuthService) {}
 
   ngOnInit() {
+    this._authService.getCurrentUser()
+    console.log(localStorage.getItem('callback'))
   }
 
   login() {
-    if(this._router.url != '/register') this._globalDataService.changeCallbackURL(this._router.url);
+    if(!localStorage.getItem('callback')){
+      localStorage.setItem('callback', this._router.url);
+    }
+    else if(this._router.url != '/register'){
+      localStorage.setItem('callback', this._router.url);
+    }
     this._router.navigate(['/login']);
   }
 
   logout() {
-    this._globalDataService.changeCallbackURL(this._router.url);
+    localStorage.setItem('callback', this._router.url);
     this._authService.logoutUser();
   }
 }

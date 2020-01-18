@@ -71,7 +71,11 @@ module.exports = {
                         else  {
                             let payload = { subject: registeredUser._id };
                             let token = jwt.sign(payload);
-                            res.status(200).send({token: token, user_id: registeredUser._id});
+                            res.status(200).send({token: token, user: {
+                                _id: registeredUser._id,
+                                name: registeredUser.name,
+                                email: registeredUser.email
+                            }});
                         }
                     });         
                 }
@@ -91,13 +95,17 @@ module.exports = {
                 else {
                     let payload = { subject: user._id }
                     let token = jwt.sign(payload);
-                    res.status(200).send({token: token, user_id: user._id});
+                    res.status(200).send({token: token, user: {
+                        _id: user._id,
+                        name: user.name,
+                        email: user.email
+                    }});
                 }
             }
         });
     },
 
-    getCurrentUser: (req, res) => {
+    currentUser: (req, res) => {
 
     }
 }

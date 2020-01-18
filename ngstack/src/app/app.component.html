@@ -20,7 +20,7 @@
                 <a class="nav-link" *ngIf="!_authService.loggedIn()" [routerLink]="['/register']" routerLinkActive="router-link-active">Sign Up</a>
               </li> -->
               <li class="nav-item active dropdown" *ngIf="_authService.loggedIn()">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ currentUserId }}</a>
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{_authService.getCurrentUser().name}}</a>
                 <div class="dropdown-menu dropdown-menu-right" style="">
                   <a class="dropdown-item" [routerLink]="['/cocm1324']">My Blog</a>
                   <a class="dropdown-item" [routerLink]="['/cocm1324/manager']">My Posts</a>
@@ -43,7 +43,7 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        Powered by ng ex mongo
+        Powered by <i class="fab fa-angular"></i> ex mongo
       </div>
     </div>
   </div>

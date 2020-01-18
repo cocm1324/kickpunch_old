@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { GlobalDataService } from './global-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,7 @@ export class AuthService {
   private _registerUrl = "http://localhost:3000/api/register";
   private _currentUserUrl = "http://localhost:3000/api/user/currentUser";
 
-  constructor(private _http: HttpClient, private _router:Router, private _globalDataService: GlobalDataService) { }
+  constructor(private _http: HttpClient, private _router:Router) { }
 
   registerUser(user): Observable<any> {
     return this._http.post<any>(this._registerUrl, user);
@@ -20,10 +19,6 @@ export class AuthService {
 
   loginUser(user): Observable<any> {
     return this._http.post<any>(this._loginUrl, user);
-  }
-
-  currentUser(): Observable<any> {
-    return this._http.get<any>(this._currentUserUrl);
   }
 
   loggedIn() {
@@ -34,10 +29,14 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  getCurrentUser() {
+    return JSON.parse(localStorage.getItem('current_user'));
+  }
+
   logoutUser() {
-    this._globalDataService.callbackURL.subscribe(url => {
-      localStorage.removeItem('token');
-      this._router.navigate([url]);
-    });
+    localStorage.removeItem('token');
+    localStorage.removeItem('current_user');
+    this._router.navigate([localStorage.getItem('callback')]);
+    localStorage.removeItem('callback');
   }
 }
