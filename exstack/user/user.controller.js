@@ -23,13 +23,11 @@ module.exports = {
         let userData;
     },
 
-    getUserByEmail: (req, res) => {
+    getUser: (req, res) => {
         // TODO: Im not sure about this destructuring method, improve it
-        let userData = req.params;
+        let userId = req.userId;
 
-        console.log(userData);
-
-        User.findOne({email: userData.email}, (error, user) => {
+        User.findById(userId, (error, user) => {
             if (error) console.log(error);
             else {
                 // if user not exist, send 404 not found
@@ -39,14 +37,14 @@ module.exports = {
                 // user의 데이터에서 password 해시 값 제외하고 보냄
                 else {
                     // TODO: find better way to send this
-                    res.status(200).send({
+                    res.status(200).send({ user: {
                         _id: user._id,
                         name: user.name,
                         email: user.email
-                    });
+                    }});
                 }
             }
-        })
+        });
     },
 
     register: (req, res) => {
@@ -73,7 +71,7 @@ module.exports = {
                         else  {
                             let payload = { subject: registeredUser._id };
                             let token = jwt.sign(payload);
-                            res.status(200).send({token});
+                            res.status(200).send({token: token, user_id: registeredUser._id});
                         }
                     });         
                 }
@@ -93,9 +91,13 @@ module.exports = {
                 else {
                     let payload = { subject: user._id }
                     let token = jwt.sign(payload);
-                    res.status(200).send({token});
+                    res.status(200).send({token: token, user_id: user._id});
                 }
             }
         });
+    },
+
+    getCurrentUser: (req, res) => {
+
     }
 }

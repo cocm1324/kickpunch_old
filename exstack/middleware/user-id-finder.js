@@ -15,7 +15,7 @@ module.exports = {
         }
 
         if(userName == undefined) {
-            return res.status(404).send('Not Found');
+            return res.status(400).send('Undefined');
         }
 
         User.findOne({ email: {$regex : "^" + userName + "@"}}, (error, user) => {

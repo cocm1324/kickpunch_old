@@ -21,7 +21,7 @@ export class ManagerComponent implements OnInit {
   }
 
   getPostData() {
-    this._dataService.getAllPostsByUserId(this.cur_route).subscribe(
+    this._dataService.getAllPostsByUserName(this.cur_route).subscribe(
       res => this.posts = res.posts,
       err => {
         if(err instanceof HttpErrorResponse) {

@@ -18,9 +18,6 @@ catch (error) {
 
 const db = `mongodb+srv://${dbCredential.db_access}:${dbCredential.db_password}@dev-kwvql.gcp.mongodb.net/${dbCredential.db_name}`;
 
-
-// todo: session을 사용해 보자
-
 mongoose.connect(db, { 
     useNewUrlParser: true,
     useUnifiedTopology: true 

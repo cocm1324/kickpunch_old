@@ -28,8 +28,8 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/font-awesome/css/font-awesome.min.css",
-              "node_modules/prismjs/themes/prism-okaidia.css"
+              "node_modules/prismjs/themes/prism-okaidia.css",
+              "node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.slim.min.js",

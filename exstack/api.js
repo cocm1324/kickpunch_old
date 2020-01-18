@@ -21,7 +21,8 @@ router.post('/login', User.login);
 
 // user endpoints
 router.get('/user', User.getAllUser);
-router.get('/user/:email', User.getUserByEmail);
+router.get('/user/currentUser', jwt.verifyToken, User.getUser);
+router.get('/user/:userId', userId.findUserId, User.getUser);
 
 // post endpoints
 router.get('/post/:userId', userId.findUserId, Post.getExposedPostByUser);

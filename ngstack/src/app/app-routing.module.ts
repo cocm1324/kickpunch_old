@@ -10,7 +10,7 @@ import { RegisterComponent } from './common/register/register.component';
 import { ManagerComponent } from './manager/manager.component';
 import { AuthGuard } from './auth.guard';
 
-// todo: 로그인을 한 유저가 login, register에 들어가지 못하도록 가드를 만들자
+// TODO: 로그인을 한 유저가 login, register에 들어가지 못하도록 가드를 만들자
 
 const routes: Routes = [
   { path: '', component: LandingComponent},

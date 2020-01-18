@@ -29,11 +29,12 @@ module.exports = {
         let token = req.headers.authorization.split(' ')[1];
         if (token === 'null') {
             res.statusMessage = "Unauthorized"
-            return res.status(401).send('Unauthorized request');
+            return res.status(401).send('Unauthorized');
         }
         let payload = jwt.verify(token, getJwtKey());
         if(!payload) {
-            return res.status.send('Unauthorized request');
+            res.statusMessage = "Unauthorized"
+            return res.status.send('Unauthorized');
         }
         req.userId = payload.subject;
         next();
