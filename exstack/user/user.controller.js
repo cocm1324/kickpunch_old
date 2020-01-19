@@ -20,7 +20,7 @@ const hash = (target) => {
 
 module.exports = {
     getAllUser: (req, res) => {
-        let userData;
+        // TODO: implement this
     },
 
     getUser: (req, res) => {
@@ -49,16 +49,23 @@ module.exports = {
 
     register: (req, res) => {
         let userData = req.body;
+        
+
+        if(!userData) {
+            res.statusMessage = 'Invalid Request';
+            res.status(401).send('Invalid Request');
+        }
+
         userData.password = hash(userData.password) // password hashing
         let user = new User(userData);
         
         // befor register, check user email already exist in db
         // for here, user name must be unique(ex=> a@a.com, a@b.com => not allowed)
-        User.findOne({ email: {$regex : "^" + userData.email.split("@")[0] + "@"}}, (error, user) => {
+        User.findOne({ email: {$regex : "^" + userData.email.split("@")[0] + "@"}}, (error, duplicateUser) => {
             if (error) console.log(error);
             else {
                 // if user exist, send email already exits
-                if (user) {
+                if (duplicateUser) {
                     res.statusMessage = "Already Exists";
                     res.status(401).send('Already Exists');
                 }

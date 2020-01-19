@@ -38,4 +38,18 @@ export class ManagerComponent implements OnInit {
       this.cur_route = params.user;
     });
   }
+
+  //
+  goToPost(postId: string) {
+    let userObj = localStorage.getItem('current_user');
+    let url = '/';
+    if(userObj) {
+      url = url + JSON.parse(userObj).email.split('@')[0] + '/post/' + postId;
+    }
+    else {
+      // TODO: error toastr
+    }
+
+    this._router.navigate([url]);
+  }
 }

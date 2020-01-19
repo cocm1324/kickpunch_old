@@ -33,14 +33,18 @@
             <td>{{ post.contents }}</td>
             <td>{{ post.exposed }}</td>
             <td>{{ post.priority }}</td>
-            <td><button class="btn btn-sm btn-success mr-1">Edit</button><button class="btn btn-sm btn-danger">Del</button></td>
+            <td>
+              <a (click)="goToPost(post._id)" class="pr-3" style="cursor: pointer;"><i class="far fa-eye"></i></a>
+              <a class="pr-3" style="cursor: pointer;"><i class="far fa-edit"></i></a>
+              <a style="cursor: pointer;"><i class="far fa-trash-alt"></i></a>
+            </td>
           </tr>
         </tbody>
       </table> 
     </div>
   </div>
 
-  <div class="row">
+  <!-- <div class="row">
     <div class="col">
       <ul class="pagination float-right">
         <li class="page-item disabled">
@@ -66,5 +70,5 @@
         </li>
       </ul>
     </div>
-  </div>
+  </div> -->
 </div>

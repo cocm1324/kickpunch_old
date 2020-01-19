@@ -16,8 +16,7 @@ export class AppComponent {
   constructor(private _router:Router, private _authService: AuthService) {}
 
   ngOnInit() {
-    this._authService.getCurrentUser()
-    console.log(localStorage.getItem('callback'))
+    this._authService.getCurrentUser();
   }
 
   login() {

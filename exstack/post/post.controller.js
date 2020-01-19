@@ -41,12 +41,37 @@ module.exports = {
         });
     },
 
-    createPost: (req, res) => {
+    getPostById: (req, res) => {
+        let postId = req.params.postId;
+
+        Post.findById(postId, (error, post) => {
+            if(error) {
+                console.log(error);
+            }
+            else {
+                if(!post) {
+                    res.statusMessage = 'Not Found'
+                    res.status(404).send('Not Found');
+                }
+                else {
+                    res.status(200).send({post: post});
+                }
+            }
+        });
+    },
+
+    newPost: (req, res) => {
         let postData = req.body;
         let userData = req.userId;
+
+        // check if this article.userid, and token is matching
+        if(userData.trim() != postData.user_id.trim()) {
+            res.statusMessage = 'Unauthorized';
+            res.status(401).send('Unauthorized');
+        }
+
         let post = new Post(postData);
 
-        post.user_id = userData;
         // TODO: In post, created date and updated date is composed in express stack, if there is other way, apply it
         post.created = new Date();
         post.updated = new Date();

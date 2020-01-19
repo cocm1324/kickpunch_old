@@ -19,7 +19,7 @@
         <h4 class="card-title">{{ post.title }}</h4>
         <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
         <p class="card-text">{{ post.contents }}</p>
-        <a [routerLink]="['post/' + post.id]" routerLinkActive="router-link-active"  class="card-link">Card link</a>
+        <a [routerLink]="['post/' + post._id]" routerLinkActive="router-link-active"  class="card-link">포스트 보기</a>
       </div>
     </div>
   </div>

@@ -42,7 +42,13 @@ export class DashboardComponent implements OnInit {
 
   getPostData() {
     this._dataService.getExposedPostsByUserName(this.cur_route).subscribe(
-      res => this.posts = res.posts,
+      res => {
+        this.posts = res.posts;
+
+        this.posts.forEach(post => {
+          console.log(JSON.stringify(post));
+        })
+      },
       err => console.log(err)
     );
   }

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private _loginUrl = "http://localhost:3000/api/login";
   private _registerUrl = "http://localhost:3000/api/register";
-  private _currentUserUrl = "http://localhost:3000/api/user/currentUser";
+  private _newPostUrl = "http://localhost:3000/api/post"
 
   constructor(private _http: HttpClient, private _router:Router) { }
 
@@ -20,6 +20,11 @@ export class AuthService {
   loginUser(user): Observable<any> {
     return this._http.post<any>(this._loginUrl, user);
   }
+
+  newPost(post): Observable<any> {
+    return this._http.post<any>(this._newPostUrl, post);
+  }
+
 
   loggedIn() {
     return !!localStorage.getItem('token'); //!!를 쓰면 있는지 없는지 반환함
@@ -39,4 +44,6 @@ export class AuthService {
     this._router.navigate([localStorage.getItem('callback')]);
     localStorage.removeItem('callback');
   }
+
+
 }

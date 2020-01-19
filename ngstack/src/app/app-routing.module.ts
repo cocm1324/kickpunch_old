@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'notfound', component: NotfoundComponent },
   { path: ':user', component: DashboardComponent },
   { path: ':user/manager', component: ManagerComponent, canActivate: [AuthGuard] },
-  { path: ':user/new', component: EditorComponent },
+  { path: ':user/new', component: EditorComponent, canActivate: [AuthGuard] },
   { path: ':user/post/:post_id', component: PostComponent },
 ];
 

@@ -16,6 +16,8 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
+  // TODO: form validation
+
   registerUser() {
     this._auth.registerUser(this.registerUserData).subscribe(
       res => {
@@ -23,8 +25,11 @@ export class RegisterComponent implements OnInit {
         localStorage.setItem('current_user', JSON.stringify(res.user));
         this._router.navigate([localStorage.getItem('callback')]);
         localStorage.removeItem('callback');
+        // TODO: 사용법 모달창 띄우기
       },
       err => console.log(err) // TODO: 실패시 얼럿창 띄우기
     )
   }
+
+  // TODO: oauth 연결하기
 }

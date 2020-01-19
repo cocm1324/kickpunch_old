@@ -12,6 +12,7 @@
             <form class="form-inline my-2 my-lg-0">
               <input class="form-control mr-sm-2 rounded-0" type="text" placeholder="Search">
             </form>
+            <!-- TODO: implement search for user/post -->
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
                 <a class="nav-link" *ngIf="!_authService.loggedIn()" (click)="login()" routerLinkActive="router-link-active" style="cursor: pointer;">Sign In</a>
@@ -43,7 +44,7 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        Powered by <i class="fab fa-angular"></i> ex mongo
+        Powered by <i class="fab fa-angular"></i>
       </div>
     </div>
   </div>
