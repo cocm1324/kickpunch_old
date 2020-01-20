@@ -5,6 +5,15 @@
     /* But also accounting for potential margin-bottom of last child */
     margin-bottom: -50px;
 }
+
 .footer, .push {
     height: 50px;
+}
+
+app-toastr {
+    z-index: 100000; // this should be max
+    position: fixed;
+    bottom: 10vh;
+    right: 5vw;
+    width: 30vw;
 }

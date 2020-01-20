@@ -1,0 +1,8 @@
+<div>
+  <div *ngFor="let message of messages" class="alert alert-dismissible {{ message.alert }}" [ngStyle]="{'visibility': visibility}">
+    <!-- TODO: visibility animation -->
+    <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+    <h6 class="alert-heading">{{ message.header }}</h6>
+    <small class="mb-0">{{ message.body }}</small>
+  </div>
+</div>

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from './service/auth.service';
 import { Router } from '@angular/router';
-import { ToastrService } from './service/toastr.service';
-import { distinctUntilChanged, skip } from 'rxjs/operators';
+import { ToastrService, ToastrMessage } from './service/toastr.service';
+import { ToastrComponent } from './common/toastr/toastr.component';
 
 @Component({
   selector: 'app-root',
@@ -22,12 +22,6 @@ export class AppComponent {
      * when log in, login component save user data at local storage
      */
     this.getCurrentUser();
-
-    this._toastr.toastr$.pipe(
-      distinctUntilChanged((prev, curr) => prev.timestamp === curr.timestamp),
-      skip(1)
-    ).subscribe(console.log); // TODO: change this part to show toaster
-    // TODO: separeate toaster component from app component
   }
 
   login() {
@@ -41,6 +35,13 @@ export class AppComponent {
   }
 
   logout() {
+    let message = {
+      header: `Goodbye`,
+      body: "You are now signed out. Do come again ^^7",
+      alert: "alert-warning"
+    }
+    this._toastr.changeToastr(message);
+
     localStorage.setItem('callback', this._router.url);
     this._auth.logoutUser();
   }

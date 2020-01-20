@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router } from '@angular/router';
-import { ToastrService, ToastrMessage } from 'src/app/service/toastr.service';
+import { ToastrService } from 'src/app/service/toastr.service';
 
 @Component({
   selector: 'app-login',
@@ -26,22 +26,37 @@ export class LoginComponent implements OnInit {
         this._auth.updateCurrentUser(res.user);
         this._router.navigate([localStorage.getItem('callback')]);
         localStorage.removeItem('callback');
+
+        let message = {
+          header: `Hello ${res.user.name}`,
+          body: "Welcome back ^^7",
+          alert: "alert-success"
+        }
+        this._toastr.changeToastr(message);
       },
       err => {
-        let message = new ToastrMessage();
-        console.log(err)
         if(err.status == 500){
-          message.header = "Internal Server Error";
-          message.body = "Something went wrong back there";
-          message.alert = "alert-danger";
-          message.timestamp = new Date;
+          let message = {
+            header: "Internal Server Error",
+            body: "Something went wrong back there",
+            alert: "alert-danger"
+          }
           this._toastr.changeToastr(message);
         }
         else if (err.status == 401){
-          message.header = "Wrong Email or Password";
-          message.body = "Please Check if your email or password";
-          message.alert = "alert-danger";
-          message.timestamp = new Date;
+          let message = {
+            header: "Wrong Email or Password",
+            body: "Please Check if your email or password",
+            alert: "alert-danger"
+          }
+          this._toastr.changeToastr(message);
+        }
+        else {
+          let message = {
+            header: err.status + err.statusText,
+            body: err.error,
+            alert: "alert-danger"
+          }
           this._toastr.changeToastr(message);
         }
       }

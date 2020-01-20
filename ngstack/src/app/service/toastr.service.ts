@@ -12,7 +12,8 @@ export class ToastrService {
 
   //service command
   changeToastr(toastr) {
-    this._toastrSource.next(toastr);
+    let message = new ToastrMessage(toastr);
+    this._toastrSource.next(message);
   }
 
   constructor() { }
@@ -28,6 +29,13 @@ export class ToastrMessage {
   body: string;
   alert: string;
   timestamp: Date;
+
+  constructor({header, body, alert}) {
+    this.header = header;
+    this.body = body;
+    this.alert = alert;
+    this.timestamp = new Date();
+  }
 }
 
 // I get this part from https://stackoverflow.com/questions/34376854/delegation-eventemitter-or-observable-in-angular/35568924#35568924
