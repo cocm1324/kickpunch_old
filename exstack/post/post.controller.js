@@ -3,7 +3,7 @@ const Post = require("./post.model");
 module.exports = {
     // for visitor; return posts that set as exposed
     getExposedPostByUser: (req, res) => {
-        let userId = req.userId;
+        let userId = req.user._id;
 
         Post.find({ user_id: userId, exposed:true }, (error, posts) => {
             if(error) {

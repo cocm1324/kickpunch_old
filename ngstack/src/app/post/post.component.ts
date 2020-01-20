@@ -9,27 +9,28 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class PostComponent implements OnInit {
 
-  cur_route: string;
+  cur_route;
   post = {};
+  postUser = {};
 
   constructor(private _data: DataService, private _router: Router, private _route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getRouteParam();
-    this.getPost(this.cur_route);
+    this.getPost(this.cur_route.postId);
+    this.getPostUser(this.cur_route.userName);
   }
 
   getRouteParam() {
     this._route.params.subscribe(params => {
-      this.cur_route = params.post_id;
+      this.cur_route = {postId: params.post_id,userName: params.user}
     });
   }
 
-  getPost(post_id) {
-    this._data.getPostById(post_id).subscribe(
+  getPost(postId) {
+    this._data.getPostById(postId).subscribe(
       res => {
         this.post = res.post;
-        console.log(this.post);
       },
       err => {
         console.log(err);
@@ -37,4 +38,10 @@ export class PostComponent implements OnInit {
     );
   }
   
+  getPostUser(userName) {
+    this._data.getUserData(userName).subscribe(
+      res => this.postUser = res.user,
+      err => console.log(err)
+    )
+  }
 }

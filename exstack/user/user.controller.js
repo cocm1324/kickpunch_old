@@ -25,7 +25,7 @@ module.exports = {
 
     getUser: (req, res) => {
         // TODO: Im not sure about this destructuring method, improve it
-        let userId = req.userId;
+        let userId = req.user._id;
 
         User.findById(userId, (error, user) => {
             if (error) console.log(error);
@@ -112,7 +112,28 @@ module.exports = {
         });
     },
 
-    currentUser: (req, res) => {
+    //
+    tokenGuard: (req, res) => {
+        let tokenId = req.userId;
+        let guardId = req.user._id;
 
+        if(!tokenId) {
+            res.statusMessage = "Invalid Request";
+            res.status(400).send("Token is missing");
+        }
+
+        if(!guardId) {
+            res.statusMessage = "Invalid Request";
+            res.status(400).send("User id is missing");
+        }
+
+        if(tokenId != guardId) {
+            console.log("no");
+            res.statusMessage = "Forbidden";
+            res.status(403).send("Forbidden");
+        }
+        else {
+            res.status(200).send({message:"ok"});
+        }
     }
 }

@@ -1,7 +1,13 @@
 <div class="container">
   <div class="row mt-5">
     <div class="col">
-      <h2 class="d-inline">{{ post.title }}</h2>
+      <h2 style="text-align:center;">{{ post.title }}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <span>{{postUser.name}}</span>
+
       <span class="float-right">Created - {{ post.created | date: 'short'}}</span>
       <!-- TODO: date파이프 만들어서 더 이해하기 쉽게 만들기 -->
     </div>

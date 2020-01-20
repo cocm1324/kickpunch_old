@@ -13,6 +13,7 @@ export class DataService {
 
   constructor(private _http: HttpClient) { }
 
+  // get a user object by username('example1'@gmail.com; 'example1' is username)
   getUserData(userName: string): Observable<any> {
     return this._http.get<any>(this._apiUrl + 'user/' + userName);
   }

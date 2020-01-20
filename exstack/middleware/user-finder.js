@@ -3,7 +3,7 @@ const User = require('../user/user.model');
 //this middleware is to get ObjectId of param.userId
 
 module.exports = {
-    findUserId: (req, res, next) => {
+    findUser: (req, res, next) => {
         let userName;
 
         if(req.params.userId){
@@ -28,7 +28,7 @@ module.exports = {
                     return res.status(404).send('Not Found');
                 }
                 else {
-                    req.userId = user._id;
+                    req.user = user;
                 }
             }
             next();

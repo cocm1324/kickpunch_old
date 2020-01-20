@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
     this._auth.registerUser(this.registerUserData).subscribe(
       res => {
         localStorage.setItem('token', res.token);
-        localStorage.setItem('current_user', JSON.stringify(res.user));
+        this._auth.updateCurrentUser(res.user);
         this._router.navigate([localStorage.getItem('callback')]);
         localStorage.removeItem('callback');
         // TODO: 사용법 모달창 띄우기
