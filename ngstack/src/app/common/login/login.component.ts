@@ -9,7 +9,7 @@ import { ToastrService } from 'src/app/service/toastr.service';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-  loginUserData = {};
+  loginUserData = {email:"", password:""};
   currentUser = {};
 
   constructor(private _auth: AuthService, private _router: Router, private _toastr: ToastrService) { }

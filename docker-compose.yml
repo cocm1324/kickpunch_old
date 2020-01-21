@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  angular-nginx:
+    build: ngstack
+    ports:
+      - "80:80"
+  
+  express:
+    build: exstack
+    ports:
+      - "3000:3000"

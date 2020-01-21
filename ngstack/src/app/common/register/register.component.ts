@@ -9,7 +9,7 @@ import { ToastrService } from 'src/app/service/toastr.service';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  registerUserData = {};
+  registerUserData = {email: "", name: "", password: ""};
   currentUser = {};
 
   constructor(private _auth: AuthService, private _router: Router, private _toastr: ToastrService) { }
