@@ -1,0 +1,31 @@
+.title-container {
+    margin-top: 30px;
+}
+
+.editor-container {
+    margin-bottom: 30px;
+    background-color: #e7e7e7;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 0.25rem;
+
+    .cheat-collapse {
+        margin: 15px 0;
+
+        .cheatsheet-content {
+            border: 1px solid #ced4da;
+            background-color: #ddd;
+        }
+    }
+}
+
+.priview-container {
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+img {
+    max-width: 100%;
+}

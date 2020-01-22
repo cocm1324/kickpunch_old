@@ -24,7 +24,6 @@ module.exports = {
     },
 
     getUser: (req, res) => {
-        // TODO: Im not sure about this destructuring method, improve it
         let userId = req.user._id;
 
         User.findById(userId, (error, user) => {
@@ -37,11 +36,19 @@ module.exports = {
                 // user의 데이터에서 password 해시 값 제외하고 보냄
                 else {
                     // TODO: find better way to send this
-                    res.status(200).send({ user: {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email
-                    }});
+                    if(!user.user_name) {
+                        user.user_name = user.email.split('@')[0];
+                        // TODO: save user_name to DB
+                    }
+
+                    res.status(200).send({ 
+                        user: {
+                            _id: user._id,
+                            name: user.name,
+                            email: user.email,
+                            user_name: user.user_name
+                        }
+                    });
                 }
             }
         });
@@ -56,12 +63,17 @@ module.exports = {
             res.status(401).send('Invalid Request');
         }
 
+        // idk this is not a bad practice, 
+        let user_name = req.body.email.split('@')[0];
+
+        userData.user_name = user_name;
+        userData.created = new Date(); // marking created date
         userData.password = hash(userData.password) // password hashing
         let user = new User(userData);
         
         // befor register, check user email already exist in db
         // for here, user name must be unique(ex=> a@a.com, a@b.com => not allowed)
-        User.findOne({ email: {$regex : "^" + userData.email.split("@")[0] + "@"}}, (error, duplicateUser) => {
+        User.findOne({ email: {$regex : "^" + userData.user_name + "@"}}, (error, duplicateUser) => {
             if (error) console.log(error);
             else {
                 // if user exist, send email already exits
@@ -78,11 +90,17 @@ module.exports = {
                         else  {
                             let payload = { subject: registeredUser._id };
                             let token = jwt.sign(payload);
-                            res.status(200).send({token: token, user: {
-                                _id: registeredUser._id,
-                                name: registeredUser.name,
-                                email: registeredUser.email
-                            }});
+                            registeredUser.password == null;
+
+                            if(!registeredUser.user_name) {
+                                registeredUser.user_name = user.email.split('@')[0];
+                                // TODO: save user_name to DB
+                            }
+
+                            res.status(200).send({
+                                token: token, 
+                                user: registeredUser
+                            });
                         }
                     });         
                 }
@@ -102,11 +120,17 @@ module.exports = {
                 else {
                     let payload = { subject: user._id }
                     let token = jwt.sign(payload);
-                    res.status(200).send({token: token, user: {
-                        _id: user._id,
-                        name: user.name,
-                        email: user.email
-                    }});
+                    user.password = null;
+
+                    if(!user.user_name) {
+                        user.user_name = user.email.split('@')[0];
+                        // TODO: save user_name to DB
+                    }
+
+                    res.status(200).send({
+                        token: token, 
+                        user: user
+                    });
                 }
             }
         });
@@ -128,7 +152,6 @@ module.exports = {
         }
 
         if(tokenId != guardId) {
-            console.log("no");
             res.statusMessage = "Forbidden";
             res.status(403).send("Forbidden");
         }

@@ -3,7 +3,7 @@
     <div class="col">
       <h3 class="mt-4 mb-3">프로필 관리</h3>
       <div class="jumbotron">
-        <h1 class="display-3">여기에는 유저 프로필 편집</h1>
+        <h1 class="display-3">blog manage</h1>
         <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
         <hr class="my-4">
         <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
@@ -35,7 +35,7 @@
             <td>{{ post.priority }}</td>
             <td>
               <a (click)="goToPost(post._id)" class="pr-3" style="cursor: pointer;"><i class="far fa-eye"></i></a>
-              <a class="pr-3" style="cursor: pointer;"><i class="far fa-edit"></i></a>
+              <a (click)="goToEdit(post._id)" class="pr-3" style="cursor: pointer;"><i class="far fa-edit"></i></a>
               <a style="cursor: pointer;"><i class="far fa-trash-alt"></i></a>
             </td>
           </tr>

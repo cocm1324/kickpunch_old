@@ -18,7 +18,7 @@ export class AuthService {
    * user data(except secret) is saved in localstorage.
    * this is to handle the user data
    */
-  private currentUserSource = new BehaviorSubject<Data>({_id:null, name:null, email:null});
+  private currentUserSource = new BehaviorSubject<Data>({_id:null, name:null, email:null, user_name:null});
   get currentUser() {
     return this.currentUserSource.asObservable()
   }
@@ -58,9 +58,7 @@ export class AuthService {
   logoutUser() {
     localStorage.removeItem('token');
     localStorage.removeItem('current_user');
-    this.currentUserSource.next({_id:null, name:null, email:null});
-    this._router.navigate([localStorage.getItem('callback')]);
-    localStorage.removeItem('callback');
+    this.currentUserSource.next({_id:null, name:null, email:null, user_name:null});
   }
 
 }
@@ -69,4 +67,5 @@ class Data {
   _id: string;
   name: string;
   email: string;
+  user_name: string;
 }

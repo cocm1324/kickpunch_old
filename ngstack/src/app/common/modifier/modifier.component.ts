@@ -8,11 +8,11 @@ import { DataService } from 'src/app/service/data.service';
 
 
 @Component({
-  selector: 'app-editor',
-  templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.scss']
+  selector: 'app-modifier',
+  templateUrl: './modifier.component.html',
+  styleUrls: ['./modifier.component.scss']
 })
-export class EditorComponent implements OnInit {
+export class ModifierComponent implements OnInit {
 
   current_user;
   current_post;
@@ -39,6 +39,7 @@ export class EditorComponent implements OnInit {
   getCurrentUser() {
     this._auth.currentUser.subscribe(user => this.current_user = user);
   }
+
 
   save():void {
     this.post.user_id = this.current_user._id;
@@ -69,4 +70,5 @@ export class EditorComponent implements OnInit {
       }
     );
   }
+
 }

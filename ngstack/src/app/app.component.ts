@@ -41,9 +41,13 @@ export class AppComponent {
       alert: "alert-warning"
     }
     this._toastr.changeToastr(message);
-
+    
     localStorage.setItem('callback', this._router.url);
+    
     this._auth.logoutUser();
+
+    this._router.navigate([localStorage.getItem('callback')]);
+    localStorage.removeItem('callback');
   }
 
   getCurrentUser() {

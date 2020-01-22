@@ -4,14 +4,14 @@
       <div class="row d-block w-100">
         <nav class="navbar navbar-expand-lg">
           <a class="navbar-brand" [routerLink]="['/']">KickPunch</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-          </button>
+          </button> -->
         
-          <div class="collapse navbar-collapse" id="navbarColor01">
-            <form class="form-inline my-2 my-lg-0">
+          <!-- <div class="collapse navbar-collapse" id="navbarColor01"> -->
+            <!-- <form class="form-inline my-2 my-lg-0">
               <input class="form-control mr-sm-2" type="text" placeholder="Search">
-            </form>
+            </form> -->
             <!-- TODO: implement search for user/post -->
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
@@ -22,16 +22,16 @@
               </li> -->
               <li class="nav-item active dropdown" *ngIf="_auth.loggedIn()">
                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ currentUser.name }}</a>
-                <div class="dropdown-menu dropdown-menu-right" style="">
+                <div class="dropdown-menu dropdown-menu-right" style="position:absolute">
                   <a class="dropdown-item" [routerLink]="['/' + currentUser.email.split('@')[0]]">My Blog</a>
-                  <a class="dropdown-item" [routerLink]="['/' + currentUser.email.split('@')[0] + '/manager']">My Posts</a>
+                  <a class="dropdown-item" [routerLink]="['/' + currentUser.email.split('@')[0] + '/manager']">Manager</a>
                   <a class="dropdown-item" [routerLink]="['/' + currentUser.email.split('@')[0] + '/new']">Create a new one</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" style="cursor: pointer;" (click)="logout()" *ngIf="_auth.loggedIn()" routerLinkActive="router-link-active" style="color: crimson; cursor: pointer;">Sign out</a>
                 </div>
               </li>
             </ul>
-          </div>
+          <!-- </div> -->
         </nav>
       </div>
     </div>
@@ -42,9 +42,9 @@
 </div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light p-0 footer">
   <div class="container">
-    <div class="row">
+    <div class="row d-block w-100">
       <div class="col">
-        <div class="float-right">See the code of this site from here: <a href="https://github.com/cocm1324/kickpunch"><i (click)="goToRepo()" class="fab fa-github fa-lg" style="cursor: pointer;"></i></a></div>
+        <div class="float-right">See the code from here <a href="https://github.com/cocm1324/kickpunch"><i (click)="goToRepo()" class="fab fa-github fa-lg" style="cursor: pointer;"></i></a></div>
       </div>
     </div>
   </div>

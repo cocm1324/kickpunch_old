@@ -60,12 +60,42 @@ module.exports = {
         });
     },
 
+    updatePostById: (req, res) => {
+        let postData = req.body;
+        let userId = req.userId;
+
+        let update = {
+            title: postData.title,
+            contents: postData.contents,
+            exposed: postData.exposed,
+            priority: postData.priority,
+            updated: new Date()
+        }
+
+        // TODO: check if user is owner of this post
+
+        Post.findByIdAndUpdate(postId, update, (error, post) => {
+            if(error) {
+                console.log(error);
+            }
+            else {
+                if(!post) {
+                    res.statusMessage = 'Not Found'
+                    res.status(404).send('Not Found');
+                }
+                else {
+                    res.status(200).send({post: post});
+                }
+            }
+        });
+    },
+
     newPost: (req, res) => {
         let postData = req.body;
-        let userData = req.userId;
+        let userId = req.userId;
 
         // check if this article.userid, and token is matching
-        if(userData.trim() != postData.user_id.trim()) {
+        if(userId.trim() != postData.user_id.trim()) {
             res.statusMessage = 'Unauthorized';
             res.status(401).send('Unauthorized');
         }

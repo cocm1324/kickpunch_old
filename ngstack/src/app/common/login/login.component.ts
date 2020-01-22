@@ -24,15 +24,20 @@ export class LoginComponent implements OnInit {
       res => {
         localStorage.setItem('token', res.token);
         this._auth.updateCurrentUser(res.user);
-        this._router.navigate([localStorage.getItem('callback')]);
-        localStorage.removeItem('callback');
-
-        let message = {
+        
+        if(localStorage.getItem('callback')){
+          this._router.navigate([localStorage.getItem('callback')]);
+          localStorage.removeItem('callback');
+        }
+        else{
+          this._router.navigate([`/${res.user.user_name}`]);
+        }
+        
+        this._toastr.changeToastr({
           header: `Hello ${res.user.name}`,
           body: "Welcome back ^^7",
           alert: "alert-success"
-        }
-        this._toastr.changeToastr(message);
+        });
       },
       err => {
         if(err.status == 500){

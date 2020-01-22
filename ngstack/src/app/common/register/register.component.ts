@@ -24,46 +24,48 @@ export class RegisterComponent implements OnInit {
       res => {
         localStorage.setItem('token', res.token);
         this._auth.updateCurrentUser(res.user);
-        this._router.navigate([localStorage.getItem('callback')]);
-        localStorage.removeItem('callback');
 
-        let message = {
+        if(localStorage.getItem('callback')){
+          this._router.navigate([localStorage.getItem('callback')]);
+          localStorage.removeItem('callback');
+        }
+        else {
+          this._router.navigate([`/${res.user.user_name}`]);
+        }
+
+        this._toastr.changeToastr({
           header: `Welcome to KickPunch!`,
           body: "Do post, and get a better tommorrow",
           alert: "alert-success"
-        }
-        this._toastr.changeToastr(message);
+        });
 
         // TODO: 사용법 모달창 띄우기
       },
       err => {
         if(err.status === 500) {
-          let message = {
+          this._toastr.changeToastr({
             header: `Ooopse, please try again later`,
             body: "Something went wrong back there",
             alert: "alert-danger"
-          }
-          this._toastr.changeToastr(message);
+          });
         }
         else if(err.status === 401){
-          let message = {
+          this._toastr.changeToastr({
             header: `User name already exists`,
             body: "Please try another email",
             alert: "alert-danger"
-          }
-          this._toastr.changeToastr(message);
+          });
         }
         else {
-          let message = {
+          this._toastr.changeToastr({
             header: err.status + err.statusText,
             body: err.error,
             alert: "alert-danger"
-          }
-          this._toastr.changeToastr(message);
+          });
         }
       }
     )
   }
 
-  // TODO: oauth 연결하기
+  // TODO: oauth는 어케함;;;
 }
