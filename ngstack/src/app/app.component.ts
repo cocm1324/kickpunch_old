@@ -34,20 +34,23 @@ export class AppComponent {
     this._router.navigate(['/login']);
   }
 
-  logout() {
-    let message = {
-      header: `Goodbye`,
-      body: "You are now signed out. Do come again ^^7",
-      alert: "alert-warning"
-    }
-    this._toastr.changeToastr(message);
-    
+  logout() {    
     localStorage.setItem('callback', this._router.url);
     
     this._auth.logoutUser();
 
     this._router.navigate([localStorage.getItem('callback')]);
     localStorage.removeItem('callback');
+
+    // because logout doesn't activate guard, after logout current route keep displays 
+    // even if the route is guarded.
+    location.reload();
+
+    this._toastr.changeToastr({
+      header: `Goodbye`,
+      body: "You are now signed out. Do come again ^^7",
+      alert: "alert-warning"
+    });
   }
 
   getCurrentUser() {

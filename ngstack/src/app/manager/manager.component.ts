@@ -22,7 +22,6 @@ export class ManagerComponent implements OnInit {
     this.getCurrentUser();
     this.getRouteParam();
     this.getPostData();
-    
   }
 
   getCurrentUser(){
