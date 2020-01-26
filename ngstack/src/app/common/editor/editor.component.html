@@ -45,8 +45,7 @@
           </div>
           <div class="form-group">
             <hr>
-            <button *ngIf="!isEdit" type="button" class="btn btn-primary float-right" (click)="save()" [disabled]="postForm.invalid">작성하기</button>
-            <button *ngIf="isEdit" type="button" class="btn btn-success float-right" (click)="edit()" [disabled]="postForm.invalid">수정하기</button>
+            <button type="button" class="btn btn-primary float-right" (click)="save()" [disabled]="postForm.invalid">작성하기</button>
           </div>
         </fieldset>
       </form>

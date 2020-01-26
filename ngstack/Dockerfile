@@ -3,9 +3,10 @@ WORKDIR /app
 COPY package.json /app
 RUN npm install
 COPY . /app
-RUN npm run build
+RUN npm run build --prod
 
 FROM nginx:1.16.0-alpine as prod-stage
 COPY --from=build-step /app/dist/ngstack /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

@@ -3,6 +3,7 @@ import { AuthService } from './service/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrMessage } from './service/toastr.service';
 import { ToastrComponent } from './common/toastr/toastr.component';
+import { User } from 'src/assets/user';
 
 @Component({
   selector: 'app-root',
@@ -53,6 +54,10 @@ export class AppComponent {
     });
   }
 
+  isLoggedIn() {
+    return this._auth.loggedIn();
+  }
+
   getCurrentUser() {
     this._auth.currentUser.subscribe(
       user => {
@@ -67,5 +72,9 @@ export class AppComponent {
         }
       }
     );
+  }
+
+  goToRepo() {
+    window.location.href = "https://github.com/cocm1324";
   }
 }

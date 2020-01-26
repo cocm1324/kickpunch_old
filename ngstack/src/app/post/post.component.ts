@@ -10,8 +10,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class PostComponent implements OnInit {
 
   cur_route;
-  post = {};
-  postUser = {};
+  post = {title: null, name: null, created: null, contents: null};
+  postUser = {name: null};
 
   constructor(private _data: DataService, private _router: Router, private _route: ActivatedRoute) { }
 
