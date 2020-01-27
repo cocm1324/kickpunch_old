@@ -1,12 +1,12 @@
 version: '3'
 
 services:
-  angular-nginx:
+  web_server:
     build: ngstack
     ports:
       - "80:80"
   
-  express:
+  api_server:
     build: exstack
     ports:
       - "3000:3000"
