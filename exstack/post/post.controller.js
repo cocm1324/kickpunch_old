@@ -61,8 +61,14 @@ module.exports = {
     },
 
     updatePostById: (req, res) => {
+        let postId = req.body._id;
         let postData = req.body;
         let userId = req.userId;
+
+        if(!postId) {
+            res.statusMessage = "Invalid Request"
+            res.status(401).send("Invalid Request");
+        }
 
         let update = {
             title: postData.title,
@@ -72,19 +78,33 @@ module.exports = {
             updated: new Date()
         }
 
+<<<<<<< HEAD
         // TODO: check if user is owner of this post
 
         Post.findByIdAndUpdate(postData._id, update, (error, post) => {
+=======
+        Post.findByIdAndUpdate(postId, update, (error, post) => {
+            //it seems 'post' here returns old post
+
+            //checking if right user is requesting its' own post
+            if(post.user_id != userId){
+                res.statusMessage = 'Unauthorized';
+                res.status(403).send('Unauthorized');
+                return;
+            }
+
+            
+>>>>>>> ae45b1400b2fd36d1084dcebd814e97b584fb0f5
             if(error) {
                 console.log(error);
             }
             else {
                 if(!post) {
-                    res.statusMessage = 'Not Found'
+                    res.statusMessage = 'Not Found';
                     res.status(404).send('Not Found');
                 }
                 else {
-                    res.status(200).send({post: post});
+                    res.status(200).send("Success");
                 }
             }
         });

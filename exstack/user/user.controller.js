@@ -69,6 +69,8 @@ module.exports = {
         userData.user_name = user_name;
         userData.created = new Date(); // marking created date
         userData.password = hash(userData.password) // password hashing
+        userData.title = user_name + "'s blog";
+        userData.description = "update here to show who you are";
         let user = new User(userData);
         
         // befor register, check user email already exist in db

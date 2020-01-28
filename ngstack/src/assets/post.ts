@@ -1,6 +1,6 @@
 export class Post {
     // backend에서 설정되는 항목
-    id: Number;
+    _id: String;
     user_id: Number;
     created_at: Date;
     updated_at: Date;

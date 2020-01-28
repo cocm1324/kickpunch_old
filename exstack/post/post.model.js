@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+// configuring mongoose option
+mongoose.set('useFindAndModify', false);
+
 const Schema = mongoose.Schema;
 const postSchema = new Schema({
     user_id: {

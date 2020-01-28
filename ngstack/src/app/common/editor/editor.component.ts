@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Post } from 'src/assets/post';
 import { AuthService } from 'src/app/service/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -14,11 +14,14 @@ import { DataService } from 'src/app/service/data.service';
 })
 export class EditorComponent implements OnInit {
 
-  current_user;
-  current_post;
-  
-  postForm;
+  postForm: FormGroup;
   post: Post = new Post();
+
+  current_user;
+  current_post = {
+    title: null,
+    contents: null
+  };
 
   @ViewChild('exposed') exposed: ElementRef;
   @ViewChild('priority') priority: ElementRef;
@@ -30,9 +33,9 @@ export class EditorComponent implements OnInit {
   ngOnInit() {
     this.postForm = this._fb.group({
       title: ['', Validators.required],
-      contents: ['', Validators.required],
+      contents: ['', Validators.required]
     });
-
+    
     this.getCurrentUser();
   }
 
@@ -40,33 +43,34 @@ export class EditorComponent implements OnInit {
     this._auth.currentUser.subscribe(user => this.current_user = user);
   }
 
-  save():void {
-    this.post.user_id = this.current_user._id;
-    this.post.title = this.postForm.get('title').value;
-    this.post.contents = this.postForm.get('contents').value;
-    this.post.exposed = this.exposed.nativeElement.checked;
-    this.post.priority = this.priority.nativeElement.value;
+  save(): void {
+    console.log(this.postForm.getRawValue());
+    // this.post.user_id = this.current_user._id;
+    // this.post.title = this.postForm.get('title').value;
+    // this.post.contents = this.postForm.get('contents').value;
+    // this.post.exposed = this.exposed.nativeElement.checked;
+    // this.post.priority = this.priority.nativeElement.value;
 
-    this._auth.newPost(this.post).subscribe(
-      res => {
-        let url = '/' + this.current_user.user_name + "/manager";
-        this._router.navigate([url]);
+    // this._auth.newPost(this.post).subscribe(
+    //   res => {
+    //     let url = '/' + this.current_user.user_name + "/manager";
+    //     this._router.navigate([url]);
 
-        let message = {
-          header: `Post created successfully`,
-          body: "Do post more, would ya?",
-          alert: "alert-success"
-        }
-        this._toastr.changeToastr(message);
-      },
-      err => {
-        let message = {
-          header: `Ooopse, please try again later`,
-          body: "Something went wrong back there",
-          alert: "alert-danger"
-        }
-        this._toastr.changeToastr(message);
-      }
-    );
+    //     let message = {
+    //       header: `Post created successfully`,
+    //       body: "Do post more, would ya?",
+    //       alert: "alert-success"
+    //     }
+    //     this._toastr.changeToastr(message);
+    //   },
+    //   err => {
+    //     let message = {
+    //       header: `Ooopse, please try again later`,
+    //       body: "Something went wrong back there",
+    //       alert: "alert-danger"
+    //     }
+    //     this._toastr.changeToastr(message);
+    //   }
+    // );
   }
 }

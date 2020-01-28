@@ -28,7 +28,7 @@ import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
 import { AuthGuard } from './auth.guard';
 import { TokenInterceptorService } from './service/token-interceptor.service';
 import { ToastrComponent } from './common/toastr/toastr.component';
-import { ModifierComponent } from './common/modifier/modifier.component';
+import { UpdatorComponent } from './common/updator/updator.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,7 @@ import { ModifierComponent } from './common/modifier/modifier.component';
     RegisterComponent,
     ManagerComponent,
     ToastrComponent,
-    ModifierComponent
+    UpdatorComponent
   ],
   imports: [
     BrowserModule,

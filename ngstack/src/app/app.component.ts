@@ -3,6 +3,7 @@ import { AuthService } from './service/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrMessage } from './service/toastr.service';
 import { ToastrComponent } from './common/toastr/toastr.component';
+import { User } from 'src/assets/user';
 
 @Component({
   selector: 'app-root',
@@ -34,20 +35,27 @@ export class AppComponent {
     this._router.navigate(['/login']);
   }
 
-  logout() {
-    let message = {
-      header: `Goodbye`,
-      body: "You are now signed out. Do come again ^^7",
-      alert: "alert-warning"
-    }
-    this._toastr.changeToastr(message);
-    
+  logout() {    
     localStorage.setItem('callback', this._router.url);
     
     this._auth.logoutUser();
 
     this._router.navigate([localStorage.getItem('callback')]);
     localStorage.removeItem('callback');
+
+    // because logout doesn't activate guard, after logout current route keep displays 
+    // even if the route is guarded.
+    location.reload();
+
+    this._toastr.changeToastr({
+      header: `Goodbye`,
+      body: "You are now signed out. Do come again ^^7",
+      alert: "alert-warning"
+    });
+  }
+
+  isLoggedIn() {
+    return this._auth.loggedIn();
   }
 
   getCurrentUser() {
@@ -64,5 +72,9 @@ export class AppComponent {
         }
       }
     );
+  }
+
+  goToRepo() {
+    window.location.href = "https://github.com/cocm1324";
   }
 }

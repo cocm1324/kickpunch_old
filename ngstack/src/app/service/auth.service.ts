@@ -34,8 +34,13 @@ export class AuthService {
     return this._http.post<any>(this._loginUrl, user);
   }
 
+  // these two are here because this http request needs 'Authentication field injected to body'
   newPost(post): Observable<any> {
     return this._http.post<any>(this._newPostUrl, post);
+  }
+
+  updatePost(post): Observable<any> {
+    return this._http.put<any>(this._newPostUrl + "/" +post._id, post);
   }
 
   // 지금의 토큰과 파라미터의 유저네임이 같은지 확인하는 api
