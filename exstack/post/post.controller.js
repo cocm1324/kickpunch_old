@@ -74,7 +74,7 @@ module.exports = {
 
         // TODO: check if user is owner of this post
 
-        Post.findByIdAndUpdate(postId, update, (error, post) => {
+        Post.findByIdAndUpdate(postData._id, update, (error, post) => {
             if(error) {
                 console.log(error);
             }

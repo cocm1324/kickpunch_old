@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import * as global from '../../.global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private _loginUrl = "http://localhost:3000/api/login";
-  private _registerUrl = "http://localhost:3000/api/register";
-  private _newPostUrl = "http://localhost:3000/api/post"
-  private _tokenGuardUrl = "http://localhost:3000/api/tokenguard"
+  private _loginUrl = `http://${global.api_server.addr}:${global.api_server.port}/api/login`;
+  private _registerUrl = `http://${global.api_server.addr}:${global.api_server.port}/api/register`;
+  private _newPostUrl = `http://${global.api_server.addr}:${global.api_server.port}/api/post`;
+  private _tokenGuardUrl = `http://${global.api_server.addr}:${global.api_server.port}/api/tokenguard`;
 
   // current user data
   /**

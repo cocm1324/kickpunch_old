@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import * as global from '../../.global';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-  private _userUrl = "http://localhost:3000/api/user/"
-  private _postUrl = "http://localhost:3000/api/posts/";
-
-  private _apiUrl = "http://localhost:3000/api/";
+  private _apiUrl = `http://${global.api_server.addr}:${global.api_server.port}/api/`;
 
   constructor(private _http: HttpClient) { }
 
