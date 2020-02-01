@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../service/data.service';
+import { DataService } from '../../../service/data/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../../../service/auth/auth.service';
+
+import { ICurrentRoute, ICurrentUser } from '../../../models';
 
 @Component({
   selector: 'app-manager',
@@ -12,8 +14,8 @@ import { AuthService } from '../service/auth.service';
 export class ManagerComponent implements OnInit {
   //note that currentlt logged in user and component's owner user can be different
 
-  current_user;
-  current_route;
+  current_user: ICurrentUser;
+  current_route: ICurrentRoute;
   posts = [];
 
   constructor(private _data: DataService, private _router: Router, private _route: ActivatedRoute, private _auth: AuthService) { }
@@ -31,7 +33,7 @@ export class ManagerComponent implements OnInit {
   }
 
   getPostData() {
-    this._data.getAllPostsByUserName(this.current_user).subscribe(
+    this._data.getAllPostsByUserName(this.current_user.name).subscribe(
       res => this.posts = res.posts,
       err => {
         if(err instanceof HttpErrorResponse) {

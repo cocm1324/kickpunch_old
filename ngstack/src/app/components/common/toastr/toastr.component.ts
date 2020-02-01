@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'src/app/service/toastr.service';
+import { ToastrService } from 'src/app/components/common/toastr/toastr.service';
 import { distinctUntilChanged, skip } from 'rxjs/operators';
 
 @Component({
@@ -10,7 +10,6 @@ import { distinctUntilChanged, skip } from 'rxjs/operators';
 export class ToastrComponent implements OnInit {
 
   messages = [];
-  // visibility = "hidden";  
   visibility = "visible";  
 
   constructor(private _toastr:ToastrService) { }
@@ -23,12 +22,12 @@ export class ToastrComponent implements OnInit {
     this._toastr.toastr$.pipe(
       distinctUntilChanged((prev, curr) => prev.timestamp === curr.timestamp),
       skip(1)
-    ).subscribe(message => {
-      this.messages.push(message);
-      // this.visibility = "visible";
-      this.timeoutPop(3000);
-      // this.timeoutHide(3000);
-    });
+    ).subscribe(
+      message => {
+        this.messages.push(message);
+        this.timeoutPop(3000);
+      }
+    );
   }
 
   timeoutPop(time: number) {

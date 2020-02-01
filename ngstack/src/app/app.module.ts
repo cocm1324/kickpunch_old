@@ -7,28 +7,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { NgxMdModule } from 'ngx-md';
 
-
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { PostComponent } from './post/post.component';
-import { NotfoundComponent } from './common/notfound/notfound.component';
-import { LoginComponent } from './common/login/login.component';
-import { EditorComponent } from './common/editor/editor.component';
-import { NgxMdModule } from './common/ngxmd/ngx-md.module';
+import { DashboardComponent } from './components/kickpunch/dashboard/dashboard.component';
+import { PostComponent } from './components/kickpunch/post/post.component';
+import { NotfoundComponent } from './components/kickpunch/notfound/notfound.component';
+import { LoginComponent } from './components/kickpunch/login/login.component';
+import { EditorComponent } from './components/kickpunch/editor/editor.component';
+import { NgxMdModule } from './components/common/ngxmd/ngx-md.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LandingComponent } from './landing/landing.component';
-import { RegisterComponent } from './common/register/register.component';
-import { AuthService } from './service/auth.service';
-import { DataService } from './service/data.service';
-import { ManagerComponent } from './manager/manager.component';
+import { LandingComponent } from './components/kickpunch/landing/landing.component';
+import { RegisterComponent } from './components/kickpunch/register/register.component';
+import { AuthService } from './service/auth/auth.service';
+import { DataService } from './service/data/data.service';
+import { ManagerComponent } from './components/kickpunch/manager/manager.component';
 
 // 폼에서 한글 마지막 글자 바인딩 안되는거 해결해주는 모듈
 import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guard/auth.guard';
 import { TokenInterceptorService } from './service/token-interceptor.service';
-import { ToastrComponent } from './common/toastr/toastr.component';
-import { UpdatorComponent } from './common/updator/updator.component';
+import { ToastrComponent } from './components/common/toastr/toastr.component';
+import { UpdatorComponent } from './components/kickpunch/updator/updator.component';
 
 @NgModule({
   declarations: [

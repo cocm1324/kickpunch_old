@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Post } from 'src/assets/post';
-import { AuthService } from 'src/app/service/auth.service';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'src/app/service/toastr.service';
-import { DataService } from 'src/app/service/data.service';
+import { ToastrService } from 'src/app/components/common/toastr/toastr.service';
+import { DataService } from 'src/app/service/data/data.service';
 
 
 @Component({
@@ -45,32 +45,5 @@ export class EditorComponent implements OnInit {
 
   save(): void {
     console.log(this.postForm.getRawValue());
-    // this.post.user_id = this.current_user._id;
-    // this.post.title = this.postForm.get('title').value;
-    // this.post.contents = this.postForm.get('contents').value;
-    // this.post.exposed = this.exposed.nativeElement.checked;
-    // this.post.priority = this.priority.nativeElement.value;
-
-    // this._auth.newPost(this.post).subscribe(
-    //   res => {
-    //     let url = '/' + this.current_user.user_name + "/manager";
-    //     this._router.navigate([url]);
-
-    //     let message = {
-    //       header: `Post created successfully`,
-    //       body: "Do post more, would ya?",
-    //       alert: "alert-success"
-    //     }
-    //     this._toastr.changeToastr(message);
-    //   },
-    //   err => {
-    //     let message = {
-    //       header: `Ooopse, please try again later`,
-    //       body: "Something went wrong back there",
-    //       alert: "alert-danger"
-    //     }
-    //     this._toastr.changeToastr(message);
-    //   }
-    // );
   }
 }

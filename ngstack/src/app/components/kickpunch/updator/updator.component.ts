@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Post } from 'src/assets/post';
-import { AuthService } from 'src/app/service/auth.service';
+import { AuthService } from 'src/app/service/auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'src/app/service/toastr.service';
-import { DataService } from 'src/app/service/data.service';
+import { ToastrService } from 'src/app/components/common/toastr/toastr.service';
+import { DataService } from 'src/app/service/data/data.service';
+
+import { IPost, IPostUpdateReq } from '../../../models';
+import { ToastrType } from '../../../enums/toastr.enum';
 
 
 @Component({
@@ -15,7 +17,7 @@ import { DataService } from 'src/app/service/data.service';
 export class UpdatorComponent implements OnInit {
 
   current_user;
-  current_post;
+  current_post: IPost;
   
   postForm: FormGroup;
 
@@ -44,6 +46,9 @@ export class UpdatorComponent implements OnInit {
     this._route.params.subscribe(params => {
       this._data.getPostById(params.post_id).subscribe(
         //load post contents to form
+        err => {
+          this._toastr.changeToastr(ToastrType.UPDATE_POST_FAIL);
+        },
         res => {
           this.current_post = res.post;
           this.current_post._id = params.post_id;
@@ -55,21 +60,13 @@ export class UpdatorComponent implements OnInit {
 
           this.exposed.nativeElement.checked = this.current_post.exposed;
           this.priority.nativeElement.value = this.current_post.priority;
-        },
-        err => {
-          this._toastr.changeToastr({
-            header: `Ooopse, please try again later`,
-            body: "Something went wrong back there",
-            alert: "alert-danger"
-          });
-          console.log(err);
         }
       )
     })
   }
 
   update() {
-    let post = {
+    let post: IPostUpdateReq = {
         _id: this.current_post._id,
         title: this.postForm.get('title').value,
         contents: this.postForm.get('contents').value,
@@ -79,22 +76,13 @@ export class UpdatorComponent implements OnInit {
 
     this._auth.updatePost(post).subscribe(
       err => {
-        this._toastr.changeToastr({
-          header: `Ooopse, please try again later`,
-          body: "Something went wrong back there",
-          alert: "alert-danger"
-        });
+        this._toastr.changeToastr(ToastrType.UPDATE_POST_FAIL);
       },
       res => {
-        // TODO: change this to route to updated post
         let url = '/' + this.current_user.user_name + "/post/" + this.current_post._id;
         this._router.navigate([url]);
 
-        this._toastr.changeToastr({
-          header: `Post updated successfully`,
-          body: "Do post more, would ya?",
-          alert: "alert-success"
-        });
+        this._toastr.changeToastr(ToastrType.UPDATE_POST_SUCCESS);
       }
     );
   }

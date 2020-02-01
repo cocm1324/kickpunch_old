@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../service/data.service';
+import { DataService } from '../../../service/data/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ICurrentRoute } from "../../../models"
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +12,7 @@ export class DashboardComponent implements OnInit {
 
   //check if
 
-  cur_route: string;
+  cur_route: ICurrentRoute;
   posts = [];
   user = {};
 
@@ -27,12 +26,12 @@ export class DashboardComponent implements OnInit {
 
   getRouteParam() {
     this._route.params.subscribe(params => {
-      this.cur_route = params.user;
+      this.cur_route.userName = params.user;
     });
   }
 
   getUserData() {
-    this._dataService.getUserData(this.cur_route).subscribe(
+    this._dataService.getUserData(this.cur_route.userName).subscribe(
       res => this.user = res.user,
       err => {
         this._router.navigateByUrl('/notfound')
@@ -41,7 +40,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getPostData() {
-    this._dataService.getExposedPostsByUserName(this.cur_route).subscribe(
+    this._dataService.getExposedPostsByUserName(this.cur_route.userName).subscribe(
       res => {
         this.posts = res.posts;
       },
