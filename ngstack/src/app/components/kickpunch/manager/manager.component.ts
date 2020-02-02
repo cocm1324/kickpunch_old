@@ -4,65 +4,65 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../../service/auth/auth.service';
 
-import { ICurrentRoute, ICurrentUser } from '../../../models';
+import { ICurrentRoute, ICurrentUser, IPost } from '../../../models';
 
 @Component({
-  selector: 'app-manager',
-  templateUrl: './manager.component.html',
-  styleUrls: ['./manager.component.sass']
+	selector: 'app-manager',
+	templateUrl: './manager.component.html',
+	styleUrls: ['./manager.component.scss']
 })
 export class ManagerComponent implements OnInit {
-  //note that currentlt logged in user and component's owner user can be different
+	//note that currentlt logged in user and component's owner user can be different
 
-  current_user: ICurrentUser;
-  current_route: ICurrentRoute;
-  posts = [];
+	current_user: ICurrentUser = {};
+	current_route: ICurrentRoute = {};
+	posts: IPost[] = [];
 
-  constructor(private _data: DataService, private _router: Router, private _route: ActivatedRoute, private _auth: AuthService) { }
+	constructor(
+		private _data: DataService, private _router: Router, 
+		private _route: ActivatedRoute, private _auth: AuthService
+	) { }
 
-  ngOnInit() {
-    this.getCurrentUser();
-    this.getRouteParam();
-    this.getPostData();
-  }
+	ngOnInit() {
+		this.getCurrentUser();
+		this.getRouteParam();
+		this.getPostData();
+	}
 
-  getCurrentUser(){
-    this._auth.currentUser.subscribe(user => {
-      this.current_user = user;
-    });
-  }
+	getCurrentUser(){
+		this._auth.currentUser.subscribe(user => {
+			this.current_user = user;
+		});
+	}
 
-  getPostData() {
-    this._data.getAllPostsByUserName(this.current_user.name).subscribe(
-      res => this.posts = res.posts,
-      err => {
-        if(err instanceof HttpErrorResponse) {
-          if (err.status === 401) {
-            this._router.navigate(['/login']);
-          }
-        }
-      }
-    );
-  }
+	getRouteParam() {
+		this._route.params.subscribe(params => {
+			this.current_route.user_name = params.user_name;
+		});
+	}
 
-  getRouteParam() {
-    this._route.params.subscribe(params => {
-      this.current_route = params.user;
-    });
-  }
+	getPostData() {
+		this._data.getAllPostsByUserName(this.current_user.user_name).subscribe(
+		res => {
+			this.posts = res;
+		},
+		err => {
+			console.log(err);
+			if(err instanceof HttpErrorResponse) {
+				if (err.status === 401) {
+					this._router.navigate(['/login']);
+				}
+			}
+		}
+		);
+	}
 
-  //
-  goToPost(postId: string) {
-    let url = '/';
-    url = url + this.current_user.user_name + '/post/' + postId;
+	//
+	goToPost(postId: string) {
+		this._router.navigate(['/' + this.current_user.user_name + '/post/' + postId]);
+	}
 
-    this._router.navigate([url]);
-  }
-
-  goToEdit(postId: string) {
-    let url = '/';
-    url = url + this.current_user.user_name + '/post/' + postId + '/edit';
-
-    this._router.navigate([url]);
-  }
+	goToEdit(postId: string) {
+		this._router.navigate(['/' + this.current_user.user_name + '/post/' + postId + '/edit']);
+	}
 }

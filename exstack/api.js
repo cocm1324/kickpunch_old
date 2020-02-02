@@ -8,7 +8,7 @@ const Post = require('./post/post.controller');
 
 // importing middleware
 const jwt = require('./middleware/jwt-helper');
-const userId = require('./middleware/user-finder');
+const user_finder = require('./middleware/user-finder');
 
 // empty endpoint
 router.get('/', (req, res) => {
@@ -18,19 +18,19 @@ router.get('/', (req, res) => {
 // user register / login endpoints
 router.post('/register', User.register);
 router.post('/login', User.login);
-router.get('/tokenguard/:userId', userId.findUser, jwt.verifyToken, User.tokenGuard);
+router.get('/tokenguard/:user_name', user_finder.findUser, jwt.verifyToken, User.tokenGuard);
 
 // user endpoints
 router.get('/user', User.getAllUser);
 router.get('/user/currentUser', jwt.verifyToken, User.getUser);
-router.get('/user/:userId', userId.findUser, User.getUser);
+router.get('/user/:user_name', user_finder.findUser, User.getUser);
 
 // post endpoints
-router.get('/posts/:userId', userId.findUser, Post.getExposedPostByUser);
-router.get('/posts/:userId/all', jwt.verifyToken, Post.getAllPostByUser);
-router.get('/post/:postId', Post.getPostById);
-router.put('/post/:postId', jwt.verifyToken, Post.updatePostById);
-router.post('/post', jwt.verifyToken, Post.newPost);
-
+router.get('/posts/:user_name', user_finder.findUser, Post.getExposedPostByUser);
+router.get('/posts/:user_name/all', user_finder.findUser, jwt.verifyToken, Post.getAllPostByUser);
+router.post('/post', jwt.verifyToken, Post.createPost);
+router.get('/post/:post_id', Post.getPostById, User.getUserFromPost);
+router.put('/post/:post_id', jwt.verifyToken, Post.updatePostById);
+router.delete('/post/:post_id', jwt.verifyToken, Post.getPostById, Post.deletePostById);
 
 module.exports = router;

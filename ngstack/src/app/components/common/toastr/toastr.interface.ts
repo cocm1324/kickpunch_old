@@ -1,4 +1,4 @@
-import { ToastrAlertType } from '../enums/toastr.enum'
+import { ToastrAlertType } from '../../../enums/toastr.enum'
 
 export interface Toastr {
     header: string;

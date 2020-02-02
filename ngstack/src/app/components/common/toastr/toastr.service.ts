@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Toastr } from '../../../models/toastr.interface';
-import { ToastrAlertType } from '../../../enums/toastr.enum';
+import { Toastr } from './toastr.interface';
+import { ToastrType } from '../../../enums/toastr.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastrService {
   // Observable toastr source
-  private _toastrSource = new BehaviorSubject<Toastr>({header: "", body: "", alert: ToastrAlertType.LIGHT, timestamp: new Date()});
+  private _toastrSource = new BehaviorSubject<Toastr>(ToastrType.DEFAULT);
   // toastr stream
   toastr$ = this._toastrSource.asObservable();
 
   //service command
   changeToastr(message: Toastr) {
+    
     let toastrMessage: Toastr = {
       header: message.header,
       body: message.body,

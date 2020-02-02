@@ -12,8 +12,8 @@ import { of, Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
   constructor(private _auth: AuthService, private _router: Router, private _data: DataService) { }
 
-  canActivate(route:ActivatedRouteSnapshot, ): Observable<boolean> {
-    const user = route.params['user'];
+  canActivate(route:ActivatedRouteSnapshot): Observable<boolean> {
+    const user = route.params['user_name'];
     
     if(!user) {
       this._router.navigate(['/']);

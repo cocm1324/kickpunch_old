@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { ICurrentUser, IPostUpdateReq } from '../../models';
+import { ICurrentUser, IPostUpdateReq, IPostCreateReq, IPostCreateRes, IPostDeleteRes, IPostDeleteReq } from '../../models';
 import { EndpointType } from '../../enums/endpoint.enum';
 import { LocalstorageType } from '../../enums/localstorage.enum';
 import { environment } from 'src/environments/environment';
@@ -36,17 +36,21 @@ export class AuthService {
   }
 
   // these two are here because this http request needs 'Authentication field injected to body'
-  newPost(post): Observable<any> {
-    return this._http.post<any>(this._newPostUrl, post);
+  createPost(req_body: IPostCreateReq): Observable<IPostCreateRes> {
+    return this._http.post<IPostCreateReq>(this._newPostUrl, req_body);
   }
 
-  updatePost(post: IPostUpdateReq): Observable<any> {
-    return this._http.put<any>(this._newPostUrl + "/" +post._id, post);
+  updatePost(req_body: IPostUpdateReq): Observable<any> {
+    return this._http.put<any>(this._newPostUrl + '/' + req_body._id, req_body);
+  }
+
+  deletePost(req_body: IPostDeleteReq): Observable<IPostDeleteRes> {
+    return this._http.delete<any>(this._newPostUrl + '/' + req_body._id);
   }
 
   // 지금의 토큰과 파라미터의 유저네임이 같은지 확인하는 api
-  tokenGuard(userName): Observable<any> {
-    return this._http.get<any>(this._tokenGuardUrl + '/' +  userName);
+  tokenGuard(user_name): Observable<any> {
+    return this._http.get<any>(this._tokenGuardUrl + '/' +  user_name);
   }
 
   loggedIn() {
@@ -72,6 +76,6 @@ export class AuthService {
 
   //get set
   get currentUser(): Observable<ICurrentUser> {
-    return this.currentUserSource.asObservable()
+    return this.currentUserSource.asObservable();
   }
 }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'src/app/components/common/toastr/toastr.service';
 import { ToastrType, ToastrAlertType } from '../../../enums/toastr.enum';
 import { LocalstorageType } from '../../../enums/localstorage.enum';
-import { ICurrentUser, IResgisterUserReq } from '../../../models';
+import { ICurrentUser, IResgisterReq } from '../../../models';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +12,7 @@ import { ICurrentUser, IResgisterUserReq } from '../../../models';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-  registerUserData: IResgisterUserReq = {email: "", name: "", password: ""};
+  registerUserData: IResgisterReq = {email: "", name: "", password: ""};
   currentUser: ICurrentUser = {};
 
   constructor(private _auth: AuthService, private _router: Router, private _toastr: ToastrService) { }

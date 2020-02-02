@@ -1,7 +1,15 @@
 export {
-    ICurrentUser, ICurrentRoute,
-    ILoginReq,
-    IResgisterUserReq,
+    IUser,
+    ICurrentUser, 
+    
+    ICurrentRoute,
 
-    IPost, IPostUpdateReq
+    ILoginReq,
+    IResgisterReq,
+
+    IPost, 
+    IPostReq, IPostRes,
+    IPostCreateReq, IPostCreateRes,
+    IPostUpdateReq, IPostUpdateRes,
+    IPostDeleteReq, IPostDeleteRes
 } from './common.interface'

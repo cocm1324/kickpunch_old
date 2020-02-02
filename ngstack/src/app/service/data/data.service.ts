@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { EndpointType } from '../../enums/endpoint.enum';
 
-import { IPost } from '../../models';
+import { IUser, IPost, IPostReq, IPostRes } from '../../models';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -12,24 +12,25 @@ import { environment } from 'src/environments/environment';
 export class DataService {
   private _userUrl = `http://${environment.api_server.addr}:${environment.api_server.port}${EndpointType.USER}`;
   private _postUrl = `http://${environment.api_server.addr}:${environment.api_server.port}${EndpointType.POST}`;
+  private _postsUrl = `http://${environment.api_server.addr}:${environment.api_server.port}${EndpointType.POSTS}`;
 
   constructor(private _http: HttpClient) { }
 
   // get a user object by username('example1'@gmail.com; 'example1' is username)
-  getUserData(userName: string): Observable<any> {
-    return this._http.get<any>(this._userUrl + '/' + userName);
+  getUserData(user_name: string): Observable<IUser> {
+    return this._http.get<IUser>(this._userUrl + '/' + user_name);
   }
 
-  getExposedPostsByUserName(userName: string): Observable<any> {
-    return this._http.get<any>(this._postUrl + '/' + userName);
+  getExposedPostsByUserName(user_name: string): Observable<IPost[]> {
+    return this._http.get<IPost[]>(this._postsUrl + '/' + user_name);
   }
 
-  getAllPostsByUserName(userName: string): Observable<any> {
-    return this._http.get<any>(this._postUrl + '/' + userName + '/all');
+  getAllPostsByUserName(user_id: string): Observable<IPost[]> {
+    return this._http.get<IPost[]>(this._postsUrl + '/' + user_id + '/all');
   }
 
-  getPostById(postId: string): Observable<IPost> {
-    return this._http.get<IPost>(this._postUrl + '/' + postId);
+  getPost(req: IPostReq): Observable<IPostRes> {
+    return this._http.get<IPostRes>(this._postUrl + '/' + req._id);
   }
 
   createPost(userId: string, post): Observable<any> {

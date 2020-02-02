@@ -3,7 +3,7 @@
 # Kickpunch
 
 > blog service project, powered by [MongoDB](https://www.mongodb.com), [Express](https://expressjs.com/), [Angular](https://angular.io), and [Node.js](https://nodejs.org) (MEAN stack)
-
+> Please visit [the site](http://52.231.78.207/)
 > Under construction!!!
 
 ## Features
