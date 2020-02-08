@@ -30,13 +30,13 @@
         <tbody>
           <tr *ngFor="let post of posts">
             <th scope="row">{{ post.title }}</th>
-            <td>{{ post.contents }}</td>
+            <td>{{ post.contents | mdTextSummary: 140 }}</td>
             <td>{{ post.exposed }}</td>
             <td>{{ post.priority }}</td>
             <td>
-              <a (click)="goToPost(post._id)" class="pr-3" style="cursor: pointer;"><i class="far fa-eye"></i></a>
-              <a (click)="goToEdit(post._id)" class="pr-3" style="cursor: pointer;"><i class="far fa-edit"></i></a>
-              <a style="cursor: pointer;"><i class="far fa-trash-alt"></i></a>
+              <a (click)="goToPost(post._id)" class="pr-2 cursor-pointer"><i class="far fa-eye"></i></a>
+              <a (click)="goToEdit(post._id)" class="pr-2 cursor-pointer"><i class="far fa-edit"></i></a>
+              <a (click)="deletePost(post._id)" class="cursor-pointer"><i class="far fa-trash-alt"></i></a>
             </td>
           </tr>
           <tr *ngIf="!posts">

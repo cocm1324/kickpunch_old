@@ -27,7 +27,7 @@ router.get('/user/:user_name', user_finder.findUser, User.getUser);
 
 // post endpoints
 router.get('/posts/:user_name', user_finder.findUser, Post.getExposedPostByUser);
-router.get('/posts/:user_name/all', user_finder.findUser, jwt.verifyToken, Post.getAllPostByUser);
+router.get('/posts/:user_name/all', user_finder.findUser, Post.getAllPostByUser);
 router.post('/post', jwt.verifyToken, Post.createPost);
 router.get('/post/:post_id', Post.getPostById, User.getUserFromPost);
 router.put('/post/:post_id', jwt.verifyToken, Post.updatePostById);

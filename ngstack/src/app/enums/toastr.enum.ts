@@ -68,7 +68,18 @@ export const ToastrType: {[key: string]: Toastr}  = {
     },
 
 
-
+    CREATE_POST_SUCCESS: {
+        header:     'Post created successfully',
+        body:       "Do post more, would ya?",
+        alert:      ToastrAlertType.SUCCESS,
+        timestamp:  null
+    },
+    CREATE_POST_FAIL: {
+        header:     `Ooopse, please try again later`,
+        body:       "Something went wrong back there",
+        alert:      ToastrAlertType.DANGER,
+        timestamp:  null
+    },
     UPDATE_POST_SUCCESS: {
         header:     'Post updated successfully',
         body:       "Do post more, would ya?",
@@ -81,16 +92,16 @@ export const ToastrType: {[key: string]: Toastr}  = {
         alert:      ToastrAlertType.DANGER,
         timestamp:  null
     },
-    CREATE_POST_SUCCESS: {
-        header:     'Post created successfully',
-        body:       "Do post more, would ya?",
+    DELETE_POST_SUCCESS: {
+        header:     `Post deleted successfully`,
+        body:       "^^7",
         alert:      ToastrAlertType.SUCCESS,
         timestamp:  null
     },
-    CREATE_POST_FAIL: {
+    DELETE_POST_FAIL: {
         header:     `Ooopse, please try again later`,
         body:       "Something went wrong back there",
         alert:      ToastrAlertType.DANGER,
         timestamp:  null
-    }
+    },
 }

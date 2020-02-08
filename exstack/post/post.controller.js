@@ -23,15 +23,7 @@ module.exports = {
 
     // for manage perpose, return every posts
     getAllPostByUser: (req, res) => {
-        let user_id = req.userId;
         let user_data = req.user_data;
-
-        if(user_id != user_data._id){
-            res.statusMessage = 'Bad Request'
-            res.status(400).send('Bad Request');
-
-            return;
-        }
     
         Post.find({ user_id: user_data._id }, (error, posts) => {
             if(error) {

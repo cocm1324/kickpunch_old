@@ -27,6 +27,8 @@ import { AuthGuard } from './guard/auth.guard';
 import { TokenInterceptorService } from './service/token-interceptor.service';
 import { ToastrComponent } from './components/common/toastr/toastr.component';
 import { UpdatorComponent } from './components/kickpunch/updator/updator.component';
+import { MdTextSummaryPipe } from './pipes/md-text-summary.pipe';
+import { PipeModule } from './pipes/pipe.module';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { UpdatorComponent } from './components/kickpunch/updator/updator.compone
     NgbModule,
     NgxMdModule.forRoot(),
     RouterModule.forRoot([]),
-    HttpClientModule
+    HttpClientModule,
+    PipeModule
   ],
   providers: [
     AuthService,
@@ -64,7 +67,8 @@ import { UpdatorComponent } from './components/kickpunch/updator/updator.compone
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    }
+    },
+    MdTextSummaryPipe
   ],
   bootstrap: [AppComponent]
 })

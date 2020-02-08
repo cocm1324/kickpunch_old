@@ -4,7 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../../service/auth/auth.service';
 
-import { ICurrentRoute, ICurrentUser, IPost } from '../../../models';
+import { 
+	ICurrentRoute, 
+	ICurrentUser,
+	IPost
+} from '../../../models';
+import { ToastrService } from '../../common/toastr/toastr.service';
+import { ToastrType } from 'src/app/enums/toastr.enum';
 
 @Component({
 	selector: 'app-manager',
@@ -19,8 +25,11 @@ export class ManagerComponent implements OnInit {
 	posts: IPost[] = [];
 
 	constructor(
-		private _data: DataService, private _router: Router, 
-		private _route: ActivatedRoute, private _auth: AuthService
+		private _data: DataService,
+		private _router: Router, 
+		private _route: ActivatedRoute,
+		private _auth: AuthService,
+		private _toastr: ToastrService
 	) { }
 
 	ngOnInit() {
@@ -64,5 +73,23 @@ export class ManagerComponent implements OnInit {
 
 	goToEdit(postId: string) {
 		this._router.navigate(['/' + this.current_user.user_name + '/post/' + postId + '/edit']);
+	}
+
+	deletePost(postId: string) {
+		// TODO: message is including postId, it is not readable from user, change it to post title
+		let confirm = window.confirm("Deleting post")
+		if (confirm) {
+			this._auth.deletePost({_id: postId}).subscribe(
+				res => {
+					this._toastr.changeToastr(ToastrType.DELETE_POST_SUCCESS);
+				},
+				err => {
+					this._toastr.changeToastr(ToastrType.DELETE_POST_FAIL);
+				}
+			)
+		}
+		else {
+
+		}
 	}
 }
