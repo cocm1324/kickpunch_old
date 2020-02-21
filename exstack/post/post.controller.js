@@ -78,11 +78,6 @@ module.exports = {
             updated: new Date()
         }
 
-<<<<<<< HEAD
-        // TODO: check if user is owner of this post
-
-        Post.findByIdAndUpdate(postData._id, update, (error, post) => {
-=======
         Post.findByIdAndUpdate(postId, update, (error, post) => {
             //it seems 'post' here returns old post
 
@@ -94,7 +89,6 @@ module.exports = {
             }
 
             
->>>>>>> ae45b1400b2fd36d1084dcebd814e97b584fb0f5
             if(error) {
                 console.log(error);
             }
