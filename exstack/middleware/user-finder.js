@@ -4,21 +4,21 @@ const User = require('../user/user.model');
 
 module.exports = {
     findUser: (req, res, next) => {
-        let userName;
+        let user_name;
 
-        if(req.params.userId){
-            userName = req.params.userId;
+        if(req.params.user_name){
+            user_name = req.params.user_name;
         }
         
         if(req.body.email && userName == undefined) {
-            userName = req.body.email.split('@')[0]; 
+            user_name = req.body.email.split('@')[0]; 
         }
 
-        if(userName == undefined) {
+        if(user_name == undefined) {
             return res.status(400).send('Undefined');
         }
 
-        User.findOne({ email: {$regex : "^" + userName + "@"}}, (error, user) => {
+        User.findOne({ email: {$regex : "^" + user_name + "@"}}, (error, user) => {
             if(error) {
                 console.log(error);
             }
@@ -28,7 +28,7 @@ module.exports = {
                     return res.status(404).send('Not Found');
                 }
                 else {
-                    req.user = user;
+                    req.user_data = user;
                 }
             }
             next();

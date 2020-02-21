@@ -24,9 +24,9 @@ module.exports = {
     },
 
     getUser: (req, res) => {
-        let userId = req.user._id;
+        let user_data = req.user_data;
 
-        User.findById(userId, (error, user) => {
+        User.findById(user_data._id, (error, user) => {
             if (error) console.log(error);
             else {
                 // if user not exist, send 404 not found
@@ -41,14 +41,44 @@ module.exports = {
                         // TODO: save user_name to DB
                     }
 
-                    res.status(200).send({ 
-                        user: {
-                            _id: user._id,
-                            name: user.name,
-                            email: user.email,
-                            user_name: user.user_name
-                        }
+                    res.status(200).send({
+                        _id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        user_name: user.user_name
                     });
+                }
+            }
+        });
+    },
+
+    getUserFromPost: (req, res) => {
+        let post_data;
+        if(req.post_data) post_data = req.post_data;
+        else return res.status(404).send('Not Found');
+
+        User.findById(post_data.post.user_id, (error, user) => {
+            if (error) console.log(error);
+            else {
+                // if user not exist, send 404 not found
+                if(!user) {
+                    res.status(404).send('Not Found');
+                }
+                // user의 데이터에서 password 해시 값 제외하고 보냄
+                else {
+                    // TODO: find better way to send this
+                    if(!user.user_name) {
+                        user.user_name = user.email.split('@')[0];
+                        // TODO: save user_name to DB
+                    }
+
+                    post_data.author = {
+                        _id: user._id,
+                        name: user.name,
+                        email: user.email,
+                        user_name: user.user_name
+                    };
+                    res.status(200).send(post_data);
                 }
             }
         });
@@ -141,7 +171,7 @@ module.exports = {
     //
     tokenGuard: (req, res) => {
         let tokenId = req.userId;
-        let guardId = req.user._id;
+        let guardId = req.user_data;
 
         if(!tokenId) {
             res.statusMessage = "Invalid Request";
@@ -153,7 +183,7 @@ module.exports = {
             res.status(400).send("User id is missing");
         }
 
-        if(tokenId != guardId) {
+        if(tokenId != guardId._id) {
             res.statusMessage = "Forbidden";
             res.status(403).send("Forbidden");
         }

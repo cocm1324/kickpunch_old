@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3 class="mt-4 mb-3">Your Blog</h3>
+      <div class="jumbotron">
+        <h1 class="display-3">blog manage</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h3 class="mt-4 mb-3">Your Posts</h3>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Contents</th>
+            <th scope="col">Exposed</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Manage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let post of posts">
+            <th scope="row">{{ post.title }}</th>
+            <td>{{ post.contents | mdTextSummary: 140 }}</td>
+            <td>{{ post.exposed }}</td>
+            <td>{{ post.priority }}</td>
+            <td>
+              <a (click)="goToPost(post._id)" class="pr-2 cursor-pointer"><i class="far fa-eye"></i></a>
+              <a (click)="goToEdit(post._id)" class="pr-2 cursor-pointer"><i class="far fa-edit"></i></a>
+              <a (click)="deletePost(post._id)" class="cursor-pointer"><i class="far fa-trash-alt"></i></a>
+            </td>
+          </tr>
+          <tr *ngIf="!posts">
+            <th>Ooops!</th>
+            <td>You don't have any posts!</td>
+            <!-- TODO: link to new post -->
+          </tr>
+        </tbody>
+      </table> 
+    </div>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col">
+      <ul class="pagination float-right">
+        <li class="page-item disabled">
+          <a class="page-link" href="#">&laquo;</a>
+        </li>
+        <li class="page-item active">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">4</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">5</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">&raquo;</a>
+        </li>
+      </ul>
+    </div>
+  </div> -->
+</div>

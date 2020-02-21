@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { AuthService } from './service/auth.service';
+import { AuthService } from './service/auth/auth.service';
 import { Router } from '@angular/router';
-import { ToastrService, ToastrMessage } from './service/toastr.service';
-import { ToastrComponent } from './common/toastr/toastr.component';
-import { User } from 'src/assets/user';
+import { ToastrService } from './components/common/toastr/toastr.service';
+import { ToastrType } from './enums/toastr.enum'
+import { LocalstorageType } from './enums/localstorage.enum';
+import { RouterLinkType } from './enums/router-link.enum';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -26,32 +28,28 @@ export class AppComponent {
   }
 
   login() {
-    if(!localStorage.getItem('callback')){
-      localStorage.setItem('callback', this._router.url);
+    if(!localStorage.getItem(LocalstorageType.CALLBACK)){
+      localStorage.setItem(LocalstorageType.CALLBACK, this._router.url);
     }
-    else if(this._router.url != '/register'){
-      localStorage.setItem('callback', this._router.url);
+    else if(this._router.url != '/' + RouterLinkType.REGISTER){
+      localStorage.setItem(LocalstorageType.CALLBACK, this._router.url);
     }
-    this._router.navigate(['/login']);
+    this._router.navigate(['/' + RouterLinkType.LOGIN]);
   }
 
   logout() {    
-    localStorage.setItem('callback', this._router.url);
+    localStorage.setItem(LocalstorageType.CALLBACK, this._router.url);
     
     this._auth.logoutUser();
 
-    this._router.navigate([localStorage.getItem('callback')]);
-    localStorage.removeItem('callback');
+    this._router.navigate([localStorage.getItem(LocalstorageType.CALLBACK)]);
+    localStorage.removeItem(LocalstorageType.CALLBACK);
 
     // because logout doesn't activate guard, after logout current route keep displays 
     // even if the route is guarded.
     location.reload();
 
-    this._toastr.changeToastr({
-      header: `Goodbye`,
-      body: "You are now signed out. Do come again ^^7",
-      alert: "alert-warning"
-    });
+    this._toastr.changeToastr(ToastrType.LOGOUT);
   }
 
   isLoggedIn() {
@@ -62,9 +60,9 @@ export class AppComponent {
     this._auth.currentUser.subscribe(
       user => {
         if(user._id == null){
-          if(localStorage.getItem('current_user') !== null){
-            this.currentUser = JSON.parse(localStorage.getItem('current_user'));
-            this._auth.updateCurrentUser(JSON.parse(localStorage.getItem('current_user')));
+          if(localStorage.getItem(LocalstorageType.CURRENT_USER) !== null){
+            this.currentUser = JSON.parse(localStorage.getItem(LocalstorageType.CURRENT_USER));
+            this._auth.updateCurrentUser(JSON.parse(localStorage.getItem(LocalstorageType.CURRENT_USER)));
           }
         }
         else {

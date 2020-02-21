@@ -3,7 +3,7 @@ WORKDIR /app
 COPY package.json /app
 RUN npm install
 COPY . /app
-RUN npm run build --prod
+RUN npm run build -- --configuration=production
 
 FROM nginx:1.16.0-alpine as prod-stage
 COPY --from=build-step /app/dist/ngstack /usr/share/nginx/html
