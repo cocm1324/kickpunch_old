@@ -5,8 +5,11 @@ services:
     build: ngstack
     ports:
       - "80:80"
+    image: cocm1324/kickpunch-web
   
   api_server:
     build: exstack
     ports:
       - "3000:3000"
+    image: cocm1324/kickpunch-api
+
