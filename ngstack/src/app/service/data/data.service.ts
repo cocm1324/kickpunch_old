@@ -36,4 +36,9 @@ export class DataService {
   createPost(userId: string, post): Observable<any> {
     return this._http.post<any>(this._postUrl + '/' + userId, post);
   } 
+
+
+  // getPageSmasherMockUp(): Observable<any> {
+  //   return this._http.get<any>()
+  // }
 }

@@ -1,0 +1,48 @@
+$border-color: rgb(68, 144, 196);
+
+.section-border-top {
+    position: relative;
+    margin-top: 3em;
+    border-top: 1px solid $border-color;
+}
+
+.section-border-bottom {
+    position: relative;
+    margin-bottom: 3em;
+    border-bottom: 1px solid $border-color;
+    width: 100%;
+}
+
+.bullet {
+    position: absolute;
+    width: 1.5em;
+    height: 1.5em;
+
+    border: 1px solid $border-color;
+    border-radius: 0.75em;
+    background-color: white;
+    z-index: 3000;
+
+    top: -0.75em;
+    left: 50%;
+    margin-left: -0.75em;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    transition: 0.3s;
+
+    div {
+        color: $border-color;
+    }
+}
+
+.bullet:hover {
+    background-color: $border-color;
+
+    div {
+        color: white;
+    }
+}

@@ -1,0 +1,11 @@
+<div class="container-fluid">
+	<div class="row post-section">
+		<div class="c-post-container">
+            <app-section-border [type]="lastElementBullet()" (clickEvent)="toggleLastElement($event)"></app-section-border>
+            <div [hidden]="!lastElementOpen">
+                <app-section-type-picker></app-section-type-picker>
+                <app-section-border [type]="borderType.NONE"></app-section-border>
+            </div>
+		</div>
+	</div>
+</div>

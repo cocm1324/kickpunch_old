@@ -1,6 +1,6 @@
 'use strict';
 
 export const api_server = {
-    addr: "52.231.78.207",
+    addr: "128.199.184.197",
     port: "3000"
 }

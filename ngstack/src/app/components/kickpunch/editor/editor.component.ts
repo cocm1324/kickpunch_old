@@ -21,20 +21,19 @@ export class EditorComponent implements OnInit {
 	postForm: FormGroup;
 	current_user: ICurrentUser;
 
-
-
 	constructor(
-		private _fb: FormBuilder, private _auth: AuthService, private _router: Router,
-		private _toastr: ToastrService, private _data: DataService, private _route: ActivatedRoute
+		private _fb: FormBuilder, 
+		private _auth: AuthService, 
+		private _router: Router,
+		private _toastr: ToastrService, 
+		private _data: DataService, 
+		private _route: ActivatedRoute
 	) { }
 
 	ngOnInit() {
 		this.initForm();
 		this.getCurrentUser();
 	}
-
-
-
 
 	initForm() {
 		this.postForm = this._fb.group({

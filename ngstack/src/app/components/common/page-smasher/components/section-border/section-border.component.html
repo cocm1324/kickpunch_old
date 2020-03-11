@@ -1,0 +1,33 @@
+<div class="section-border-bottom" *ngIf="isTypeNone()"></div>
+
+<div class="section-border-top" *ngIf="isTypeAdd()">
+	<div class="bullet" (click)="bulletClick()">
+		<div>
+			<i class="fas fa-plus"></i>
+		</div>
+	</div>
+</div>
+
+<div class="section-border-top" *ngIf="isTypeCancel()">
+	<div class="bullet" (click)="bulletClick()">
+		<div>
+			<i class="fas fa-minus"></i>
+		</div>
+	</div>
+</div>
+
+<div class="section-border-top" *ngIf="isTypeUp()">
+	<div class="bullet" (click)="bulletClick()">
+		<div>
+			<i class="fas fa-angle-double-up"></i>
+		</div>
+	</div>	
+</div>
+
+<div class="section-border-bottom" *ngIf="isTypeDown()">
+	<div class="bullet" (click)="bulletClick()">
+		<div>
+			<i class="fas fa-angle-double-down"></i>
+		</div>
+	</div>
+</div>
