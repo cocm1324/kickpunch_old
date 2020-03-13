@@ -9,7 +9,9 @@ import { BORDER_TYPE } from '../../enums';
 export class SectionBorderComponent implements OnInit {
 
 	@Input() type: BORDER_TYPE = BORDER_TYPE.NONE;
-	@Output() clickEvent: EventEmitter<boolean> = new EventEmitter();
+	@Output() clickEvent: EventEmitter<BORDER_TYPE> = new EventEmitter();
+
+	private borderType = BORDER_TYPE;
 
 	constructor() { }
 
@@ -17,26 +19,34 @@ export class SectionBorderComponent implements OnInit {
 	}
 
 	isTypeNone() {
-		return this.type == BORDER_TYPE.NONE;
+		return this.type == this.borderType.NONE;
 	}
 
-	isTypeAdd() {
-		return this.type == BORDER_TYPE.ADD;
+	isTypeOpen() {
+		return this.type == this.borderType.OPEN;
+	}
+
+	isTypeClose() {
+		return this.type == this.borderType.CLOSE;
+	}
+
+	isTypeSubmit() {
+		return this.type == this.borderType.SUBMIT;
 	}
 
 	isTypeCancel() {
-		return this.type == BORDER_TYPE.CANCEL;
+		return this.type == this.borderType.CANCEL;
 	}
 
 	isTypeUp() {
-		return this.type == BORDER_TYPE.UP;
+		return this.type == this.borderType.UP;
 	}
 
 	isTypeDown() {
-		return this.type == BORDER_TYPE.DOWN;
+		return this.type == this.borderType.DOWN;
 	}
 
-	bulletClick() {
-		this.clickEvent.emit(true);
+	bulletClick(type: BORDER_TYPE) {
+		this.clickEvent.emit(type);
 	}
 }

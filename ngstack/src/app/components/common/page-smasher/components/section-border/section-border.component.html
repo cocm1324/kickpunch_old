@@ -1,23 +1,39 @@
 <div class="section-border-bottom" *ngIf="isTypeNone()"></div>
 
-<div class="section-border-top" *ngIf="isTypeAdd()">
-	<div class="bullet" (click)="bulletClick()">
+<div class="section-border-top" *ngIf="isTypeOpen()">
+	<div class="bullet" (click)="bulletClick(this.borderType.OPEN)">
 		<div>
 			<i class="fas fa-plus"></i>
 		</div>
 	</div>
 </div>
 
-<div class="section-border-top" *ngIf="isTypeCancel()">
-	<div class="bullet" (click)="bulletClick()">
+<div class="section-border-top" *ngIf="isTypeClose()">
+	<div class="bullet" (click)="bulletClick(this.borderType.CLOSE)">
 		<div>
 			<i class="fas fa-minus"></i>
 		</div>
 	</div>
 </div>
 
+<div class="section-border-bottom" *ngIf="isTypeSubmit()">
+	<div class="bullet" (click)="bulletClick(this.borderType.SUBMIT)">
+		<div>
+			<i class="fas fa-check"></i>
+		</div>
+	</div>
+</div>
+
+<div class="section-border-top" *ngIf="isTypeCancel()">
+	<div class="bullet" (click)="bulletClick(this.borderType.CANCEL)">
+		<div>
+			<i class="fas fa-times"></i>
+		</div>
+	</div>
+</div>
+
 <div class="section-border-top" *ngIf="isTypeUp()">
-	<div class="bullet" (click)="bulletClick()">
+	<div class="bullet" (click)="bulletClick(this.borderType.UP)">
 		<div>
 			<i class="fas fa-angle-double-up"></i>
 		</div>
@@ -25,7 +41,7 @@
 </div>
 
 <div class="section-border-bottom" *ngIf="isTypeDown()">
-	<div class="bullet" (click)="bulletClick()">
+	<div class="bullet" (click)="bulletClick(this.borderType.DOWN)">
 		<div>
 			<i class="fas fa-angle-double-down"></i>
 		</div>

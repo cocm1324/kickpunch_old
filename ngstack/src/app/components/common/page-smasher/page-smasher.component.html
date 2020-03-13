@@ -1,11 +1,16 @@
 <div class="container-fluid">
-	<div class="row post-section">
-		<div class="c-post-container">
-            <app-section-border [type]="lastElementBullet()" (clickEvent)="toggleLastElement($event)"></app-section-border>
-            <div [hidden]="!lastElementOpen">
-                <app-section-type-picker></app-section-type-picker>
-                <app-section-border [type]="borderType.NONE"></app-section-border>
-            </div>
-		</div>
+    
+    <div *ngFor="let section of sections" class="row c-justify-center mb-4">
+        <div *ngIf="section.type==sectionContentType.IMAGE_URL" [ngClass]="{'c-post-container': section.width==widthType.POST, 'c-wide-container':section.width==widthType.WIDE, 'c-banner-container':section.width==widthType.HERO }">
+            <img [src]="section.contents">
+        </div>
+    </div>
+    
+    <div class="row c-justify-center mb-5">
+        <div [ngSwitch]="editorStep">
+            <app-section-type-picker *ngSwitchCase="sectionCreationStep.TYPE_PICKER" (clickEvent)="loadEditor($event)"></app-section-type-picker>
+            <app-section-image-editor *ngSwitchCase="sectionCreationStep.IMAGE_EDITOR" (abort)="goToTypePicker()" (submit)="submit($event)"></app-section-image-editor>
+            <app-section-markdown-editor *ngSwitchCase="sectionCreationStep.MARKDOWN_EDITOR"></app-section-markdown-editor>
+        </div>
 	</div>
 </div>

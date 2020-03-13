@@ -1,5 +1,14 @@
-<div class="container-fluid">
-	<div class="class-row p-2">
-		welgnm
+<app-section-border [type]="getBorderType()" (clickEvent)="toggleSection($event)"></app-section-border>
+<div [hidden]="!sectionOpen" class="container-fluid">
+	<div class="row c-post-container">
+		<div class="col item" (click)="imageSelected()">
+			<i class="fas fa-camera-retro"></i>
+			<div class="caption">Image</div>
+		</div>
+		<div class="col item" (click)="postSelected()">
+			<i class="fas fa-edit"></i>
+			<div class="caption">Post</div>
+		</div>
 	</div>
+	<app-section-border [type]="borderType.NONE"></app-section-border>
 </div>

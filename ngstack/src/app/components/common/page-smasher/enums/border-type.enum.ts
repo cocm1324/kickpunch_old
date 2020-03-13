@@ -1,6 +1,8 @@
 export enum BORDER_TYPE {
 	NONE,
-	ADD,
+	OPEN,
+	CLOSE,
+	SUBMIT,
 	CANCEL,
 	UP,
 	DOWN

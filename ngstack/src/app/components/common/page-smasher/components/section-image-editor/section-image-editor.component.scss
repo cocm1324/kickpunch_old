@@ -1,0 +1,72 @@
+@import '../../assets/page-smasher';
+
+.item {
+    margin: 1em 3em;
+    text-align: center;
+    border-radius: 0.75em;
+
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.item:hover {
+    background-color: $color-gray;
+}
+
+.caption {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 4em;
+}
+
+.input-field {
+    max-width: 600px;
+
+    margin: 1em 0;
+    text-align: center;
+}
+
+.left-expand,.left-shrink,.right-shrink,.right-expand {
+    color: $color-gray;
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+
+    &:hover {
+        color: $color-blue;
+    }
+}
+
+.left-expand {
+    left: -1.675em;
+    margin-top: -0.675em;
+}
+.left-shrink {
+    left: 1em;
+    margin-top: -0.675em;
+}
+.right-shrink {
+    right: 1em;
+    margin-top: -0.675em;
+}
+.right-expand {
+    right: -1.675em;
+    margin-top: -0.675em;
+}
+
+.cancel {
+    position: absolute;
+    color: $color-gray;
+    right: 0;
+    top: -1em;
+    cursor: pointer;
+
+    &:hover {
+        color: $color-blue;
+    }
+}
+
+img {
+    width: 100%;
+}
