@@ -47,3 +47,11 @@
 		</div>
 	</div>
 </div>
+
+<div class="section-border-top" *ngIf="isTypeRevert()">
+	<div class="bullet" (click)="bulletClick(this.borderType.REVERT)">
+		<div>
+			<i class="fas fa-long-arrow-alt-left"></i>
+		</div>
+	</div>
+</div>

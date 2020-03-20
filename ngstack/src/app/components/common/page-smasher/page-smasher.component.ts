@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BORDER_TYPE, SECTION_TYPE, WIDTH_TYPE, SECTION_CONTENT_TYPE } from './enums';
 import { ISectionItem } from './models/section.model';
 
-export interface ICommonLastElement {
-	open: boolean;
-}
 
 export enum SECTION_CREATION_STEP {
 	TYPE_PICKER,
@@ -19,24 +16,24 @@ export enum SECTION_CREATION_STEP {
 })
 export class PageSmasherComponent implements OnInit {
 
-	private borderType = BORDER_TYPE;
-	private sectionCreationStep = SECTION_CREATION_STEP;
-	private lastElement: ICommonLastElement;
-	private editorStep: SECTION_CREATION_STEP;
+	borderType = BORDER_TYPE;
+	editorStep: SECTION_CREATION_STEP;
+	widthType = WIDTH_TYPE;
+	sectionContentType = SECTION_CONTENT_TYPE;
+	sectionCreationStep = SECTION_CREATION_STEP;
+	
+	sections: Array<ISectionItem> = [];
 
-	private widthType = WIDTH_TYPE;
-	private sectionContentType = SECTION_CONTENT_TYPE;
-
-	private sections: Array<ISectionItem> = [];
+	private pickerOpen: boolean;
 
 	constructor( ) { }
 
 	get lastElementOpen() {
-		return this.lastElement.open;
+		return this.pickerOpen;
 	}
 
 	ngOnInit() {
-		this.lastElement = {open: false};
+		this.pickerOpen = false;
 		this.editorStep = this.sectionCreationStep.TYPE_PICKER;
 
 		// this.lastElement = {open: true};
@@ -44,7 +41,7 @@ export class PageSmasherComponent implements OnInit {
 	}
 	
 	toggleLastElement($event) {
-		this.lastElement.open = !this.lastElement.open;
+		this.pickerOpen = !this.pickerOpen;
 	}
 
 	loadEditor($event) {
@@ -57,6 +54,9 @@ export class PageSmasherComponent implements OnInit {
 
 	goToTypePicker($event) {
 		this.editorStep = this.sectionCreationStep.TYPE_PICKER;
+		if (!$event) {
+			this.pickerOpen = true;
+		}
 	}
 
 	submit($event) {

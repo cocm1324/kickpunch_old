@@ -1,3 +1,30 @@
-<p>
-  section-markdown-editor works!
-</p>
+<app-section-border [type]="borderType.REVERT" (clickEvent)="onRevert($event)"></app-section-border>
+<form [formGroup]="postForm">
+<div class="container-fluid">
+	<div class="row c-relative c-justify-center" [ngClass]="{'c-post-container': width==widthType.POST, 'c-wide-container':width==widthType.WIDE, 'c-banner-container':width==widthType.HERO }">
+		
+		<div *ngIf="isExpandable()" class="left-expand" (click)="expand()">
+			<i class="fas fa-angle-left"></i>
+		</div>
+		<div *ngIf="isShrinkable()" class="left-shrink" (click)="shrink()">
+			<i class="fas fa-angle-right"></i>
+		</div>
+
+		<div class="col p-0">
+			<textarea class="input-field" formControlName="post" rows="4"></textarea>
+		</div>
+
+		<div *ngIf="isShrinkable()" class="right-shrink" (click)="shrink()">
+			<i class="fas fa-angle-left"></i>
+		</div>
+		<div *ngIf="isExpandable()" class="right-expand" (click)="expand()">
+			<i class="fas fa-angle-right"></i>
+		</div>
+
+	</div>
+	<div *ngIf="display" class="row c-relative" [ngClass]="{'c-post-container': width==widthType.POST, 'c-wide-container':width==widthType.WIDE, 'c-banner-container':width==widthType.HERO }">
+		<ngx-md [data]="post.value" [sanitizeHtml]='true'></ngx-md>
+	</div>
+</div>
+</form>
+<app-section-border [type]="getBorderType()" (clickEvent)="onSubmit($event)"></app-section-border>

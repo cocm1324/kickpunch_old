@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { BORDER_TYPE } from '../../enums';
 
 export enum SECTION_TYPE {
@@ -14,14 +14,15 @@ export enum SECTION_TYPE {
 export class SectionTypePickerComponent implements OnInit {
 
 	@Output() clickEvent: EventEmitter<SECTION_TYPE> = new EventEmitter();
+	@Input() sectionOpen: boolean = false;
 
-	private sectionOpen: boolean = false;
 	private sectionType = SECTION_TYPE;
 	private borderType = BORDER_TYPE;
 
 	constructor() { }
 
 	ngOnInit() {
+		
 	}
 
 	imageSelected() {

@@ -2,13 +2,13 @@ $border-color: rgb(68, 144, 196);
 
 .section-border-top {
     position: relative;
-    margin-top: 3em;
+    margin-top: 1em;
     border-top: 1px solid $border-color;
 }
 
 .section-border-bottom {
     position: relative;
-    margin-bottom: 3em;
+    margin-bottom: 1em;
     border-bottom: 1px solid $border-color;
     width: 100%;
 }

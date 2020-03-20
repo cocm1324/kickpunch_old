@@ -1,4 +1,4 @@
-<app-section-border [type]="borderType.CANCEL" (clickEvent)="onAbort($event)"></app-section-border>
+<app-section-border [type]="borderType.REVERT" (clickEvent)="onRevert($event)"></app-section-border>
 <form [formGroup]="imageForm">
 <div class="container-fluid">
 	<div class="row c-relative c-justify-center" [ngClass]="{'c-post-container': width==widthType.POST, 'c-wide-container':width==widthType.WIDE, 'c-banner-container':width==widthType.HERO }">
@@ -21,12 +21,11 @@
 
 		<div *ngIf="step==imageStep.IMAGE_UPLOAD" class="col input-field p-0">
 			<div class="form-group">
-				<div class="cancel" (click)="cancel()"><i class="fas fa-times"></i></div>
 				<label class="col-form-label" for="inputDefault">Upload Image</label>
 				<div class="input-group mb-3">
 					<div class="custom-file">
-						<input type="file" class="custom-file-input" id="inputGroupFile02">
-						<label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+						<input formControlName="imageUpload" type="file" class="custom-file-input" id="inputGroupFile" accept="image/gif, image/jpeg, image/png">
+						<label class="custom-file-label" for="inputGroupFile">Choose file</label>
 					</div>
 					<div class="input-group-append">
 					  	<span class="input-group-text" id="">Upload</span>
@@ -36,7 +35,6 @@
 		</div>
 
 		<div *ngIf="step==imageStep.IMAGE_URL" class="col input-field p-0">
-			<div class="cancel" (click)="cancel()"><i class="fas fa-times"></i></div>
 			<div class="form-group">
 				<label class="col-form-label" for="inputDefault">Image Url</label>
 				<div class="input-group mb-3">

@@ -46,6 +46,10 @@ export class SectionBorderComponent implements OnInit {
 		return this.type == this.borderType.DOWN;
 	}
 
+	isTypeRevert() {
+		return this.type == this.borderType.REVERT;
+	}
+
 	bulletClick(type: BORDER_TYPE) {
 		this.clickEvent.emit(type);
 	}

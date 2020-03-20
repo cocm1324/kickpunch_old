@@ -5,5 +5,6 @@ export enum BORDER_TYPE {
 	SUBMIT,
 	CANCEL,
 	UP,
-	DOWN
+	DOWN,
+	REVERT
 }

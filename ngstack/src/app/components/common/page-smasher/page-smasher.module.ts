@@ -7,6 +7,8 @@ import { SectionBorderComponent } from './components/section-border/section-bord
 import { SectionTypePickerComponent } from './components/section-type-picker/section-type-picker.component';
 import { SectionImageEditorComponent } from './components/section-image-editor/section-image-editor.component';
 import { SectionMarkdownEditorComponent } from './components/section-markdown-editor/section-markdown-editor.component';
+import { NgxMdModule } from './components/ngxmd/ngx-md.module';
+// import { NgxMdModule } from '../ngxmd/ngx-md.module';
 
 @NgModule({
 	declarations: [
@@ -20,7 +22,8 @@ import { SectionMarkdownEditorComponent } from './components/section-markdown-ed
 		FormsModule,
 		ReactiveFormsModule,
 		HttpClientModule,
-		CommonModule
+		CommonModule,
+		NgxMdModule.forRoot()
 	],
 	exports: [
 		PageSmasherComponent

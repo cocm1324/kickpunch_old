@@ -5,7 +5,7 @@ $screen-xl-min: 1200px;
 
 $color-blue: rgb(68, 144, 196);
 $color-gray: #dddddd;
-
+$color-bisque: bisque;
 
 @mixin sm {
     @media (min-width: #{$screen-sm-min}) {

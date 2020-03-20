@@ -17,16 +17,17 @@ export enum IMAGE_STEP {
 })
 export class SectionImageEditorComponent implements OnInit, OnDestroy {
 
-	@Output() abort: EventEmitter<boolean> = new EventEmitter();
+	@Output() revert: EventEmitter<boolean> = new EventEmitter();
 	@Output() submit: EventEmitter<ISectionItem> = new EventEmitter();
 
-	private imageForm: FormGroup;
+	step: IMAGE_STEP;
+	imageStep = IMAGE_STEP;
+	width: WIDTH_TYPE;
+	widthType = WIDTH_TYPE;
 
-	private display: boolean = false;
-	private step: IMAGE_STEP;
-	private imageStep = IMAGE_STEP;
-	private width: WIDTH_TYPE;
-	private widthType = WIDTH_TYPE;
+	display: boolean = false;
+
+	private imageForm: FormGroup;
 	private borderType = BORDER_TYPE;
 
 	private subscriptions: Subscription[] = [];
@@ -41,7 +42,8 @@ export class SectionImageEditorComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.imageForm = this.fb.group({
-			imageUrl: ['']
+			imageUrl: [''],
+			imageUpload: [''],
 		});
 
 		this.width = this.widthType.POST;
@@ -61,20 +63,6 @@ export class SectionImageEditorComponent implements OnInit, OnDestroy {
 
 	urlSelected() {
 		this.step = this.imageStep.IMAGE_URL;
-	}
-
-	cancel() {
-		if (this.display == true) {
-			if (confirm('Changes will be lost')) {
-				this.step = this.imageStep.TYPE_SELECTION;
-				this.width = this.widthType.POST;
-				this.clearImageUrl();
-			}
-		} else {
-			this.step = this.imageStep.TYPE_SELECTION;
-			this.width = this.widthType.POST;
-			this.clearImageUrl();
-		}
 	}
 
 	isExpandable() {
@@ -108,13 +96,22 @@ export class SectionImageEditorComponent implements OnInit, OnDestroy {
 		this.imageUrl.setValue('');
 	}
 
-	onAbort(event) {
-		if (this.display == true) {
-			if (confirm('Changes will be lost')) {
-				this.abort.emit(true);
+	onRevert() {
+		if (this.step == IMAGE_STEP.TYPE_SELECTION) {
+			this.revert.emit(false);
+		}
+		else {
+			if (this.display == true) {
+				if (confirm('Changes will be lost')) {
+					this.step = this.imageStep.TYPE_SELECTION;
+					this.width = this.widthType.POST;
+					this.clearImageUrl();
+				}
+			} else {
+				this.step = this.imageStep.TYPE_SELECTION;
+				this.width = this.widthType.POST;
+				this.clearImageUrl();
 			}
-		} else {
-			this.abort.emit(true);
 		}
 	}
 
@@ -122,7 +119,7 @@ export class SectionImageEditorComponent implements OnInit, OnDestroy {
 		return this.display ? this.borderType.SUBMIT : this.borderType.NONE;
 	}
 
-	onSubmit($event) {
+	onSubmit() {
 		if (this.step == this.imageStep.IMAGE_URL) {
 			const section: ISectionItem = {
 				seq: null,
@@ -131,7 +128,7 @@ export class SectionImageEditorComponent implements OnInit, OnDestroy {
 				contents: this.imageUrl.value
 			}
 			this.submit.emit(section);
-			this.abort.emit(true);
+			this.revert.emit(true);
 		}
 	}
 
