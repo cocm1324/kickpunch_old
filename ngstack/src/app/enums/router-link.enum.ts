@@ -1,6 +1,7 @@
 export enum RouterLinkType{
     LOGIN =         'login',
     REGISTER =      'register',
+    TEST_PAGE =     'testpage',
 
     USER =          ':user_name',
     USER_MANAGER =  ':user_name/manager',

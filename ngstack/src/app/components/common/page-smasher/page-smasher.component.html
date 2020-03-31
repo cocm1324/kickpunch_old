@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="row c-justify-center">
+        <div class="c-post-container p-4">
+            <h3>Page Designer</h3>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div *ngFor="let section of sections" class="row c-justify-center mb-4">
+        <div *ngIf="section.type==sectionContentType.IMAGE_URL" [ngClass]="{'c-post-container': section.width==widthType.POST, 'c-wide-container':section.width==widthType.WIDE, 'c-banner-container':section.width==widthType.HERO }">
+            <img [src]="section.contents">
+        </div>
+        <div *ngIf="section.type==sectionContentType.POST" [ngClass]="{'c-post-container': section.width==widthType.POST, 'c-wide-container':section.width==widthType.WIDE, 'c-banner-container':section.width==widthType.HERO }">
+            <ngx-md [data]="section.contents" [sanitizeHtml]='true'></ngx-md>
+        </div>
+    </div>
+    
+    <div class="row c-justify-center mb-5">
+        <div [ngSwitch]="editorStep">
+            <app-section-type-picker *ngSwitchCase="sectionCreationStep.TYPE_PICKER" (clickEvent)="loadEditor($event)" [sectionOpen]="pickerOpen"></app-section-type-picker>
+            <app-section-image-editor *ngSwitchCase="sectionCreationStep.IMAGE_EDITOR" (revert)="goToTypePicker($event)" (submit)="submit($event)"></app-section-image-editor>
+            <app-section-markdown-editor *ngSwitchCase="sectionCreationStep.MARKDOWN_EDITOR" (revert)="goToTypePicker($event)" (submit)="submit($event)"></app-section-markdown-editor>
+        </div>
+	</div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="push"></div>
+    </div>
+</div>
+
+<pre>
+    {{sections | json}}
+</pre>

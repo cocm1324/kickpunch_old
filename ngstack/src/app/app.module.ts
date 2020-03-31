@@ -29,6 +29,7 @@ import { ToastrComponent } from './components/common/toastr/toastr.component';
 import { UpdatorComponent } from './components/kickpunch/updator/updator.component';
 import { MdTextSummaryPipe } from './pipes/md-text-summary.pipe';
 import { PipeModule } from './pipes/pipe.module';
+import { PageSmasherModule } from './components/common/page-smasher/page-smasher.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { PipeModule } from './pipes/pipe.module';
     NgxMdModule.forRoot(),
     RouterModule.forRoot([]),
     HttpClientModule,
-    PipeModule
+    PipeModule,
+    PageSmasherModule
   ],
   providers: [
     AuthService,

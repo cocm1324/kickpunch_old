@@ -1,0 +1,100 @@
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1200px;
+
+$color-blue: rgb(68, 144, 196);
+$color-gray: #dddddd;
+$color-bisque: bisque;
+
+@mixin sm {
+    @media (min-width: #{$screen-sm-min}) {
+        @content;
+    }
+}
+@mixin md {
+    @media (min-width: #{$screen-md-min}) {
+        @content;
+    }
+}
+@mixin lg {
+    @media (min-width: #{$screen-lg-min}) {
+        @content;
+    }
+}
+@mixin xl {
+    @media (min-width: #{$screen-xl-min}) {
+        @content;
+    }
+}
+
+
+.c-post-container {
+    width: 92vw;
+
+    font-size: 22px;
+    line-height: 1.58;
+    font-weight: 400;
+
+    display: flex;
+
+    @include sm {
+        width: 88.5vw;
+    }
+
+    @include md {
+        max-width: 680px;
+    }
+}
+
+.c-wide-container {
+    width: 100vw;
+    
+    font-size: 22px;
+    line-height: 1.58;
+    font-weight: 400;
+
+    display: flex;
+
+    @include sm {
+        width: 540px;
+    }
+
+    @include md {
+        width: 720px;
+    }
+
+    @include lg {
+        width: 960px;
+    }
+
+    @include xl {
+        width: 1140px;
+    }
+}
+
+.c-banner-container {
+    width: 100vw;
+
+    font-size: 22px;
+    line-height: 1.58;
+    font-weight: 400;
+
+    display: flex;
+}
+
+.c-relative {
+    position: relative;
+}
+
+.c-absolute {
+    position: absolute;
+}
+
+.c-pointer {
+    cursor: pointer;
+}
+
+.c-justify-center {
+    justify-content: center;
+}

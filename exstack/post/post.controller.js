@@ -95,7 +95,6 @@ module.exports = {
         let userId = req.userId;
 
         if(!postId) {
-            
             res.statusMessage = "Invalid Request"
             return res.status(401).send("Invalid Request");
         }
