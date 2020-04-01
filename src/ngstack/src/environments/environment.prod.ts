@@ -1,0 +1,7 @@
+export const environment = {
+	production: true,
+	api_server: {
+		addr: "128.199.184.197",
+		port: "3000"
+	}
+};

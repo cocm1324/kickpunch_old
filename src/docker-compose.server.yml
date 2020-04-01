@@ -1,0 +1,10 @@
+on: '3'  
+services:
+        web-server:
+                image: cocm1324/kickpunch-web:latest
+                ports:
+                        - "80:80"
+        api-server:
+                image: cocm1324/kickpunch-api:latest
+                ports:
+                        - "3000:3000"
