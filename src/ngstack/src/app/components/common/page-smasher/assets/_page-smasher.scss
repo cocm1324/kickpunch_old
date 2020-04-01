@@ -28,15 +28,21 @@ $color-bisque: bisque;
     }
 }
 
-
-.c-post-container {
-    width: 92vw;
+ngx-md {
+    word-break: break-word;
+    width: 100%;
 
     font-size: 22px;
     line-height: 1.58;
     font-weight: 400;
+}
+
+
+.c-post-container {
+    width: 92vw;
 
     display: flex;
+    flex-wrap: wrap;
 
     @include sm {
         width: 88.5vw;
@@ -49,12 +55,9 @@ $color-bisque: bisque;
 
 .c-wide-container {
     width: 100vw;
-    
-    font-size: 22px;
-    line-height: 1.58;
-    font-weight: 400;
 
     display: flex;
+    flex-wrap: wrap;
 
     @include sm {
         width: 540px;
@@ -76,11 +79,8 @@ $color-bisque: bisque;
 .c-banner-container {
     width: 100vw;
 
-    font-size: 22px;
-    line-height: 1.58;
-    font-weight: 400;
-
     display: flex;
+    flex-wrap: wrap;
 }
 
 .c-relative {
@@ -91,10 +91,39 @@ $color-bisque: bisque;
     position: absolute;
 }
 
+.c-fixed {
+    position: fixed;
+}
+
 .c-pointer {
     cursor: pointer;
 }
 
 .c-justify-center {
     justify-content: center;
+}
+
+.c-justify-start {
+    justify-content: flex-start;
+}
+
+.c-justify-end {
+    justify-content: flex-end;
+}
+
+.c-align-center {
+    align-items: center;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.cursor-grab {
+    cursor: -webkit-grab; 
+    cursor: grab;
+}
+
+.cursor-grabbing {
+    cursor: grabbing !important;
 }

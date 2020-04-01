@@ -1,18 +1,21 @@
-<div class="container-fluid">
-    <div class="row c-justify-center">
-        <div class="c-post-container p-4">
-            <h3>Page Designer</h3>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div *ngFor="let section of sections" class="row c-justify-center mb-4">
-        <div *ngIf="section.type==sectionContentType.IMAGE_URL" [ngClass]="{'c-post-container': section.width==widthType.POST, 'c-wide-container':section.width==widthType.WIDE, 'c-banner-container':section.width==widthType.HERO }">
-            <img [src]="section.contents">
-        </div>
-        <div *ngIf="section.type==sectionContentType.POST" [ngClass]="{'c-post-container': section.width==widthType.POST, 'c-wide-container':section.width==widthType.WIDE, 'c-banner-container':section.width==widthType.HERO }">
-            <ngx-md [data]="section.contents" [sanitizeHtml]='true'></ngx-md>
+<div class="container-fluid c-relative" cdkDropListGroup>
+    <div cdkDropList (cdkDropListDropped)="sectionDrop($event)">
+        <div 
+            cdkDrag 
+            (cdkDragStarted)="dragStart($event)" 
+            (cdkDropListEntered)="dragEnter($event)"
+            class="row c-justify-center mb-4"
+            *ngFor="let section of sections">    
+            <div [ngClass]="{'c-post-container': section.width==widthType.POST, 'c-wide-container':section.width==widthType.WIDE, 'c-banner-container':section.width==widthType.HERO }">
+                <app-section-border class="w-100" [type]="borderType.DRAG" cdkDragHandle></app-section-border>
+                <div class="w-100" *ngIf="section.type==sectionContentType.IMAGE_URL">
+                    <img [src]="section.contents">
+                </div>
+                <div class="w-100" *ngIf="section.type==sectionContentType.POST">
+                    <ngx-md [data]="section.contents" [sanitizeHtml]='true'></ngx-md>
+                </div>
+                <app-section-border class="w-100" [type]="borderType.EDIT" (clickEvent)="edit($event, section)"></app-section-border>
+            </div>
         </div>
     </div>
     
@@ -22,15 +25,21 @@
             <app-section-image-editor *ngSwitchCase="sectionCreationStep.IMAGE_EDITOR" (revert)="goToTypePicker($event)" (submit)="submit($event)"></app-section-image-editor>
             <app-section-markdown-editor *ngSwitchCase="sectionCreationStep.MARKDOWN_EDITOR" (revert)="goToTypePicker($event)" (submit)="submit($event)"></app-section-markdown-editor>
         </div>
-	</div>
-</div>
-
-<div class="container-fluid">
+    </div>
+    
     <div class="row">
         <div class="push"></div>
     </div>
-</div>
 
-<pre>
-    {{sections | json}}
-</pre>
+    <div #editorFooter class="row editor-panel">
+        <div class="container p-0">
+            <div *ngIf="true" cdkDropList (cdkDropListDropped)="drop($event)" class="row c-justify-center c-align-center drop-box">
+                <div class="caption">Drop here to DELETE</div>
+            </div>
+            <div class="row w-100 pt-4 pb-4 m-0 c-justify-end">
+                <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+                <button type="button" class="btn btn-primary ml-3" (click)="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

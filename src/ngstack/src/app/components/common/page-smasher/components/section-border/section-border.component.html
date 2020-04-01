@@ -1,7 +1,7 @@
 <div class="section-border-bottom" *ngIf="isTypeNone()"></div>
 
 <div class="section-border-top" *ngIf="isTypeOpen()">
-	<div class="bullet" (click)="bulletClick(this.borderType.OPEN)">
+	<div class="bullet" (click)="bulletClick(borderType.OPEN)">
 		<div>
 			<i class="fas fa-plus"></i>
 		</div>
@@ -9,7 +9,7 @@
 </div>
 
 <div class="section-border-top" *ngIf="isTypeClose()">
-	<div class="bullet" (click)="bulletClick(this.borderType.CLOSE)">
+	<div class="bullet" (click)="bulletClick(borderType.CLOSE)">
 		<div>
 			<i class="fas fa-minus"></i>
 		</div>
@@ -17,7 +17,7 @@
 </div>
 
 <div class="section-border-bottom" *ngIf="isTypeSubmit()">
-	<div class="bullet" (click)="bulletClick(this.borderType.SUBMIT)">
+	<div class="bullet" (click)="bulletClick(borderType.SUBMIT)">
 		<div>
 			<i class="fas fa-check"></i>
 		</div>
@@ -25,7 +25,7 @@
 </div>
 
 <div class="section-border-top" *ngIf="isTypeCancel()">
-	<div class="bullet" (click)="bulletClick(this.borderType.CANCEL)">
+	<div class="bullet" (click)="bulletClick(borderType.CANCEL)">
 		<div>
 			<i class="fas fa-times"></i>
 		</div>
@@ -33,7 +33,7 @@
 </div>
 
 <div class="section-border-top" *ngIf="isTypeUp()">
-	<div class="bullet" (click)="bulletClick(this.borderType.UP)">
+	<div class="bullet" (click)="bulletClick(borderType.UP)">
 		<div>
 			<i class="fas fa-angle-double-up"></i>
 		</div>
@@ -41,15 +41,31 @@
 </div>
 
 <div class="section-border-bottom" *ngIf="isTypeDown()">
-	<div class="bullet" (click)="bulletClick(this.borderType.DOWN)">
+	<div class="bullet" (click)="bulletClick(borderType.DOWN)">
 		<div>
 			<i class="fas fa-angle-double-down"></i>
 		</div>
 	</div>
 </div>
 
+<div class="section-border-top cursor-grab" *ngIf="isTypeDrag()">
+	<div class="bullet" (click)="bulletClick(borderType.DRAG)">
+		<div>
+			<i class="fas fa-arrows-alt-v"></i>
+		</div>
+	</div>	
+</div>
+
+<div class="section-border-bottom" *ngIf="isTypeEdit()">
+	<div class="bullet" (click)="bulletClick(borderType.EDIT)">
+		<div>
+			<i class="fas fa-pen"></i>
+		</div>
+	</div>
+</div>
+
 <div class="section-border-top" *ngIf="isTypeRevert()">
-	<div class="bullet" (click)="bulletClick(this.borderType.REVERT)">
+	<div class="bullet" (click)="bulletClick(borderType.REVERT)">
 		<div>
 			<i class="fas fa-long-arrow-alt-left"></i>
 		</div>

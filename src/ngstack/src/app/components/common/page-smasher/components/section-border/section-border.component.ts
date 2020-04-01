@@ -11,7 +11,7 @@ export class SectionBorderComponent implements OnInit {
 	@Input() type: BORDER_TYPE = BORDER_TYPE.NONE;
 	@Output() clickEvent: EventEmitter<BORDER_TYPE> = new EventEmitter();
 
-	private borderType = BORDER_TYPE;
+	borderType = BORDER_TYPE;
 
 	constructor() { }
 
@@ -44,6 +44,14 @@ export class SectionBorderComponent implements OnInit {
 
 	isTypeDown() {
 		return this.type == this.borderType.DOWN;
+	}
+
+	isTypeDrag() {
+		return this.type == this.borderType.DRAG;
+	}
+
+	isTypeEdit() {
+		return this.type == this.borderType.EDIT;
 	}
 
 	isTypeRevert() {

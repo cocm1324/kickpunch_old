@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/cor
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { BORDER_TYPE, WIDTH_TYPE, SECTION_CONTENT_TYPE } from '../../enums';
-import { ISectionItem } from '../../models/section.model';
+import { ISectionItem } from '../../models/section.interface';
 
 export enum IMAGE_STEP {
 	TYPE_SELECTION,

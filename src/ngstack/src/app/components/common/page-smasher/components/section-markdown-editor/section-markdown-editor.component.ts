@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { ISectionItem } from '../../models/section.model';
+import { ISectionItem } from '../../models/section.interface';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { WIDTH_TYPE, BORDER_TYPE, SECTION_CONTENT_TYPE } from '../../enums';
 import { Subscription } from 'rxjs';
@@ -19,7 +19,7 @@ export class SectionMarkdownEditorComponent implements OnInit, OnDestroy {
 	widthType = WIDTH_TYPE;
 	borderType = BORDER_TYPE;
 
-	private postForm: FormGroup;
+	postForm: FormGroup;
 	private subscriptions: Subscription[] = [];
 
 	get post() {

@@ -6,5 +6,7 @@ export enum BORDER_TYPE {
 	CANCEL,
 	UP,
 	DOWN,
+	DRAG,
+	EDIT,
 	REVERT
 }

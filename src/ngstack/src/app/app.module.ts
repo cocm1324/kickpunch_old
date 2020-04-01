@@ -6,8 +6,6 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { DashboardComponent } from './components/kickpunch/dashboard/dashboard.component';
 import { PostComponent } from './components/kickpunch/post/post.component';
 import { NotfoundComponent } from './components/kickpunch/notfound/notfound.component';
@@ -20,8 +18,6 @@ import { RegisterComponent } from './components/kickpunch/register/register.comp
 import { AuthService } from './service/auth/auth.service';
 import { DataService } from './service/data/data.service';
 import { ManagerComponent } from './components/kickpunch/manager/manager.component';
-
-// 폼에서 한글 마지막 글자 바인딩 안되는거 해결해주는 모듈
 import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
 import { AuthGuard } from './guard/auth.guard';
 import { TokenInterceptorService } from './service/token-interceptor.service';
@@ -30,6 +26,7 @@ import { UpdatorComponent } from './components/kickpunch/updator/updator.compone
 import { MdTextSummaryPipe } from './pipes/md-text-summary.pipe';
 import { PipeModule } from './pipes/pipe.module';
 import { PageSmasherModule } from './components/common/page-smasher/page-smasher.module';
+import { AppCommonModule } from './app-common.module';
 
 @NgModule({
   declarations: [
@@ -47,15 +44,17 @@ import { PageSmasherModule } from './components/common/page-smasher/page-smasher
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgbModule,
-    NgxMdModule.forRoot(),
-    RouterModule.forRoot([]),
+    RouterModule,
     HttpClientModule,
+
+    AppCommonModule,
+    AppRoutingModule,
+    PageSmasherModule,
     PipeModule,
-    PageSmasherModule
+
+    NgxMdModule.forRoot()
   ],
   providers: [
     AuthService,
