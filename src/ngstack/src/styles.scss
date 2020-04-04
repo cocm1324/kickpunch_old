@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 // bootstrap과 bootswatch를 가져옴
 @import "./assets/css/variables";
+@import "./assets/css/theme";
 @import "./assets/css/custom";
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "../node_modules/bootswatch/dist/litera/bootswatch";

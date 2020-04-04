@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, OnDestroy, Renderer2 } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, OnDestroy, Renderer2, AfterViewInit, HostListener } from '@angular/core';
 import { BORDER_TYPE, SECTION_TYPE, WIDTH_TYPE, SECTION_CONTENT_TYPE } from './enums';
 import { ISectionItem } from './models/section.interface';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -46,6 +46,7 @@ export class PageSmasherComponent implements OnInit, OnDestroy {
 	@ViewChild('editorFooter') editorFooter: ElementRef
 
 	sectionDragged: boolean = false;
+	editing: boolean = false;
 	pickerOpen: boolean = false;
 
 	borderType = BORDER_TYPE;
@@ -58,7 +59,7 @@ export class PageSmasherComponent implements OnInit, OnDestroy {
 
 	get lastElementOpen() {
 		return this.pickerOpen;
-	}
+	} 
 
 	constructor(
 		private renderer: Renderer2
@@ -70,10 +71,17 @@ export class PageSmasherComponent implements OnInit, OnDestroy {
 
 		// this.lastElement = {open: true};
 		// this.editorStep = this.sectionCreationStep.IMAGE_EDITOR;
+	}
+	
+	@HostListener('window:scroll', ['$event']) onScrollEvent($event){
+		const current = document.documentElement.scrollTop;
+		const breakPoint = document.documentElement.scrollHeight - document.documentElement.clientHeight - 50;
 
-		console.log(this.renderer)
-
-		window.addEventListener('scroll', this.scroll, true);
+		if (current > breakPoint) {
+			this.renderer.setStyle(this.editorFooter.nativeElement, 'position', 'absolute');
+		} else {
+			this.renderer.setStyle(this.editorFooter.nativeElement, 'position', 'fixed');
+		}
 	}
 	
 	toggleLastElement($event) {
@@ -124,17 +132,18 @@ export class PageSmasherComponent implements OnInit, OnDestroy {
 		console.log($event)
 	}
 
-	scroll() {
-		const current = document.documentElement.scrollTop;
-		const breakPoint = document.documentElement.scrollHeight - document.documentElement.clientHeight - 50;
+	// scroll() {
+	// 	const current = document.documentElement.scrollTop;
+	// 	const breakPoint = document.documentElement.scrollHeight - document.documentElement.clientHeight - 50;
 
-		console.log(current, breakPoint, this.renderer);
+	// 	console.log(current, breakPoint, this.editorFooter);
 
-		if (current > breakPoint) {
-			this.renderer.setStyle(this.editorFooter.nativeElement, 'bottom', '0');
-			this.renderer.setStyle(this.editorFooter.nativeElement, 'position', 'absolute');
-		}
-	}
+	// 	if (current > breakPoint) {
+	// 		this.editorFooter.nativeElement
+	// 		this.renderer.setStyle(this.editorFooter.nativeElement, 'bottom', '0');
+	// 		this.renderer.setStyle(this.editorFooter.nativeElement, 'position', 'absolute');
+	// 	}
+	// }
 
 	cancel() {
 
@@ -145,6 +154,5 @@ export class PageSmasherComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		window.removeEventListener('scroll', this.scroll, true);
 	}
 }

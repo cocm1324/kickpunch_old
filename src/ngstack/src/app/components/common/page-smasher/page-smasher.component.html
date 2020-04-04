@@ -12,7 +12,7 @@
                     <img [src]="section.contents">
                 </div>
                 <div class="w-100" *ngIf="section.type==sectionContentType.POST">
-                    <ngx-md [data]="section.contents" [sanitizeHtml]='true'></ngx-md>
+                    <ngx-md [data]="section.contents" [sanitizeHtml]='false'></ngx-md>
                 </div>
                 <app-section-border class="w-100" [type]="borderType.EDIT" (clickEvent)="edit($event, section)"></app-section-border>
             </div>
@@ -33,7 +33,7 @@
 
     <div #editorFooter class="row editor-panel">
         <div class="container p-0">
-            <div *ngIf="true" cdkDropList (cdkDropListDropped)="drop($event)" class="row c-justify-center c-align-center drop-box">
+            <div *ngIf="true" cdkDropList [ngClass]="{'d-none': !sectionDragged}" (cdkDropListDropped)="drop($event)" class="row c-justify-center c-align-center drop-box">
                 <div class="caption">Drop here to DELETE</div>
             </div>
             <div class="row w-100 pt-4 pb-4 m-0 c-justify-end">

@@ -23,7 +23,7 @@
 
 	</div>
 	<div *ngIf="display" class="row c-relative" [ngClass]="{'c-post-container': width==widthType.POST, 'c-wide-container':width==widthType.WIDE, 'c-banner-container':width==widthType.HERO }">
-		<ngx-md [data]="post.value" [sanitizeHtml]='true'></ngx-md>
+		<ngx-md [data]="post.value" [sanitizeHtml]='false'></ngx-md>
 	</div>
 </div>
 </form>
