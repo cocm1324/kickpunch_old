@@ -3,7 +3,7 @@ const common = require("../../common");
 
 module.exports = {
     // for visitor; return posts that set as exposed
-    getExposedPostByUser: (req, res) => {
+    getBlogPost: (req, res) => {
         const {_id} = req.data.user;
         
         Post.find({ user_id: _id, exposed: true }, (error, posts) => {
@@ -15,9 +15,23 @@ module.exports = {
                 common.errorMessage(res, 404);
                 return;
             }
+
+            const response = posts.map(post => {
+                return {
+                    id: post._id,
+                    title: post.title,
+                    contents: post.contents,
+                    exposed: post.exposed,
+                    priority: post.priority,
+                    userId: post.user_id,
+                    created: post.created,
+                    updated: post.updated
+                }
+            });
+
             res.status(200).send({
                 RESULT: posts.length,
-                response: posts
+                response: response
             }); 
         });
     },

@@ -3,11 +3,11 @@ export enum RouterLinkType{
     REGISTER =      'register',
     TEST_PAGE =     'testpage',
 
-    USER =          ':user_name',
-    USER_MANAGER =  ':user_name/manager',
-    NEW_POST =      ':user_name/new',
-    POST =          ':user_name/post/:post_id',
-    MODIFTY_POST =  ':user_name/post/:post_id/edit',
+    USER =          ':userName',
+    USER_MANAGER =  ':userName/manager',
+    NEW_POST =      ':userName/new',
+    POST =          ':userName/post/:postId',
+    MODIFTY_POST =  ':userName/post/:postId/edit',
 
     NOTFOUND =      'notfound'
 }

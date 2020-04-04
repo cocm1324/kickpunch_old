@@ -3,23 +3,29 @@ const jwt = require('../../middleware/jwt-helper');
 const common = require('../../common');
 
 module.exports = {
-    getUser: (req, res) => {
-        const {verifiedUserId} = req.data;
+    getBlog: (req, res) => {
+        const {user_name} = req.params;
 
-        User.findById(verifiedUserId, (error, user) => {
-            if (error) {
+        if (user_name == null) {
+            common.errorMessage(res, 401);
+            return;
+        }
+
+        User.findOne({user_name: user_name}, (error, user) => {
+            const {_id, user_name, email, title, description} = user;
+
+            if(error) {
                 common.errorMessage(res, 500, error);
                 return;
             }
-            if (!user) {
+            if(!user) {
                 common.errorMessage(res, 404);
                 return;
             }
 
-            const {_id, user_name, email, title, description} = user;
             const response = {
-                _id: _id,
-                user_name: user_name,
+                id: _id,
+                userName: user_name,
                 email: email,
                 title: title,
                 description: description
@@ -31,6 +37,33 @@ module.exports = {
             });
         });
     },
+
+    // getUser: (req, res) => {
+    //     const {verifiedUserId} = req.data;
+        
+    //     User.findById(verifiedUserId, (error, user) => {
+    //         if (error) {
+    //             common.errorMessage(res, 500, error);
+    //             return;
+    //         }
+    //         if (!user) {
+    //             common.errorMessage(res, 404);
+    //             return;
+    //         }
+
+    //         const {_id, user_name, email} = user;
+    //         const response = {
+    //             id: _id,
+    //             userName: user_name,
+    //             email: email
+    //         }
+
+    //         res.status(200).send({
+    //             RESULT: 1,
+    //             response: response
+    //         });
+    //     });
+    // },
 
     getUserFromPost: (req, res) => {
         const {post} = req.data;
@@ -65,26 +98,24 @@ module.exports = {
         });
     },
 
-    getBlog: (req, res) => {
-        const {user} = req.data;
-        const {title, description} = user;
+    // getBlog: (req, res) => {
+    //     const {user} = req.data;
+    //     const {title, description} = user;
         
-        const response = {
-            title: title,
-            description: description
-        }
+    //     const response = {
+    //         title: title,
+    //         description: description
+    //     }
 
-        res.status(200).send({
-            RESULT: 1,
-            response: response
-        });
-    },
+    //     res.status(200).send({
+    //         RESULT: 1,
+    //         response: response
+    //     });
+    // },
 
     updateBlog: (req, res) => {
         const {user_name, title, description} = req.body;
         const {verifiedUserId} = req.data;
-
-        console.log(req.body, verifiedUserId);
 
         User.findOne({user_name: user_name}, (error, user) => {
             if(error) {
@@ -156,13 +187,14 @@ module.exports = {
 
                 const token = jwt.sign({subject: registeredUser._id});
                 const user_info = {
+                    id: registeredUser._id,
                     email: registeredUser.email,
-                    user_name: registeredUser.user_name,
+                    userName: registeredUser.user_name,
                     created: registeredUser.created
                 }
                 const response = {
                     token: token,
-                    user_info: user_info
+                    userInfo: user_info
                 }
                 res.status(200).send({
                     RESULT: 1,
@@ -191,15 +223,16 @@ module.exports = {
             }
 
             const user_info = {
+                id: user._id,
                 email: user.email,
-                user_name: user.user_name,
+                userName: user.user_name,
                 created: user.created
             }
 
             const token = jwt.sign({ subject: user._id });
             const response = {
-                user: user_info,
-                token: token
+                token: token,
+                userInfo: user_info
             }
 
             res.status(200).send({
@@ -209,20 +242,21 @@ module.exports = {
         });
     },
 
-    tokenGuard: (req, res) => {
-        const {user, verifiedUserId} = req.data;
+    sessionCheck: (req, res) => {
+        const {verifiedUserId} = req.data;
+        const {_id} = req.body;
 
         if(!verifiedUserId) {
             common.errorMessage(res, 401);
             return;
         }
 
-        if(!user) {
+        if(!_id) {
             common.errorMessage(res, 401);
             return;
         }
 
-        if(verifiedUserId != user._id) {
+        if(verifiedUserId != _id) {
             common.errorMessage(res, 403);
             return;
         }

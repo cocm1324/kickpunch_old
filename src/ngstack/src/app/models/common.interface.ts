@@ -1,41 +1,22 @@
 export interface IResponse {
     RESULT?: number;
-    response?: any;
 }
 
 export interface IUser {
-    _id?: string,
-    name?: string,
-    email?: string,
-    user_name?: string
-}
-
-export interface ICurrentUser {
-    _id?: string;
-    name?: string;
+    id?: string;
     email?: string;
-    user_name?: string;
+    userName?: string;
+    created?: Date;
 }
 
 export interface ICurrentRoute {
-    post_id?: string,
-    user_name?: string
-}
-
-export interface ILoginReq {
-    email: string,
-    password: string
-}
-
-export interface IResgisterReq {
-    email: string,
-    name: string,
-    password: string
+    postId?: string,
+    userName?: string
 }
 
 export interface IPost {
-    _id?: string,
-    user_id?: number,
+    id?: string,
+    userId?: number,
     created?: Date,
     updated?: Date,
     title?: string,
@@ -89,4 +70,12 @@ export interface IPostDeleteReq {
 
 export interface IPostDeleteRes {
     message: string
+}
+
+export interface IBlog {
+    id: string;
+    userName: string;
+    email: string;
+    title: string;
+    description: string;
 }

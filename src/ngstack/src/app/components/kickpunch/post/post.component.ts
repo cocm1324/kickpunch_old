@@ -15,23 +15,23 @@ import { ToastrService } from '../../common/toastr/toastr.service';
 export class PostComponent implements OnInit {
 
 	current_route: ICurrentRoute;
-	author: IUser = { user_name: null };
+	author: IUser = { userName: null };
 	post: IPost = { title: "", created: new Date(), contents: "" };
 
 	constructor(private _data: DataService, private _router: Router, private _route: ActivatedRoute, private _toastr: ToastrService) { }
 
 	ngOnInit() {
 		this.getRouteParam();
-		this.getPost({_id: this.current_route.post_id});
+		this.getPost({_id: this.current_route.postId});
 	}
 
 	getRouteParam() {
 		this._route.params.subscribe(params => {
 			this.current_route = {
-				post_id: params.post_id, user_name: params.user_name
+				postId: params.postId, userName: params.userName
 			}
 			
-			if(this.current_route.post_id == "undefined" && this.current_route == "undefined") {
+			if(this.current_route.postId == "undefined" && this.current_route == "undefined") {
 				this._router.navigate(['/' + RouterLinkType.NOTFOUND]);
 			}
 		});

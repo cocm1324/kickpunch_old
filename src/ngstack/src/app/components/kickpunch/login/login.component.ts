@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/service/auth/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'src/app/components/common/toastr/toastr.service';
-import { ToastrAlertType, ToastrType } from '../../../enums/toastr.enum';
+import { ToastrType } from '../../../enums/toastr.enum';
 import { LocalstorageType } from '../../../enums/localstorage.enum';
-import { ICurrentUser, ILoginReq } from '../../../models';
+import { ILoginReq } from '../../../models';
+import { DataService } from 'src/app/service/data/data.service';
+import { SessionService } from 'src/app/service/session/session.service';
 
 @Component({
 	selector: 'app-login',
@@ -12,15 +13,15 @@ import { ICurrentUser, ILoginReq } from '../../../models';
 	styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-	loginUserData: ILoginReq = { email:"", password:"" };
-
+	
 	email: string = '';
 	password: string = '';
 
 	constructor(
-		private _auth: AuthService,
-		private _router: Router, 
-		private _toastr: ToastrService
+		private router: Router, 
+		private dataService: DataService,
+		private sessionService: SessionService,
+		private toastrService: ToastrService
 	) { }
 
 	ngOnInit() {
@@ -34,21 +35,18 @@ export class LoginComponent implements OnInit {
 			password: this.password
 		}
 
-		this._auth.loginUser(request).subscribe(res => {
+		this.dataService.runLogin(request).subscribe(res => {
 			if (res.RESULT) {
-				const {token, user} = res.response;
+				const {token, userInfo} = res.response;
 				localStorage.setItem(LocalstorageType.TOKEN, token);
-				this._auth.updateCurrentUser(user);
-				
+				this.sessionService.updateCurrentUser(userInfo);
 				if(localStorage.getItem(LocalstorageType.CALLBACK)){
-					this._router.navigate([localStorage.getItem(LocalstorageType.CALLBACK)]);
+					this.router.navigate([localStorage.getItem(LocalstorageType.CALLBACK)]);
 					localStorage.removeItem(LocalstorageType.CALLBACK);
+				} else {
+					this.router.navigate([`/${userInfo.userName}`]);
 				}
-				else{
-					this._router.navigate([`/${user.user_name}`]);
-				}
-
-				this._toastr.changeToastr(ToastrType.LOGIN_SUCCESS);
+				this.toastrService.changeToastr(ToastrType.LOGIN_SUCCESS);
 			}
 		});
 	}

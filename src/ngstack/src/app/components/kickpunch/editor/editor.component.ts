@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { AuthService } from 'src/app/service/auth/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'src/app/components/common/toastr/toastr.service';
 import { DataService } from 'src/app/service/data/data.service';
-
-import { ICurrentUser, IPostCreateReq } from '../../../models';
+import { IPostCreateReq, IUser } from '../../../models';
 import { ToastrType } from 'src/app/enums/toastr.enum';
+import { SessionService } from 'src/app/service/session/session.service';
 
 @Component({
 	selector: 'app-editor',
@@ -19,15 +18,14 @@ export class EditorComponent implements OnInit {
 	@ViewChild('priority') priority: ElementRef;
 
 	postForm: FormGroup;
-	current_user: ICurrentUser;
+	currentUser: IUser;
 
 	constructor(
-		private _fb: FormBuilder, 
-		private _auth: AuthService, 
-		private _router: Router,
-		private _toastr: ToastrService, 
-		private _data: DataService, 
-		private _route: ActivatedRoute
+		private fb: FormBuilder, 
+		private router: Router,
+		private dataService: DataService,
+		private sessionService: SessionService,
+		private toastrService: ToastrService
 	) { }
 
 	ngOnInit() {
@@ -36,32 +34,29 @@ export class EditorComponent implements OnInit {
 	}
 
 	initForm() {
-		this.postForm = this._fb.group({
+		this.postForm = this.fb.group({
 			title: ['', Validators.required],
 			contents: ['', Validators.required]
 		});
 	}
 
 	getCurrentUser() {
-		this._auth.currentUser.subscribe(user => this.current_user = user);
+		this.sessionService.currentUser.subscribe(user => this.currentUser = user);
 	}
 
 	save(): void {
-		let post: IPostCreateReq = {
+		const request: IPostCreateReq = {
 			title: this.postForm.get('title').value,
 			contents: this.postForm.get('contents').value,
 			exposed: this.exposed.nativeElement.checked,
 			priority: this.priority.nativeElement.value
 		}
 
-		this._auth.createPost(post).subscribe(
-			res => {
-			  this._router.navigate(['/' + res.user_id + "/post/" + res._id]);
-			  this._toastr.changeToastr(ToastrType.CREATE_POST_SUCCESS);
-			},
-			err => {
-				this._toastr.changeToastr(ToastrType.CREATE_POST_FAIL);
-			}
-		  );
+		this.dataService.createPost(request).subscribe(res => {
+			this.router.navigate(['/' + res.user_id + "/post/" + res._id]);
+			this.toastrService.changeToastr(ToastrType.CREATE_POST_SUCCESS);
+		}, err => {
+			this.toastrService.changeToastr(ToastrType.CREATE_POST_FAIL);
+		});
 	}
 }

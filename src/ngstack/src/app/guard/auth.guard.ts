@@ -1,40 +1,42 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
-import { AuthService } from '../service/auth/auth.service';
 import { DataService } from '../service/data/data.service';
 import { map, catchError } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
-
+import { SessionService } from '../service/session/session.service';
 
 @Injectable({
-  providedIn: 'root'
+  	providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private _auth: AuthService, private _router: Router, private _data: DataService) { }
+	constructor(
+		private router: Router, 
+		private dataService: DataService,
+		private sessionService: SessionService,
+	) { }
 
-  canActivate(route:ActivatedRouteSnapshot): Observable<boolean> {
-    const user = route.params['user_name'];
-    
-    if(!user) {
-      this._router.navigate(['/']);
-      // TODO: toastr -> invalid request
-      return of(false);
-    }
+	canActivate(route:ActivatedRouteSnapshot): Observable<boolean> {
+		const user = route.params['userName'];
+		
+		if(!user) {
+			this.router.navigate(['/']);
+			// TODO: toastr -> invalid request
+			return of(false);
+		}
 
-    if(!this._auth.loggedIn()) {
-      this._router.navigate(['/login']);
-      // TODO: toastr -> not logged in
-      return of(false);
-    } 
+		if(!this.sessionService.getIsLoggedIn) {
+			this.router.navigate(['/login']);
+			return of(false);
+		} 
 
-    return this._auth.tokenGuard(user).pipe(
-      map(response => response.message === 'ok'),
-      catchError(error => {
-        this._router.navigate(['/login']);
-        return of(false);
-      })
-    );
-  }
+		return this.dataService.runVerifySession(user).pipe(
+			map(response => response.message === 'ok'),
+			catchError(error => {
+				this.router.navigate(['/login']);
+				return of(false);
+			})
+		);
+	}
 }
 
 // I referenced this site when coding this file -> https://stackoverflow.com/questions/47210919/wait-for-http-inside-guard-on-angular-5/47211470 
