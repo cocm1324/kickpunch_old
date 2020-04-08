@@ -33,36 +33,28 @@ export class ManagerComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.getCurrentUser();
-		this.getRouteParam();
-		this.getPostData();
+		this.loadData();
 	}
 
-	getCurrentUser(){
-		this.sessionService.currentUser.subscribe(user => {
-			this.currentUser = user;
-		});
-	}
-
-	getRouteParam() {
+	loadData() {
 		this.route.params.subscribe(params => {
 			this.currentRoute.userName = params.userName;
 		});
-	}
+		this.sessionService.currentUser.subscribe(user => {
+			this.currentUser = user;
 
-	getPostData() {
-		this.dataService.getAllPostsByUserName(this.currentUser.userName).subscribe(res => {
-			this.posts = res;
-		}, err => {
-			console.log(err);
-			if(err instanceof HttpErrorResponse) {
-				if (err.status === 401) {
-					this.router.navigate(['/login']);
+			this.dataService.getManagerPost(this.currentUser.userName).subscribe(res => {
+				this.posts = res.response;
+			}, err => {
+				console.log(err);
+				if(err instanceof HttpErrorResponse) {
+					if (err.status === 401) {
+						this.router.navigate(['/login']);
+					}
 				}
-			}
+			});
 		});
 	}
-
 
 	goToPost(postId: string) {
 		this.router.navigate(['/' + this.currentUser.userName + '/post/' + postId]);

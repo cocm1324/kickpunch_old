@@ -1,5 +1,5 @@
 export enum LocalstorageType {
     TOKEN =         'token',
-    CURRENT_USER =  'current_user',
+    CURRENT_USER =  'currentUser',
     CALLBACK =      'callback'
 }

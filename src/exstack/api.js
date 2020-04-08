@@ -24,7 +24,7 @@ router.put('/blog/:user_name', jwt.verifyToken, User.updateBlog);
 
 router.get('/blog/:user_name/post', user_finder.findUser, Post.getBlogPost);
 
-router.get('/posts/:user_name/all', user_finder.findUser, Post.getAllPostByUser);
+router.get('/manager/:user_name/post', user_finder.findUser, Post.getManagerPost);
 router.get('/post/:post_id', Post.getPostById, User.getUserFromPost);
 
 

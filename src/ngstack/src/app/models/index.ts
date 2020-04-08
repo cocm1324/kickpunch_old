@@ -11,13 +11,18 @@ export {
     IPostCreateReq, IPostCreateRes,
     IPostUpdateReq, IPostUpdateRes,
     IPostDeleteReq, IPostDeleteRes
-} from './common.interface'
+} from './common.interface';
 
 export {
     ILoginReq, ILoginRes,
-    IRegisterReq, IRegisterRes
-} from './session.interface'
+    IRegisterReq, IRegisterRes,
+    ISessionVerifyReq
+} from './session.interface';
 
 export {
     IGetBlog, IGetBlogPost
-} from './blog.interface'
+} from './blog.interface';
+
+export {
+    IGetManagerPost
+} from './manager.interface';

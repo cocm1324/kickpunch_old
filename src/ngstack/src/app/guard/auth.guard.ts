@@ -4,6 +4,7 @@ import { DataService } from '../service/data/data.service';
 import { map, catchError } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { SessionService } from '../service/session/session.service';
+import { LocalstorageType } from '@enums/localstorage.enum';
 
 @Injectable({
   	providedIn: 'root'
@@ -16,9 +17,10 @@ export class AuthGuard implements CanActivate {
 	) { }
 
 	canActivate(route:ActivatedRouteSnapshot): Observable<boolean> {
-		const user = route.params['userName'];
-		
-		if(!user) {
+		console.log
+		const {userName} = route.params;
+
+		if(!userName) {
 			this.router.navigate(['/']);
 			// TODO: toastr -> invalid request
 			return of(false);
@@ -29,8 +31,8 @@ export class AuthGuard implements CanActivate {
 			return of(false);
 		} 
 
-		return this.dataService.runVerifySession(user).pipe(
-			map(response => response.message === 'ok'),
+		return this.dataService.runVerifySession({userName: userName}).pipe(
+			map(response => response.RESULT == 1),
 			catchError(error => {
 				this.router.navigate(['/login']);
 				return of(false);

@@ -1,7 +1,11 @@
 @import "../../../node_modules/bootswatch/dist/litera/variables";
 
+.c-relative {
+    position: relative;
+}
+
 .c-absolute {
-    position: absolute;
+    position: absolute !important;
 }
 
 .c-text-center {

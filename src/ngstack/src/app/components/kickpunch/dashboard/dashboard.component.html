@@ -1,6 +1,6 @@
 <div class="container-fluid jumbotron rounded-0">
-	<div class="row m-0">
-		<div class="container">
+	<div class="row">
+		<div class="container" *ngIf="dataReady">
 			<h1 class="display-3">{{blogTitle}}</h1>
 			<p class="lead">keyword</p>
 			<hr class="my-4">
@@ -10,7 +10,7 @@
 </div>
 
 <div class="container">
-	<div class="row">
+	<div *ngIf="dataReady" class="row">
 		<div *ngFor="let post of posts" class="card mb-4" style="width: 100%;">
 			<div class="card-body">
 				<h4 class="card-title">{{ post.title }}</h4>
@@ -20,3 +20,9 @@
 		</div>
 	</div>
 </div>
+
+<button mat-icon-button [matMenuTriggerFor]="appMenu">hello</button>
+<mat-menu #appMenu="matMenu" yPosition="above">
+	<button mat-menu-item>Settings</button>
+	<button mat-menu-item>Help</button>
+</mat-menu>

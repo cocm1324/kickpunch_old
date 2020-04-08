@@ -10,6 +10,7 @@ import { ICurrentRoute, IPost, IBlog } from "../../../models"
 })
 export class DashboardComponent implements OnInit {
 
+	dataReady: boolean = false;
 	currentRoute: ICurrentRoute = {userName: null};
 	posts: IPost[];
 	blogInfo: IBlog;
@@ -46,6 +47,7 @@ export class DashboardComponent implements OnInit {
 			this.dataService.getBlogPost(userName).subscribe(res => {
 				if (res.RESULT) {
 					this.posts = res.response;
+					this.dataReady = true;
 				}
 			},
 			err => {

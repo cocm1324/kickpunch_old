@@ -244,25 +244,34 @@ module.exports = {
 
     sessionCheck: (req, res) => {
         const {verifiedUserId} = req.data;
-        const {_id} = req.body;
+        const {userName} = req.body;
 
-        if(!verifiedUserId) {
+        if (!verifiedUserId) {
             common.errorMessage(res, 401);
             return;
         }
 
-        if(!_id) {
+        if (!userName) {
             common.errorMessage(res, 401);
             return;
         }
 
-        if(verifiedUserId != _id) {
-            common.errorMessage(res, 403);
-            return;
-        }
-        
-        res.status(200).send({
-            RESULT: 1,
+        User.findById(verifiedUserId, (err, user) => {
+            if (err) {
+                common.errorMessage(res, 500, error);
+                return;
+            }
+
+            const {user_name} = user;
+
+            if (userName != user_name) {
+                common.errorMessage(res, 403);
+                return;
+            }
+            
+            res.status(200).send({
+                RESULT: 1,
+            });
         });
     }
 }

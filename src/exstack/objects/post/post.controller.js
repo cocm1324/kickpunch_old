@@ -36,7 +36,7 @@ module.exports = {
         });
     },
 
-    getAllPostByUser: (req, res) => {
+    getManagerPost: (req, res) => {
         const {_id} = req.data.user;
     
         Post.find({ user_id: _id }, (error, posts) => {
