@@ -14,40 +14,61 @@ import { ToastrService } from '../../common/toastr/toastr.service';
 })
 export class PostComponent implements OnInit {
 
-	current_route: ICurrentRoute;
+	currentRoute: ICurrentRoute;
 	author: IUser = { userName: null };
 	post: IPost = { title: "", created: new Date(), contents: "" };
 
-	constructor(private _data: DataService, private _router: Router, private _route: ActivatedRoute, private _toastr: ToastrService) { }
+	constructor(
+		private data: DataService, 
+		private router: Router, 
+		private route: ActivatedRoute, 
+		private toastr: ToastrService
+	) { }
 
 	ngOnInit() {
 		this.getRouteParam();
-		this.getPost({_id: this.current_route.postId});
 	}
 
 	getRouteParam() {
-		this._route.params.subscribe(params => {
-			this.current_route = {
+		this.route.params.subscribe(params => {
+			this.currentRoute = {
 				postId: params.postId, userName: params.userName
 			}
 			
-			if(this.current_route.postId == "undefined" && this.current_route == "undefined") {
-				this._router.navigate(['/' + RouterLinkType.NOTFOUND]);
+			if(this.currentRoute.postId == "undefined" && this.currentRoute == "undefined") {
+				this.router.navigate(['/' + RouterLinkType.NOTFOUND]);
 			}
+
+			const postData: IPostReq = {id: this.currentRoute.postId}
+			this.getPost(postData);
 		});
 	}
 
-	getPost(req_body: IPostReq) {
-		this._data.getPost(req_body).subscribe({
-			next: res_body => {
-				this.author = res_body.author;
-				this.post = res_body.post;
+	getPost(req: IPostReq) {
+		this.data.getPost(req).subscribe(
+			res => {
+				if (!res.RESULT) {
+					this.toastr.changeToastr(ToastrType.POST_NOT_FOUNT);
+					this.router.navigate(['/' + RouterLinkType.NOTFOUND]);
+				}
+				const {userName} = res.response.user;
+				const {created, updated, id, title, contents} = res.response.post;
+				
+				this.author = {
+					userName: userName
+				};
+				this.post = {
+					id: id,
+					title: title,
+					contents: contents,
+					updated: updated,
+					created: created
+				};
 			},
-			error: err => {
-				this._toastr.changeToastr(ToastrType.INVALID_REQUEST);
-				this._router.navigate(['/' + RouterLinkType.NOTFOUND]);
-			},
-			complete: () => {}
-		});
+			err => {
+				this.toastr.changeToastr(ToastrType.INVALID_REQUEST);
+				this.router.navigate(['/' + RouterLinkType.NOTFOUND]);
+			}
+		);
 	}
 }

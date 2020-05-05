@@ -1,59 +1,59 @@
+<form [formGroup]="postForm">
 <div class="container title-container">
-  <div class="row">
-    <h2>Edit</h2>
-  </div>
+	<div class="row">
+		<h2>Edit</h2>
+	</div>
 </div>
 <div class="container editor-container">
-  <div class="row">
-    <div class="col">
-      <form [formGroup]="postForm">
-        <fieldset>
-          <legend>Contents</legend>
-          <hr>
-          <div class="form-group mb-4" style="position: relative;">
-            <label>Title</label>
-            <input class="form-control" type="text" formControlName="title">
-            <div *ngIf="postForm.controls.title.errors?.required && postForm.controls.title.touched" style="color: red; position: absolute;"><small>*Required</small></div>
-          </div>
-          <div class="form-group mb-4" style="position: relative;">
-            <label>Body</label>
-            <textarea class="form-control" id="exampleTextarea" formControlName="contents" rows="8"></textarea>
-            <div *ngIf="postForm.controls.contents.errors?.required && postForm.controls.contents.touched" style="color: red; position: absolute;"><small>*Required</small></div>
-          </div>
+	<div class="row">
+		<div class="col">
+			<fieldset>
+				<legend>Contents</legend>
+				<hr>
+				<div class="form-group mb-4" style="position: relative;">
+					<label>Title</label>
+					<input class="form-control" type="text" formControlName="title">
+					<div *ngIf="postForm.controls.title.errors?.required && postForm.controls.title.touched" style="color: red; position: absolute;"><small>*Required</small></div>
+				</div>
+				<div class="form-group mb-4" style="position: relative;">
+					<label>Body</label>
+					<textarea class="form-control" id="exampleTextarea" formControlName="contents" rows="8"></textarea>
+					<div *ngIf="postForm.controls.contents.errors?.required && postForm.controls.contents.touched" style="color: red; position: absolute;"><small>*Required</small></div>
+				</div>
 
-          <div class="cheat-collapse">
-            <button class="btn btn-primary mb-3" type="button" data-toggle="collapse" data-target="#cheatsheet" aria-expanded="false" aria-controls="collapseExample">
-              Tip
-            </button>
-            
-            <div class="collapse" id="cheatsheet">
-              <div class="card card-body cheatsheet-content">
-                I will pull markdown syntax here
-              </div>
-            </div>
-          </div>
+				<div class="cheat-collapse">
+					<button class="btn btn-primary mb-3" type="button" data-toggle="collapse" data-target="#cheatsheet" aria-expanded="false" aria-controls="collapseExample">
+					Tip
+					</button>
+					
+					<div class="collapse" id="cheatsheet">
+					<div class="card card-body cheatsheet-content">
+						I will pull markdown syntax here
+					</div>
+					</div>
+				</div>
 
-          <legend>Post Setting</legend>
-          <hr>
-          <div class="form-group">
-            <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="customSwitch1" #exposed checked="">
-              <label class="custom-control-label" for="customSwitch1">Feature</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="customRange1">Priority: {{ priority.value }}</label>
-            <input type="range" #priority class="custom-range" (change)="true" min="0" max="100" value="50">
-          </div>
-          <div class="form-group">
-            <hr>
-            <button type="button" class="btn btn-success float-right" (click)="update()" [disabled]="postForm.invalid">Update</button>
-          </div>
-        </fieldset>
-      </form>
-    </div>
-  </div>
+				<legend>Post Setting</legend>
+				<hr>
+				<div class="form-group">
+					<div class="custom-control custom-switch">
+					<input type="checkbox" class="custom-control-input" id="customSwitch1" #exposed checked="">
+					<label class="custom-control-label" for="customSwitch1">Feature</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="customRange1">Priority: {{ priority.value }}</label>
+					<input type="range" #priority class="custom-range" (change)="true" min="0" max="100" value="50">
+				</div>
+				<div class="form-group">
+					<hr>
+					<button type="button" class="btn btn-success float-right" (click)="update()" [disabled]="postForm.invalid">Update</button>
+				</div>
+			</fieldset>
+		</div>
+	</div>
 </div>
+</form>
 
 <!-- <div class="container title-container">
   <div class="row">

@@ -5,10 +5,10 @@ import { ICurrentRoute, IPost, IBlog } from "../../../models"
 
 @Component({
 	selector: 'app-dashboard',
-	templateUrl: './dashboard.component.html',
-	styleUrls: ['./dashboard.component.scss']
+	templateUrl: './blog.component.html',
+	styleUrls: ['./blog.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class BlogComponent implements OnInit {
 
 	dataReady: boolean = false;
 	currentRoute: ICurrentRoute = {userName: null};
@@ -36,23 +36,27 @@ export class DashboardComponent implements OnInit {
 		this.route.params.subscribe(params => {
 			const {userName} = params;
 			this.currentRoute.userName = userName;
-			this.dataService.getBlogInfo(userName).subscribe(res => {
-				if (res.RESULT) {
-					this.blogInfo = res.response;
+			this.dataService.getBlogInfo(userName).subscribe(
+				res => {
+					if (res.RESULT) {
+						this.blogInfo = res.response;
+					}
+				}, 
+				err => {
+					this.router.navigateByUrl('/notfound');
 				}
-			}, err => {
-				// this.router.navigateByUrl('/notfound');
-			});
-
-			this.dataService.getBlogPost(userName).subscribe(res => {
-				if (res.RESULT) {
-					this.posts = res.response;
-					this.dataReady = true;
+			);
+			this.dataService.getBlogPost(userName).subscribe(
+				res => {
+					if (res.RESULT) {
+						this.posts = res.response;
+						this.dataReady = true;
+					}
+				},
+				err => {
+					console.log(err)
 				}
-			},
-			err => {
-				console.log(err)
-			});
+			);
 		});
 	}
 

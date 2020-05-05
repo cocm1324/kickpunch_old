@@ -16,8 +16,8 @@ export class SectionTypePickerComponent implements OnInit {
 	@Output() clickEvent: EventEmitter<SECTION_TYPE> = new EventEmitter();
 	@Input() sectionOpen: boolean = false;
 
-	private sectionType = SECTION_TYPE;
-	private borderType = BORDER_TYPE;
+	sectionType = SECTION_TYPE;
+	borderType = BORDER_TYPE;
 
 	constructor() { }
 

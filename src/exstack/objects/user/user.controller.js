@@ -38,42 +38,15 @@ module.exports = {
         });
     },
 
-    // getUser: (req, res) => {
-    //     const {verifiedUserId} = req.data;
-        
-    //     User.findById(verifiedUserId, (error, user) => {
-    //         if (error) {
-    //             common.errorMessage(res, 500, error);
-    //             return;
-    //         }
-    //         if (!user) {
-    //             common.errorMessage(res, 404);
-    //             return;
-    //         }
-
-    //         const {_id, user_name, email} = user;
-    //         const response = {
-    //             id: _id,
-    //             userName: user_name,
-    //             email: email
-    //         }
-
-    //         res.status(200).send({
-    //             RESULT: 1,
-    //             response: response
-    //         });
-    //     });
-    // },
-
     getUserFromPost: (req, res) => {
-        const {post} = req.data;
-        
-        if (!post) {
+        const {contents, created, updated, title, user_id, _id} = req.data.post;
+    
+        if (!req.data) {
             common.errorMessage(res, 500, 'Post data is missing!');
             return;
         }
-
-        User.findById(post.user_id, (error, user) => {
+    
+        User.findById(user_id, (error, user) => {
             if (error) {
                 common.errorMessage(res, 500, error);
                 return;
@@ -81,14 +54,24 @@ module.exports = {
             
             if(!user) {
                 common.errorMessage(res, 404);
+                console.log('mark')
                 return;
             }
 
-            const {_id, email, user_name} = user;
+            const {email, user_name} = user;
             const response = {
-                _id: _id,
-                email: email,
-                user_name: user_name
+                user: {
+                    id: user_id,
+                    email: email,
+                    userName: user_name
+                },
+                post: {
+                    id: _id,
+                    title: title,
+                    created: created,
+                    updated: updated,
+                    contents: contents
+                }
             };
 
             res.status(200).send({
@@ -98,57 +81,32 @@ module.exports = {
         });
     },
 
-    // getBlog: (req, res) => {
-    //     const {user} = req.data;
-    //     const {title, description} = user;
-        
-    //     const response = {
-    //         title: title,
-    //         description: description
-    //     }
-
-    //     res.status(200).send({
-    //         RESULT: 1,
-    //         response: response
-    //     });
-    // },
-
     updateBlog: (req, res) => {
-        const {user_name, title, description} = req.body;
+        const {userId, title, description} = req.body;
         const {verifiedUserId} = req.data;
 
-        User.findOne({user_name: user_name}, (error, user) => {
+        if (userId != verifiedUserId) {
+            common.errorMessage(res, 403);
+            return;
+        }
+
+        const request = {
+            title: title,
+            description: description
+        }
+
+        User.findByIdAndUpdate(userId, request, (error, updatedUser) => {
             if(error) {
                 common.errorMessage(res, 500, error);
                 return;
             }
-            if(!user) {
+            if(!updatedUser) {
                 common.errorMessage(res, 404);
                 return;
             }
-            if(user._id != verifiedUserId) {
-                common.errorMessage(res, 403);
-                return;
-            }
-
-            const request = {
-                title: title,
-                description: description
-            }
-
-            User.findByIdAndUpdate(user._id, request, (error, updatedUser) => {
-                if(error) {
-                    common.errorMessage(res, 500, error);
-                    return;
-                }
-                if(!updatedUser) {
-                    common.errorMessage(res, 404);
-                    return;
-                }
-                res.status(200).send({
-                    RESULT: 1,
-                    response: "ok"
-                });
+            res.status(200).send({
+                RESULT: 1,
+                response: "updated"
             });
         });
     },

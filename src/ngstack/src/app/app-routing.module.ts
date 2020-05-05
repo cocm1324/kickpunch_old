@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './components/kickpunch/dashboard/dashboard.component';
+import { BlogComponent } from './components/kickpunch/blog/blog.component';
 import { PostComponent } from './components/kickpunch/post/post.component';
 import { NotfoundComponent } from './components/kickpunch/notfound/notfound.component';
 import { LoginComponent } from './components/kickpunch/login/login.component';
@@ -25,7 +25,7 @@ const routes: Routes = [
   { path: RouterLinkType.LOGIN, component: LoginComponent },
   { path: RouterLinkType.REGISTER, component: RegisterComponent },
   
-  { path: RouterLinkType.USER, component: DashboardComponent },
+  { path: RouterLinkType.USER, component: BlogComponent },
   { path: RouterLinkType.POST, component: PostComponent },
   { path: RouterLinkType.USER_MANAGER, component: ManagerComponent, canActivate: [AuthGuard] },
   { path: RouterLinkType.NEW_POST, component: EditorComponent, canActivate: [AuthGuard] },

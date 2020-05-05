@@ -14,6 +14,7 @@ export interface ILoginRes extends IResponse {
 }
 
 export interface IRegisterReq {
+    name: string;
     email: string;
     password: string;
 }

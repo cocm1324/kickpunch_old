@@ -6,7 +6,7 @@ import { EndpointType } from '../../enums/endpoint.enum';
 import { 
 	IPost, IPostReq, IPostRes, IRegisterReq, IRegisterRes, 
 	ILoginRes, ILoginReq, IPostCreateRes, IPostCreateReq, IPostUpdateReq, 
-	IPostDeleteReq, IPostDeleteRes, IGetBlog, IGetBlogPost, ISessionVerifyReq, IResponse, IGetManagerPost 
+	IPostDeleteReq, IPostDeleteRes, IGetBlog, IGetBlogPost, ISessionVerifyReq, IResponse, IGetManagerPost, IPostUpdateRes, IBlogUpdateReq, IBlogUpdateRes 
 } from '../../models';
 import { environment } from 'src/environments/environment';
 
@@ -36,7 +36,7 @@ export class DataService {
 		);
 	}
 	getPost(req: IPostReq): Observable<IPostRes> {
-		return this.http.get<IPostRes>(this.postUrl + '/' + req._id);
+		return this.http.get<IPostRes>(this.postUrl + '/' + req.id);
 	}
 
 	runRegister(user: IRegisterReq): Observable<IRegisterRes> {
@@ -50,11 +50,16 @@ export class DataService {
 	createPost(req_body: IPostCreateReq): Observable<IPostCreateRes> {
 		return this.http.post<IPostCreateReq>(this.newPostUrl, req_body);
 	}
-	updatePost(req_body: IPostUpdateReq): Observable<any> {
-		return this.http.put<any>(this.newPostUrl + '/' + req_body._id, req_body);
+	updatePost(req_body: IPostUpdateReq): Observable<IPostUpdateRes> {
+		return this.http.put<IPostUpdateRes>(this.newPostUrl + '/' + req_body.id, req_body);
 	}
 	deletePost(req_body: IPostDeleteReq): Observable<IPostDeleteRes> {
-		return this.http.delete<any>(this.newPostUrl + '/' + req_body._id);
+		return this.http.delete<any>(this.newPostUrl + '/' + req_body.id);
+	}
+
+	//blog update
+	updateBlog(req_body: IBlogUpdateReq, userName): Observable<IBlogUpdateRes> {
+		return this.http.put<IBlogUpdateRes>(`http://${environment.api_server.addr}:${environment.api_server.port}/api/blog/${userName}`, req_body);
 	}
 
 	runVerifySession(req: ISessionVerifyReq): Observable<IResponse> {

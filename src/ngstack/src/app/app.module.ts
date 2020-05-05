@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './components/kickpunch/dashboard/dashboard.component';
+import { BlogComponent } from './components/kickpunch/blog/blog.component';
 import { PostComponent } from './components/kickpunch/post/post.component';
 import { NotfoundComponent } from './components/kickpunch/notfound/notfound.component';
 import { LoginComponent } from './components/kickpunch/login/login.component';
@@ -31,7 +31,7 @@ import { SessionService } from './service/session/session.service';
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
+    BlogComponent,
     PostComponent,
     NotfoundComponent,
     LoginComponent,

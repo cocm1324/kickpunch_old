@@ -13,7 +13,7 @@ import { SessionService } from 'src/app/service/session/session.service';
 	styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-	registerUserData: IRegisterReq = {email: "", password: ""};
+	registerUserData: IRegisterReq = {name: "", email: "", password: ""};
 	currentUser: IUser = {};
 
 	constructor(

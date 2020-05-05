@@ -27,8 +27,8 @@ export class SectionImageEditorComponent implements OnInit, OnDestroy {
 
 	display: boolean = false;
 
-	private imageForm: FormGroup;
-	private borderType = BORDER_TYPE;
+	imageForm: FormGroup;
+	borderType = BORDER_TYPE;
 
 	private subscriptions: Subscription[] = [];
 
@@ -96,7 +96,7 @@ export class SectionImageEditorComponent implements OnInit, OnDestroy {
 		this.imageUrl.setValue('');
 	}
 
-	onRevert() {
+	onRevert($event) {
 		if (this.step == IMAGE_STEP.TYPE_SELECTION) {
 			this.revert.emit(false);
 		}
@@ -119,7 +119,7 @@ export class SectionImageEditorComponent implements OnInit, OnDestroy {
 		return this.display ? this.borderType.SUBMIT : this.borderType.NONE;
 	}
 
-	onSubmit() {
+	onSubmit($event) {
 		if (this.step == this.imageStep.IMAGE_URL) {
 			const section: ISectionItem = {
 				seq: null,

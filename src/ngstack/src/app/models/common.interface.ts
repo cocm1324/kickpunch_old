@@ -25,15 +25,6 @@ export interface IPost {
     priority?: number
 }
 
-export interface IPostReq {
-    _id: string
-}
-
-export interface IPostRes {
-    author: IUser,
-    post: IPost
-}
-
 export interface IPostCreateReq {
     title: string,
     contents: string,
@@ -50,26 +41,6 @@ export interface IPostCreateRes {
     contents?: string,
     exposed?: boolean,
     priority?: number
-}
-
-export interface IPostUpdateReq {
-    _id: string,
-    title: string,
-    contents: string,
-    exposed: boolean,
-    priority: number
-}
-
-export interface IPostUpdateRes {
-    message: string
-}
-
-export interface IPostDeleteReq {
-    _id: string
-}
-
-export interface IPostDeleteRes {
-    message: string
 }
 
 export interface IBlog {

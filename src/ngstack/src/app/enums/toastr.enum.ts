@@ -104,4 +104,25 @@ export const ToastrType: {[key: string]: Toastr}  = {
         alert:      ToastrAlertType.DANGER,
         timestamp:  null
     },
+
+    POST_NOT_FOUNT: {
+        header:     `No Post!`,
+        body:       "There is no such post!",
+        alert:      ToastrAlertType.DANGER,
+        timestamp:  null
+    },
+
+    UPDATE_BLOG_SUCCESS: {
+        header:     'Blog updated successfully',
+        body:       "Do post more, would ya?",
+        alert:      ToastrAlertType.SUCCESS,
+        timestamp:  null
+    },
+    UPDATE_BLOG_FAIL: {
+        header:     `Ooopse, please try again later`,
+        body:       "Something went wrong back there",
+        alert:      ToastrAlertType.DANGER,
+        timestamp:  null
+    },
+
 }

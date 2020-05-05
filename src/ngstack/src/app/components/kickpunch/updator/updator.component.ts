@@ -42,26 +42,29 @@ export class UpdatorComponent implements OnInit {
 
 	getData() {
 		this.route.params.subscribe(params => {
-			this.dataService.getPost({_id: params.postId}).subscribe({next: res_body => {
-				this.currentUser = res_body.author;
-				this.currentPost = res_body.post;
+			this.dataService.getPost({id: params.postId}).subscribe(
+				res => {
+					this.currentUser = res.response.user;
+					this.currentPost = res.response.post;
 
-				this.postForm.patchValue({
-					title: this.currentPost.title,
-					contents: this.currentPost.contents
-				});
+					this.postForm.patchValue({
+						title: this.currentPost.title,
+						contents: this.currentPost.contents
+					});
 
-				this.exposed.nativeElement.checked = this.currentPost.exposed;
-				this.priority.nativeElement.value = this.currentPost.priority;
-			}, error: err => this.toastrService.changeToastr(ToastrType.UPDATE_POST_FAIL),
-				complete: () => {}
-			});
+					this.exposed.nativeElement.checked = this.currentPost.exposed;
+					this.priority.nativeElement.value = this.currentPost.priority;
+				}, 
+				err => {
+					this.toastrService.changeToastr(ToastrType.UPDATE_POST_FAIL);
+				}
+			);
 		});
 	}
 
 	update() {
 		const request: IPostUpdateReq = {
-			_id: this.currentPost.id,
+			id: this.currentPost.id,
 			title: this.postForm.get('title').value,
 			contents: this.postForm.get('contents').value,
 			exposed: this.exposed.nativeElement.checked,
@@ -69,13 +72,19 @@ export class UpdatorComponent implements OnInit {
 		}
 
 		// TODO: I dont understand this, why response is comming in error? study it and make it understandable
-		this.dataService.updatePost(request).subscribe({next: res_body => {	
-			this.toastrService.changeToastr(ToastrType.UPDATE_POST_FAIL)
-		}, error: err => {
-			this.toastrService.changeToastr(ToastrType.UPDATE_POST_SUCCESS);
-			const url = '/' + this.currentUser.userName + "/post/" + this.currentPost.id;
-			this.router.navigate([url]);
-		}, complete: () => {}
-		});
+		this.dataService.updatePost(request).subscribe(
+			res => {	
+				if (!res.RESULT) {
+					this.toastrService.changeToastr(ToastrType.UPDATE_POST_FAIL);
+				} else {
+					this.toastrService.changeToastr(ToastrType.UPDATE_POST_SUCCESS);
+					const url = '/' + this.currentUser.userName + "/post/" + this.currentPost.id;
+					this.router.navigate([url]);
+				}
+			}, 
+			err => {
+				this.toastrService.changeToastr(ToastrType.UPDATE_POST_FAIL);
+			}
+		);
 	}
 }

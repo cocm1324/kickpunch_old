@@ -7,10 +7,7 @@ export {
     ICurrentRoute,
 
     IPost, 
-    IPostReq, IPostRes,
-    IPostCreateReq, IPostCreateRes,
-    IPostUpdateReq, IPostUpdateRes,
-    IPostDeleteReq, IPostDeleteRes
+    IPostCreateReq, IPostCreateRes
 } from './common.interface';
 
 export {
@@ -24,5 +21,15 @@ export {
 } from './blog.interface';
 
 export {
-    IGetManagerPost
+    IGetManagerPost,
+    IPostDeleteReq, IPostDeleteRes,
+    IBlogUpdateReq, IBlogUpdateRes
 } from './manager.interface';
+
+export {
+    IPostReq, IPostRes
+} from './post.interface';
+
+export {
+    IPostUpdateReq, IPostUpdateRes,
+} from  './editor.interace';
