@@ -78,7 +78,7 @@ export class SectionMarkdownEditorComponent implements OnInit, OnDestroy {
 		this.post.setValue('');
 	}
 
-	onRevert() {
+	onRevert($event) {
 		if (this.display == true) {
 			if (confirm('Changes will be lost')) {
 				this.revert.emit(false);
@@ -92,7 +92,7 @@ export class SectionMarkdownEditorComponent implements OnInit, OnDestroy {
 		return this.display ? this.borderType.SUBMIT : this.borderType.NONE;
 	}
 
-	onSubmit() {
+	onSubmit($event) {
 		const section: ISectionItem = {
 			seq: null,
 			width: this.width,

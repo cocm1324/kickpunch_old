@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
 @NgModule({
 	imports: [
-		DragDropModule
+		BrowserAnimationsModule,
 	],
 	exports: [
-		DragDropModule
+		BrowserAnimationsModule,
 	]
 })
 export class AppCommonModule { }

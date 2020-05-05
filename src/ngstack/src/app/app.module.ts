@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './components/kickpunch/dashboard/dashboard.component';
+import { BlogComponent } from './components/kickpunch/blog/blog.component';
 import { PostComponent } from './components/kickpunch/post/post.component';
 import { NotfoundComponent } from './components/kickpunch/notfound/notfound.component';
 import { LoginComponent } from './components/kickpunch/login/login.component';
@@ -15,7 +15,6 @@ import { NgxMdModule } from './components/common/ngxmd/ngx-md.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LandingComponent } from './components/kickpunch/landing/landing.component';
 import { RegisterComponent } from './components/kickpunch/register/register.component';
-import { AuthService } from './service/auth/auth.service';
 import { DataService } from './service/data/data.service';
 import { ManagerComponent } from './components/kickpunch/manager/manager.component';
 import { COMPOSITION_BUFFER_MODE } from '@angular/forms';
@@ -27,11 +26,12 @@ import { MdTextSummaryPipe } from './pipes/md-text-summary.pipe';
 import { PipeModule } from './pipes/pipe.module';
 import { PageSmasherModule } from './components/common/page-smasher/page-smasher.module';
 import { AppCommonModule } from './app-common.module';
+import { SessionService } from './service/session/session.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
+    BlogComponent,
     PostComponent,
     NotfoundComponent,
     LoginComponent,
@@ -57,7 +57,7 @@ import { AppCommonModule } from './app-common.module';
     NgxMdModule.forRoot()
   ],
   providers: [
-    AuthService,
+    SessionService,
     AuthGuard,
     DataService,
     {

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { AuthService } from 'src/app/service/auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'src/app/components/common/toastr/toastr.service';
 import { DataService } from 'src/app/service/data/data.service';
@@ -16,20 +15,24 @@ import { ToastrType } from '../../../enums/toastr.enum';
 })
 export class UpdatorComponent implements OnInit {
 
-	current_user: IUser;
-	current_post: IPost;
+	currentUser: IUser;
+	currentPost: IPost;
 	
 	postForm: FormGroup;
 
 	@ViewChild('exposed') exposed: ElementRef;
 	@ViewChild('priority') priority: ElementRef;
 
-	constructor(private _fb: FormBuilder, private _auth: AuthService, private _router: Router, private _toastr: ToastrService, private _data: DataService, private _route: ActivatedRoute) { 
-		
-	}
+	constructor(
+		private fb: FormBuilder, 
+		private router: Router, 
+		private route: ActivatedRoute,
+		private toastrService: ToastrService, 
+		private dataService: DataService
+	) { }
 
 	ngOnInit() {
-		this.postForm = this._fb.group({
+		this.postForm = this.fb.group({
 			title: ['', Validators.required],
 			contents: ['', Validators.required],
 		});
@@ -38,49 +41,50 @@ export class UpdatorComponent implements OnInit {
 	}
 
 	getData() {
-		this._route.params.subscribe(params => {
-			this._data.getPost({_id: params.post_id}).subscribe({
-				next: res_body => {
-					this.current_user = res_body.author;
-					this.current_post = res_body.post;
+		this.route.params.subscribe(params => {
+			this.dataService.getPost({id: params.postId}).subscribe(
+				res => {
+					this.currentUser = res.response.user;
+					this.currentPost = res.response.post;
 
 					this.postForm.patchValue({
-						title: this.current_post.title,
-						contents: this.current_post.contents
-			    	});
-
-					this.exposed.nativeElement.checked = this.current_post.exposed;
-					this.priority.nativeElement.value = this.current_post.priority;
-				},
-				error: err => this._toastr.changeToastr(ToastrType.UPDATE_POST_FAIL),
-				complete: () => {}
-			});
+						title: this.currentPost.title,
+						contents: this.currentPost.contents
+					});
+					console.log(this.currentPost)
+					this.exposed.nativeElement.checked = this.currentPost.exposed;
+					this.priority.nativeElement.value = this.currentPost.priority;
+				}, 
+				err => {
+					this.toastrService.changeToastr(ToastrType.UPDATE_POST_FAIL);
+				}
+			);
 		});
 	}
 
 	update() {
-		let post: IPostUpdateReq = {
-				_id: this.current_post._id,
-				title: this.postForm.get('title').value,
-				contents: this.postForm.get('contents').value,
-				exposed: this.exposed.nativeElement.checked,
-				priority: this.priority.nativeElement.value
+		const request: IPostUpdateReq = {
+			id: this.currentPost.id,
+			title: this.postForm.get('title').value,
+			contents: this.postForm.get('contents').value,
+			exposed: this.exposed.nativeElement.checked,
+			priority: this.priority.nativeElement.value
 		}
 
-		this._auth.updatePost(post)
-
 		// TODO: I dont understand this, why response is comming in error? study it and make it understandable
-		this._auth.updatePost(post).subscribe({
-			next: res_body => {
-				console.log(res_body);
-				this._toastr.changeToastr(ToastrType.UPDATE_POST_FAIL)
-			},
-			error: err => {
-				this._toastr.changeToastr(ToastrType.UPDATE_POST_SUCCESS);
-				let url = '/' + this.current_user.user_name + "/post/" + this.current_post._id;
-				this._router.navigate([url]);
-			},
-			complete: () => {}
-		});
+		this.dataService.updatePost(request).subscribe(
+			res => {	
+				if (!res.RESULT) {
+					this.toastrService.changeToastr(ToastrType.UPDATE_POST_FAIL);
+				} else {
+					this.toastrService.changeToastr(ToastrType.UPDATE_POST_SUCCESS);
+					const url = '/' + this.currentUser.userName + "/post/" + this.currentPost.id;
+					this.router.navigate([url]);
+				}
+			}, 
+			err => {
+				this.toastrService.changeToastr(ToastrType.UPDATE_POST_FAIL);
+			}
+		);
 	}
 }

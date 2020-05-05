@@ -2,15 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../service/data/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../../service/auth/auth.service';
 
-import { 
-	ICurrentRoute, 
-	ICurrentUser,
-	IPost
-} from '../../../models';
+import { ICurrentRoute, IPost, IUser, IBlogUpdateRes, IBlogUpdateReq } from '../../../models';
 import { ToastrService } from '../../common/toastr/toastr.service';
 import { ToastrType } from 'src/app/enums/toastr.enum';
+import { SessionService } from 'src/app/service/session/session.service';
+import { RouterLinkType } from '../../../enums/router-link.enum';
 
 @Component({
 	selector: 'app-manager',
@@ -20,76 +17,145 @@ import { ToastrType } from 'src/app/enums/toastr.enum';
 export class ManagerComponent implements OnInit {
 	//note that currentlt logged in user and component's owner user can be different
 
-	current_user: ICurrentUser = {};
-	current_route: ICurrentRoute = {};
+	title = "he"
+	description = "he"
+
+	titleDefault;
+	descriptionDefault;
+
+	currentUser: IUser = {};
+	currentRoute: ICurrentRoute = {};
 	posts: IPost[] = [];
 
 	constructor(
-		private _data: DataService,
-		private _router: Router, 
-		private _route: ActivatedRoute,
-		private _auth: AuthService,
-		private _toastr: ToastrService
+		private router: Router, 
+		private route: ActivatedRoute,
+		private dataService: DataService,
+		private sessionService: SessionService,
+		private toastrService: ToastrService
 	) { }
 
 	ngOnInit() {
-		this.getCurrentUser();
-		this.getRouteParam();
-		this.getPostData();
+		this.loadData();
 	}
 
-	getCurrentUser(){
-		this._auth.currentUser.subscribe(user => {
-			this.current_user = user;
+	loadData() {
+		this.route.params.subscribe(params => {
+			this.currentRoute.userName = params.userName;
+		});
+		this.sessionService.currentUser.subscribe(user => {
+			this.currentUser = user;
+			this.refreshPostList();
+			this.refreshBlog();
 		});
 	}
 
-	getRouteParam() {
-		this._route.params.subscribe(params => {
-			this.current_route.user_name = params.user_name;
-		});
-	}
-
-	getPostData() {
-		this._data.getAllPostsByUserName(this.current_user.user_name).subscribe(
-		res => {
-			this.posts = res;
-		},
-		err => {
-			console.log(err);
-			if(err instanceof HttpErrorResponse) {
-				if (err.status === 401) {
-					this._router.navigate(['/login']);
+	refreshPostList() {
+		this.dataService.getManagerPost(this.currentUser.userName).subscribe(
+			res => {
+				if (!res.RESULT) {
+					this.toastrService.changeToastr(ToastrType.INVALID_REQUEST);
+					this.router.navigate(['/' + RouterLinkType.NOTFOUND]);
+				}
+				this.posts = res.response;
+			}, 
+			err => {
+				if (err instanceof HttpErrorResponse) {
+					if (err.status === 401) {
+						this.router.navigate(['/login']);
+					}
 				}
 			}
-		}
 		);
 	}
 
-	//
+	refreshBlog() {
+		this.dataService.getBlogInfo(this.currentUser.userName).subscribe(
+			res => {
+				if (res.RESULT) {
+					const {title, description} = res.response;
+					this.title = title;
+					this.description = description;
+
+					this.titleDefault = title;
+					this.descriptionDefault = description;
+				}
+			}, 
+			err => {
+				this.router.navigateByUrl('/notfound');
+			}
+		);
+	}
+
 	goToPost(postId: string) {
-		this._router.navigate(['/' + this.current_user.user_name + '/post/' + postId]);
+		this.router.navigate(['/' + this.currentUser.userName + '/post/' + postId]);
 	}
 
 	goToEdit(postId: string) {
-		this._router.navigate(['/' + this.current_user.user_name + '/post/' + postId + '/edit']);
+		this.router.navigate(['/' + this.currentUser.userName + '/post/' + postId + '/edit']);
 	}
 
 	deletePost(postId: string) {
 		// TODO: message is including postId, it is not readable from user, change it to post title
-		let confirm = window.confirm("Deleting post")
+		const confirm = window.confirm("Deleting post");
 		if (confirm) {
-			this._auth.deletePost({_id: postId}).subscribe(
+			this.dataService.deletePost({id: postId}).subscribe(
 				res => {
-					this._toastr.changeToastr(ToastrType.DELETE_POST_SUCCESS);
-				},
+					if (!res.RESULT) {
+						this.toastrService.changeToastr(ToastrType.DELETE_POST_FAIL);	
+					} else {
+						this.toastrService.changeToastr(ToastrType.DELETE_POST_SUCCESS);
+						this.refreshPostList();
+					}
+				}, 
 				err => {
-					this._toastr.changeToastr(ToastrType.DELETE_POST_FAIL);
+					this.toastrService.changeToastr(ToastrType.DELETE_POST_FAIL);
 				}
-			)
-		}
-		else {
+			);
+		} else {
 
 		}
+	}
+
+	changeTitle() {
+		const request: IBlogUpdateReq = {
+			userId: this.currentUser.id,
+			title: this.title,
+			description: this.descriptionDefault
+		};
+
+		this.dataService.updateBlog(request, this.currentUser.userName).subscribe(
+			res => {
+				if (!res.RESULT) {
+					this.toastrService.changeToastr(ToastrType.UPDATE_BLOG_FAIL);
+				}
+				this.toastrService.changeToastr(ToastrType.UPDATE_BLOG_SUCCESS);
+				this.refreshBlog()
+			},
+			err => {
+				this.toastrService.changeToastr(ToastrType.INVALID_REQUEST);
+			}
+		);
+	}
+
+	changeDescription() {
+		const request: IBlogUpdateReq = {
+			userId: this.currentUser.id,
+			title: this.titleDefault,
+			description: this.description
+		};
+
+		this.dataService.updateBlog(request, this.currentUser.userName).subscribe(
+			res => {
+				if (!res.RESULT) {
+					this.toastrService.changeToastr(ToastrType.UPDATE_BLOG_FAIL);
+				}
+				this.toastrService.changeToastr(ToastrType.UPDATE_BLOG_SUCCESS);
+				this.refreshBlog()
+			},
+			err => {
+				this.toastrService.changeToastr(ToastrType.INVALID_REQUEST);
+			}
+		);
 	}
 }

@@ -1,9 +1,28 @@
 @import "../../../node_modules/bootswatch/dist/litera/variables";
 
-.text-center {
+.c-relative {
+    position: relative;
+}
+
+.c-absolute {
+    position: absolute !important;
+}
+
+.c-text-center {
     text-align: center;
 }
 
-.cursor-pointer {
+.c-text-unselect {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.c-cursor-pointer {
     cursor: pointer !important;
+}
+
+.c-text-crimson {
+    color: crimson !important;
 }

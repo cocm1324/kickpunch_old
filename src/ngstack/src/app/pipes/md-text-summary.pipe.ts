@@ -10,7 +10,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 */
 @Pipe({name: 'mdTextSummary'})
 export class MdTextSummaryPipe implements PipeTransform {
-  transform(mdText: string, length?: number): string {
-    return mdText.replace(/[|&;$%@"<>()+,_]/g, "").substr(0, length ? length : 200) + "...";
-  }
+	transform(mdText: string, length?: number): string {
+		return mdText.replace(/[|&;$%@"<>()+,_]/g, "").substr(0, length ? length : 200) + "...";
+	}
 }

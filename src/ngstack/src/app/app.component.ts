@@ -1,78 +1,91 @@
 import { Component } from '@angular/core';
-import { AuthService } from './service/auth/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from './components/common/toastr/toastr.service';
 import { ToastrType } from './enums/toastr.enum'
 import { LocalstorageType } from './enums/localstorage.enum';
 import { RouterLinkType } from './enums/router-link.enum';
 import { environment } from 'src/environments/environment';
+import { SessionService } from './service/session/session.service';
+import { DataService } from './service/data/data.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 
-  title = 'ngstack';
-  currentUser = {};
+	title = 'ngstack';
+	currentUser;
 
-  constructor(private _router:Router, private _auth: AuthService, private _toastr:ToastrService) {}
+	get userName() {
+		return this.currentUser.userName;
+	}
 
-  ngOnInit() {
-    // TODO: this is causing error when login
-    /**
-     * when log in, login component save user data at local storage
-     */
-    this.getCurrentUser();
-  }
+	get isLoggedIn() {
+		return this.sessionService.getIsLoggedIn();
+	}
 
-  login() {
-    if(!localStorage.getItem(LocalstorageType.CALLBACK)){
-      localStorage.setItem(LocalstorageType.CALLBACK, this._router.url);
-    }
-    else if(this._router.url != '/' + RouterLinkType.REGISTER){
-      localStorage.setItem(LocalstorageType.CALLBACK, this._router.url);
-    }
-    this._router.navigate(['/' + RouterLinkType.LOGIN]);
-  }
+	constructor(
+		private router:Router, 
+		private sessionService: SessionService,
+		private toastrService:ToastrService
+	) {}
 
-  logout() {    
-    localStorage.setItem(LocalstorageType.CALLBACK, this._router.url);
-    
-    this._auth.logoutUser();
+	ngOnInit() {
+		// TODO: this is causing error when login
+		/**
+		 * when log in, login component save user data at local storage
+		 */
+		this.getCurrentUser();
+	}
 
-    this._router.navigate([localStorage.getItem(LocalstorageType.CALLBACK)]);
-    localStorage.removeItem(LocalstorageType.CALLBACK);
+	login() {
+		if(!localStorage.getItem(LocalstorageType.CALLBACK)){
+			localStorage.setItem(LocalstorageType.CALLBACK, this.router.url);
+		}
+		else if(this.router.url != '/' + RouterLinkType.REGISTER){
+			localStorage.setItem(LocalstorageType.CALLBACK, this.router.url);
+		}
+		this.router.navigate(['/' + RouterLinkType.LOGIN]);
+	}
 
-    // because logout doesn't activate guard, after logout current route keep displays 
-    // even if the route is guarded.
-    location.reload();
+	logout() {    
+		localStorage.setItem(LocalstorageType.CALLBACK, this.router.url);
+		this.sessionService.runLogOut();
+		this.router.navigate([localStorage.getItem(LocalstorageType.CALLBACK)]);
+		localStorage.removeItem(LocalstorageType.CALLBACK);
 
-    this._toastr.changeToastr(ToastrType.LOGOUT);
-  }
+		location.reload();
+		this.toastrService.changeToastr(ToastrType.LOGOUT);
+	}
 
-  isLoggedIn() {
-    return this._auth.loggedIn();
-  }
+	getCurrentUser() {
+		this.sessionService.currentUser.subscribe(user => {
+			if (user.id == null) {
+				if (localStorage.getItem(LocalstorageType.CURRENT_USER) !== null) {
+					this.currentUser = JSON.parse(localStorage.getItem(LocalstorageType.CURRENT_USER));
+					this.sessionService.updateCurrentUser(JSON.parse(localStorage.getItem(LocalstorageType.CURRENT_USER)));
+				}
+			} else {
+				this.currentUser = user;
+			}
+		});
+	}
 
-  getCurrentUser() {
-    this._auth.currentUser.subscribe(
-      user => {
-        if(user._id == null){
-          if(localStorage.getItem(LocalstorageType.CURRENT_USER) !== null){
-            this.currentUser = JSON.parse(localStorage.getItem(LocalstorageType.CURRENT_USER));
-            this._auth.updateCurrentUser(JSON.parse(localStorage.getItem(LocalstorageType.CURRENT_USER)));
-          }
-        }
-        else {
-          this.currentUser = user;
-        }
-      }
-    );
-  }
+	goToBlog() {
+		this.router.navigate([this.userName]);
+	}
 
-  goToRepo() {
-    window.location.href = "https://github.com/cocm1324";
-  }
+	goToManager() {
+		this.router.navigate([`${this.userName}/manager`]);
+	}
+
+	goToEditor() {
+		this.router.navigate([`${this.userName}/new`]);
+	}
+
+	goToRepo() {
+		window.location.href = "https://github.com/cocm1324/kickpunch";
+	}
 }

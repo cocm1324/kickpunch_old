@@ -3,7 +3,7 @@ const common = require("../../common");
 
 module.exports = {
     // for visitor; return posts that set as exposed
-    getExposedPostByUser: (req, res) => {
+    getBlogPost: (req, res) => {
         const {_id} = req.data.user;
         
         Post.find({ user_id: _id, exposed: true }, (error, posts) => {
@@ -15,14 +15,28 @@ module.exports = {
                 common.errorMessage(res, 404);
                 return;
             }
+
+            const response = posts.map(post => {
+                return {
+                    id: post._id,
+                    title: post.title,
+                    contents: post.contents,
+                    exposed: post.exposed,
+                    priority: post.priority,
+                    userId: post.user_id,
+                    created: post.created,
+                    updated: post.updated
+                }
+            });
+
             res.status(200).send({
                 RESULT: posts.length,
-                response: posts
+                response: response
             }); 
         });
     },
 
-    getAllPostByUser: (req, res) => {
+    getManagerPost: (req, res) => {
         const {_id} = req.data.user;
     
         Post.find({ user_id: _id }, (error, posts) => {
@@ -34,9 +48,24 @@ module.exports = {
                 common.errorMessage(res, 404);
                 return;
             }
+            const postList = posts.map(post => {
+                const postMap = {
+                    id: post._id,
+                    title: post.title,
+                    created: post.created,
+                    updated: post.updated,
+                    contents: post.contents.replace(/[|&;$%@"<>()+,_]/g, "").substr(0, 200) + "...",
+                    userId: post.user_id,
+                    exposed: post.exposed,
+                    priority: post.priority
+                };
+
+                return postMap;
+            });
+
             res.status(200).send({
                 RESULT: posts.length,
-                response: posts
+                response: postList
             });
         });
     },
@@ -96,10 +125,10 @@ module.exports = {
     },
 
     updatePostById: (req, res) => {
-        const {_id, title, contents, exposed, priority} = req.body
+        const {id, title, contents, exposed, priority} = req.body
         const {verifiedUserId} = req.data;
 
-        if(!_id) {
+        if(!id) {
             common.errorMessage(res, 401);
             return;
         }
@@ -112,22 +141,24 @@ module.exports = {
             updated: new Date()
         }
 
-        Post.findByIdAndUpdate(_id, request, (error, post) => {
-            if(post.user_id != verifiedUserId){
+        Post.findByIdAndUpdate(id, request, (error, post) => {
+            const {user_id} = post;
+        
+            if (user_id != verifiedUserId){
                 common.errorMessage(res, 403);
                 return;
             }
-            if(error) {
+            if (error) {
                 common.errorMessage(res, 500, error);
                 return;
             }
-            if(!post) {
+            if (!post) {
                 common.errorMessage(res, 404);
                 return;
             }
             res.status(200).send({
                 RESULT: 1,
-                response: "ok"
+                response: "updated"
             });
         });
     },

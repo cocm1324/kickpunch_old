@@ -1,15 +1,35 @@
 export {
+    IResponse,
+    IBlog,
+
     IUser,
-    ICurrentUser, 
     
     ICurrentRoute,
 
-    ILoginReq,
-    IResgisterReq,
-
     IPost, 
-    IPostReq, IPostRes,
-    IPostCreateReq, IPostCreateRes,
+    IPostCreateReq, IPostCreateRes
+} from './common.interface';
+
+export {
+    ILoginReq, ILoginRes,
+    IRegisterReq, IRegisterRes,
+    ISessionVerifyReq
+} from './session.interface';
+
+export {
+    IGetBlog, IGetBlogPost
+} from './blog.interface';
+
+export {
+    IGetManagerPost,
+    IPostDeleteReq, IPostDeleteRes,
+    IBlogUpdateReq, IBlogUpdateRes
+} from './manager.interface';
+
+export {
+    IPostReq, IPostRes
+} from './post.interface';
+
+export {
     IPostUpdateReq, IPostUpdateRes,
-    IPostDeleteReq, IPostDeleteRes
-} from './common.interface'
+} from  './editor.interace';
