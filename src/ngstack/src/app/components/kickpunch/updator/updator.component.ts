@@ -51,7 +51,7 @@ export class UpdatorComponent implements OnInit {
 						title: this.currentPost.title,
 						contents: this.currentPost.contents
 					});
-
+					console.log(this.currentPost)
 					this.exposed.nativeElement.checked = this.currentPost.exposed;
 					this.priority.nativeElement.value = this.currentPost.priority;
 				}, 

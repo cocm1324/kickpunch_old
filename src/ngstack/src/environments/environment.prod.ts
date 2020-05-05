@@ -1,7 +1,7 @@
 export const environment = {
 	production: true,
 	api_server: {
-		addr: "kickpunch.tech",
+		addr: "www.kickpunch.tech",
 		port: "3000"
 	}
 };

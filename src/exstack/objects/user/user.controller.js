@@ -39,7 +39,16 @@ module.exports = {
     },
 
     getUserFromPost: (req, res) => {
-        const {contents, created, updated, title, user_id, _id} = req.data.post;
+        const {
+            contents, 
+            created, 
+            updated, 
+            title, 
+            user_id, 
+            _id,
+            exposed,
+            priority
+        } = req.data.post;
     
         if (!req.data) {
             common.errorMessage(res, 500, 'Post data is missing!');
@@ -70,7 +79,9 @@ module.exports = {
                     title: title,
                     created: created,
                     updated: updated,
-                    contents: contents
+                    contents: contents,
+                    exposed: exposed,
+                    priority: priority
                 }
             };
 
